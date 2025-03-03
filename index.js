@@ -1,92 +1,114 @@
-//Description: Node.js HTML client
-//request: npm install express ejs axios body-parser
+require("dotenv").config();
 
 const express = require('express');
-const axios = require('axios');
 const app = express();
-var bodyParser = require('body-parser');
+const axios = require('axios');
 const path = require("path");
+var bodyParser = require('body-parser');
 
-//Base URL for the API
-//const base_url = "https://api.example.com";
-const base_url = "http://localhost:5000";
+const api_port = process.env.API_PORT || 3000;
+const base_url = `http://localhost:${api_port}`;
 
-//Set the template engine
-app.set("views" , path.join(__dirname, "/public/views"));
+// ตั้งค่าระบบ Template Engine
+app.set("views", path.join(__dirname, "/public/views"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}));
-
-//Serve static files
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/public'));
 
+// ==================== Home Page (แสดงสินค้าทั้งหมด) ====================
 app.get("/", async (req, res) => {
-    try{
-        const response = await axios.get(base_url + '/books');
-        res.render("books", { books: response.data });
-    }catch(err){
+    try {
+        const productList = await axios.get(base_url + '/products'); // ดึงสินค้าทั้งหมด
+        const categories = await axios.get(base_url + '/category'); // ดึงหมวดหมู่
+        res.render("products", { products: productList.data, category: categories.data });
+    } catch (err) {
         console.error(err);
-        res.status(500).send('Error');
+        res.status(500).send('Error loading product list.');
     }
 });
 
-app.get("/book/:id", async (req, res) => {
-    try{
-        const response = await axios.get(base_url + '/books/' + req.params.id);
-        res.render("book", { book: response.data });
-    }catch(err){
+// ==================== View Product (แสดงรายละเอียดสินค้า) ====================
+app.get("/product/:id", async (req, res) => {
+    try {
+        const product = await axios.get(base_url + '/products/' + req.params.id);
+        res.render("product", { product: product.data });
+    } catch (err) {
         console.error(err);
-        res.status(500).send('Error');
+        res.status(500).send('Error loading product details.');
     }
 });
 
-app.get("/create", (req, res) => {
-    res.render("create");
+// ==================== Create Product (หน้าเพิ่มสินค้า) ====================
+app.get("/create", async (req, res) => {
+    try {
+        const categories = await axios.get(base_url + '/category'); // ดึงหมวดหมู่
+        res.render("create", { categories: categories.data });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error loading create page.');
+    }
 });
 
+// ส่งข้อมูลเพื่อเพิ่มสินค้าใหม่
 app.post("/create", async (req, res) => {
-    try{
-        const data = {title: req.body.title, author: req.body.author };
-        await axios.post(base_url + '/books', data);
+    try {
+        const data = {
+            name: req.body.name,
+            category_id: req.body.category_id,
+            unitPrice: req.body.unitPrice,
+            stockQty: req.body.stockQty
+        };
+        await axios.post(base_url + '/products', data);
         res.redirect("/");
-    }catch(err){
+    } catch (err) {
         console.error(err);
-        res.status(500).send('Error');
+        res.status(500).send('Error creating product.');
     }
 });
 
+// ==================== Update Product (หน้าแก้ไขสินค้า) ====================
 app.get("/update/:id", async (req, res) => {
-    try{
-        const response = await axios.get(
-        base_url + '/books/' + req.params.id);
-        res.render("update", { book: response.data });
-    }catch(err){
+    try {
+        const product = await axios.get(base_url + '/products/' + req.params.id);
+        const categories = await axios.get(base_url + '/category');
+        res.render("update", { product: product.data, categories: categories.data });
+    } catch (err) {
         console.error(err);
-        res.status(500).send('Error');
+        res.status(500).send('Error loading update page.');
     }
 });
 
+// ส่งข้อมูลเพื่ออัปเดตสินค้า
 app.post("/update/:id", async (req, res) => {
-    try{
-        const data = {title: req.body.title, author: req.body.author };
-        await axios.put(base_url + '/books/' + req.params.id, data);
+    try {
+        const data = {
+            name: req.body.name,
+            category_id: req.body.category_id,
+            unitPrice: req.body.unitPrice,
+            stockQty: req.body.stockQty
+        };
+        await axios.put(base_url + '/products/' + req.params.id, data);
         res.redirect("/");
-    }catch(err){
+    } catch (err) {
         console.error(err);
-        res.status(500).send('Error');
+        res.status(500).send('Error updating product.');
     }
 });
 
+// ==================== Delete Product (ลบสินค้า) ====================
 app.get("/delete/:id", async (req, res) => {
-    try{
-        await axios.delete(base_url + '/books/' + req.params.id);
-            res.redirect("/");
-    }catch(err){
+    try {
+        await axios.delete(base_url + '/products/' + req.params.id);
+        res.redirect("/");
+    } catch (err) {
         console.error(err);
-        res.status(500).send('Error');
+        res.status(500).send('Error deleting product.');
     }
 });
 
-app.listen(5500, () => {
-    console.log('Server started on http://localhost:5500');
-    });
+// ==================== Start Server ====================
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+    console.log(`Server listening at http://localhost:${port}`);
+});
