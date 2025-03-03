@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หมวดหมู่สินค้า - DIY Computer</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <header>
+        <a href="/" class="logo">DIY Computer</a>
+        <form class="search-bar" action="/search" method="GET">
+            <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
+            <button type="submit">ค้นหา</button>
+        </form>
+        <nav>
+            <a href="/">หน้าแรก</a>
+            <!-- <a href="/category">หมวดหมู่</a> -->
+            <div class="dropdown">
+                <a href="/category" class="dropbtn">หมวดหมู่สินค้า</a>
+                <div class="dropdown-content">
+                    <a href="#">การ์ดจอ</a>
+                    <a href="#">เมนบอร์ด</a>
+                    <a href="#">RAM</a>
+                    <a href="#">ซีพียู</a>
+                </div>
+            </div>
+            <a href="#">ตะกร้า</a>
+            <a href="#">บัญชี</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">หมวดหมู่สินค้า</h2>
+        <div class="product-grid">
+            <!-- CPU -->
+            <div class="product-card">
+                <img src="cpu.jpg" alt="CPU">
+                <div class="product-info">
+                    <h3>CPU</h3>
+                    <p>โปรเซสเซอร์หลากหลายรุ่น</p>
+                    <a href="#" class="btn">ดูสินค้า</a>
+                </div>
+            </div>
+
+            <!-- GPU -->
+            <div class="product-card">
+                <img src="gpu.jpg" alt="GPU">
+                <div class="product-info">
+                    <h3>GPU</h3>
+                    <p>การ์ดจอสำหรับเล่นเกมและทำงาน</p>
+                    <a href="#" class="btn">ดูสินค้า</a>
+                </div>
+            </div>
+
+            <!-- RAM -->
+            <div class="product-card">
+                <img src="ram.jpg" alt="RAM">
+                <div class="product-info">
+                    <h3>RAM</h3>
+                    <p>หน่วยความจำประสิทธิภาพสูง</p>
+                    <a href="#" class="btn">ดูสินค้า</a>
+                </div>
+            </div>
+
+            <!-- Motherboard -->
+            <div class="product-card">
+                <img src="motherboard.jpg" alt="Motherboard">
+                <div class="product-info">
+                    <h3>เมนบอร์ด</h3>
+                    <p>รองรับทุกแพลตฟอร์ม</p>
+                    <a href="#" class="btn">ดูสินค้า</a>
+                </div>
+            </div>
+
+            <!-- Power Supply -->
+            <div class="product-card">
+                <img src="psu.jpg" alt="PSU">
+                <div class="product-info">
+                    <h3>Power Supply (PSU)</h3>
+                    <p>แหล่งจ่ายไฟคุณภาพสูง</p>
+                    <a href="#" class="btn">ดูสินค้า</a>
+                </div>
+            </div>
+
+            <!-- Storage -->
+            <div class="product-card">
+                <img src="ssd.jpg" alt="Storage">
+                <div class="product-info">
+                    <h3>อุปกรณ์จัดเก็บข้อมูล</h3>
+                    <p>SSD & HDD ทุกความจุ</p>
+                    <a href="#" class="btn">ดูสินค้า</a>
+                </div>
+            </div>
+
+            <!-- Cooling -->
+            <div class="product-card">
+                <img src="cooling.jpg" alt="Cooling">
+                <div class="product-info">
+                    <h3>ระบบระบายความร้อน</h3>
+                    <p>ชุดน้ำและพัดลมระบายความร้อน</p>
+                    <a href="#" class="btn">ดูสินค้า</a>
+                </div>
+            </div>
+
+            <!-- Case -->
+            <div class="product-card">
+                <img src="case.jpg" alt="Case">
+                <div class="product-info">
+                    <h3>เคสคอมพิวเตอร์</h3>
+                    <p>ดีไซน์สวยงามและระบายอากาศดี</p>
+                    <a href="#" class="btn">ดูสินค้า</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+    </footer>
+
+</body>
+
+</html>

@@ -41,6 +41,61 @@ app.get("/", async (req, res) => {
     }
 });
 
+
+app.get("/search", async (req, res) => {
+    const query = req.query.query;  // รับค่าจาก input ชื่อ query
+    try {
+        const productList = await axios.get(base_url + '/products');  // ดึงสินค้าทั้งหมด
+        const categories = await axios.get(base_url + '/category');  // ดึงหมวดหมู่
+        const brand = await axios.get(base_url + '/brands');
+
+        // ค้นหาสินค้าตามคำค้น
+        const filteredProducts = productList.data.filter(product =>
+            product.name.toLowerCase().includes(query.toLowerCase())  // ค้นหาตามชื่อสินค้า
+        );
+
+        res.render("products", {
+            products: filteredProducts,
+            category: categories.data,
+            brands: brand.data,
+            query: query  // ส่ง query ที่ค้นหามาในหน้าผลลัพธ์
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error during search.');
+    }
+});
+
+
+app.get("/login", async (req, res) => {
+    try{
+        const product = await axios.get(base_url + '/products');
+        const category = await axios.get(base_url + '/category');
+        const brand = await axios.get(base_url + '/brands');
+
+        res.render("login", { products: product.data, category: category.data, brands: brand.data });
+    }catch(err){
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
+
+
+app.get("/category", async (req, res) => {
+    try{
+        const product = await axios.get(base_url + '/products');
+        const category = await axios.get(base_url + '/category');
+        const brand = await axios.get(base_url + '/brands');
+
+        res.render("category", { products: product.data, category: category.data, brands: brand.data });
+    }catch(err){
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
+
+
+
 app.get("/book/:id", async (req, res) => {
     try{
         const response = await axios.get(base_url + '/books/' + req.params.id);

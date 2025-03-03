@@ -33,40 +33,41 @@
         </nav>
     </header>
 
-    <div class="banner"></div>
-
     <div class="container">
-        <h2 class="section-title">สินค้าทั้งหมด</h2>
-        <div class="product-grid">
+        <% if (typeof query !=='undefined' ) { %>
+            <h2 class="section-title">สินค้าสำหรับคำค้นหา "<%= query %>"</h2>
+        
+            <div class="product-grid">
+                <% for(var i=0; i< products.length; i++) { %>
 
-            <% for(var i=0; i< products.length; i++) { %>
-
-                <div class="product-card">
-                    <img src="" alt="">
-                    <div class="product-info">
-                        <% for(var k=0; k< brands.length; k++) { %>
-                            <% if (products[i].brand_ID==brands[k].brand_ID) { %>
-                                <h3>
-                                    <%= brands[k].name %>
-                                        <%= products[i].name %>
-                                </h3>
+                    <div class="product-card">
+                        <img src="" alt="">
+                        <div class="product-info">
+                            <% for(var k=0; k< brands.length; k++) { %>
+                                <% if (products[i].brand_ID==brands[k].brand_ID) { %>
+                                    <h3>
+                                        <%= brands[k].name %>
+                                            <%= products[i].name %>
+                                    </h3>
                                 <% } %>
-                                    <% } %>
+                            <% } %>
 
-                                        <p>ราคา: <%= products[i].unitPrice %> บาท</p>
-                                        <a href="#" class="btn"
-                                            onclick="alert('เพิ่ม <%= products[i].name %> ลงตะกร้า')">เพิ่มลงตะกร้า</a>
-                                        <a href="#" class="btn"
-                                            onclick="alert('รายละเอียดสินค้า: <%= products[i].name %> - ราคา: <%= products[i].price %> บาท')">ดูรายละเอียด</a>
+                            <p>ราคา: <%= products[i].unitPrice %> บาท</p>
+                            <a href="#" class="btn"
+                                onclick="alert('เพิ่ม <%= products[i].name %> ลงตะกร้า')">เพิ่มลงตะกร้า</a>
+                            <a href="#" class="btn"
+                                onclick="alert('รายละเอียดสินค้า: <%= products[i].name %> - ราคา: <%= products[i].price %> บาท')">ดูรายละเอียด</a>
+                        </div>
                     </div>
-                </div>
                 <% } %>
-        </div>
+            </div>
+        <% } %>
     </div>
 
     <footer>
         &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
     </footer>
+
 </body>
 
 </html>
