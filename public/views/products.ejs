@@ -8,10 +8,20 @@
 <body>
     <h1>Product List</h1>
     <table>
-        <% for(var i=0; i< products.length; i++) { %>
-        <tr>
-            <td><%= products[i].name %>%></th>
-        </tr>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i=0; i< products.length; i++) { %>
+            <tr>
+                <td><%= products[i].name %></td>
+                <td><%= category[(products[i].category_ID)-1].name %></td>
+                <td><%= category[(products[i].category_ID)-1].name %></td>
+            </tr>
+        </tbody>
         <% } %>
     </table>
 </body>
