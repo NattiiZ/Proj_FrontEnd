@@ -30,9 +30,11 @@ app.use("/admin", adminRoutes);
 
 app.get("/", async (req, res) => {
     try{
-        const productList = await axios.get(base_url + '/products');
-        const categories = await axios.get(base_url + '/category');
-        res.render("customer/products", { products: productList.data, category: categories.data });
+        const product = await axios.get(base_url + '/products');
+        const category = await axios.get(base_url + '/category');
+        const brand = await axios.get(base_url + '/brands');
+
+        res.render("customer/home", { products: product.data, category: category.data, brands: brand.data });
     }catch(err){
         console.error(err);
         res.status(500).send('Error');
