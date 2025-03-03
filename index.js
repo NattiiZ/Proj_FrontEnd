@@ -17,13 +17,13 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false}));
 
-// app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
-const customerRoutes = express.Router();
-const adminRoutes = express.Router();
+// const customerRoutes = express.Router();
+// const adminRoutes = express.Router();
 
-app.use("/customer", customerRoutes);
-app.use("/admin", adminRoutes);
+// app.use("/customer", customerRoutes);
+// app.use("/admin", adminRoutes);
 
 
 
@@ -34,7 +34,7 @@ app.get("/", async (req, res) => {
         const category = await axios.get(base_url + '/category');
         const brand = await axios.get(base_url + '/brands');
 
-        res.render("customer/home", { products: product.data, category: category.data, brands: brand.data });
+        res.render("home", { products: product.data, category: category.data, brands: brand.data });
     }catch(err){
         console.error(err);
         res.status(500).send('Error');

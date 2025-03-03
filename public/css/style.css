@@ -1,10 +1,127 @@
-/* Global Styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Prompt', sans-serif;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    background: #ffffff;
+    color: #333;
+    line-height: 1.6;
+}
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 35px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #333;
+}
+.search-bar {
+    display: flex;
+    flex: 1;
+    margin: 0 2rem;
+    justify-content: center;
+}
+.search-bar input {
+    font-size: 100%;
+    margin-right: 10px;
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
 }
 
-.nav {
-    background: #333;
+.search-bar button {
+    padding: 10px 20px;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+nav {
+    display: flex;
+    gap: 40px;
+}
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+nav a:hover {
+    color: #1a73e8;
+}
+.banner {
+    width: 100%;
+    height: 300px;
+    background: url('banner.jpg') center/cover no-repeat;
+    background: #1558b0;
+    margin: 1rem 0;
+    /* border-radius: 12px; */
+}
+.container {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.section-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+.product-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+.product-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+.product-card img {
+    width: 100%;
+    display: block;
+}
+.product-info {
+    padding: 1.5rem;
+}
+.product-info h3 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+.product-info p {
+    margin: 0 0 1rem 0;
+    color: #666;
+}
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    background: #1a73e8;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s;
+    margin-right: 10px;
+}
+.btn:hover {
+    background: #1558b0;
+}
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #666;
+    border-top: 1px solid #e0e0e0;
 }
