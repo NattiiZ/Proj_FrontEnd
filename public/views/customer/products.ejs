@@ -18,8 +18,11 @@
             <% for(var i=0; i< products.length; i++) { %>
             <tr>
                 <td><%= products[i].name %></td>
-                <td><%= category[(products[i].category_ID)-1].name %></td>
-                <td><%= category[(products[i].category_ID)-1].name %></td>
+                 <% for(var k=0; k< category.length; k++) { %>
+                    <% if(category[k].category_ID == products[i].category_ID) { %>
+                        <td><%= category[k].name %></td>
+                    <% } %>
+                <% } %>
             </tr>
         </tbody>
         <% } %>
