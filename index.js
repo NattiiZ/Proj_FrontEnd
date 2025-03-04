@@ -135,6 +135,19 @@ app.get("/login", async (req, res) =>
     }
 });
 
+app.get("/register", async (req, res) => 
+{
+    try {
+        const category = await axios.get(base_url + '/category');
+
+        res.render("register", { category: category.data});
+    } 
+    catch(err){
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
+
 app.get("/dashboard", async (req, res) => 
 {
     try {
