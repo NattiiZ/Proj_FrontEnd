@@ -36,21 +36,26 @@ app.get("/", async (req, res) =>
     }
 });
 
-
 app.get("/search", async (req, res) => 
 {
     const query = req.query.query;
-    
-    try {
-        const productList = await axios.get(base_url + '/products');
-        const brand = await axios.get(base_url + '/brands');
-        const categories = await axios.get(base_url + '/category');
 
-        
+    try {
+        const [productList, brand, categories] = await Promise.all([
+            axios.get(base_url + '/products'),
+            axios.get(base_url + '/brands'),
+            axios.get(base_url + '/category')
+        ]);
+
+        const brandMap = brand.data.reduce((map, b) => {
+            map[b.brand_ID] = b.name;
+            return map;
+        }, {});
+
         const filteredProducts = productList.data.filter(product => {
-            const productBrand = brand.data.find(b => b.brand_ID === product.brand_ID);
-            const brandName = productBrand ? productBrand.name : '';
-            return (brandName + product.name).toLowerCase().includes(query.toLowerCase());
+            const brandName = brandMap[product.brand_ID] || '';
+            const searchText = `${brandName} ${product.name}`.toLowerCase();
+            return searchText.includes(query.toLowerCase());
         });
 
         res.render("customer/productSearch", {
@@ -59,8 +64,7 @@ app.get("/search", async (req, res) =>
             brands: brand.data,
             query: query
         });
-    } 
-    catch (err) {
+    } catch (err) {
         console.error(err);
         res.status(500).send('Error during search.');
     }
