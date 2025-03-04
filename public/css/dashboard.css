@@ -1,103 +1,71 @@
-body {
-    font-family: "Prompt", sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f5f5f5;
-    color: #333;
-}
-
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 60px;
-    border-bottom: 1px solid #a5a5a5;
-}
-
-.logo {
-    font-size: 2rem;
-    font-weight: 600;
-    text-decoration: none;
-    color: #333;
-}
-
-nav {
-    display: flex;
-    gap: 30px;
-    font-size: larger;
-}
-
-nav a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    padding: 10px 12px;
-}
-
-nav a:hover {
-    color: #1a73e8;
-}
-
-.container {
+/* เพิ่มเติมการตกแต่งในแผงควบคุม */
+.admin-panel {
     padding: 2rem 1rem;
-    max-width: 90%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.section-title {
-    font-size: 2rem;
-    font-weight: 600;
-    margin-bottom: 2rem;
-}
-
-.admin-dashboard {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-}
-
-.admin-card {
-    border: 1px solid #e0e0e0;
+    background: #fff;
     border-radius: 12px;
-    background: white;
-    padding: 1.5rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.admin-card h3 {
+.admin-panel p {
     font-size: 1.4rem;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 1rem;
 }
 
-.admin-card p {
+.card-menu {
+    display: flex;
+    flex-wrap: wrap; /* ทำให้มันสามารถพับแถว */
+    justify-content: space-between; /* จัดเรียงให้แถวแรกเต็ม */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.card-menu .card {
+    flex: 1 1 45%; /* กำหนดขนาดของแต่ละ card */
+    max-width: 45%; /* ไม่ให้ card เกินขนาดนี้ */
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-menu .card:nth-child(n+4) {
+    flex: 1 1 45%; /* ใช้ flex แบบเดียวกันสำหรับแถวล่าง */
+    max-width: 45%;
+    margin: 0 auto; /* ทำให้แถวล่างอยู่กลาง */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.card p {
     color: #666;
+    font-size: 1rem;
     margin-bottom: 1.5rem;
 }
 
-.btn {
+.btn-card {
     display: inline-block;
-    padding: 0.6rem 1rem;
+    padding: 0.6rem 1.2rem;
     background: #1a73e8;
     color: white;
     text-decoration: none;
-    border: none;
     border-radius: 6px;
     transition: background 0.3s;
 }
 
-.btn:hover {
+.btn-card:hover {
     background: #1558b0;
-}
-
-footer {
-    text-align: center;
-    padding: 2rem;
-    color: #666;
-    border-top: 1px solid #a5a5a5;
-    flex-shrink: 1;
 }

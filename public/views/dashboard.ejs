@@ -6,62 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/dashboard.css">
-    <title>ระบบจัดการ Admin</title>
+    <title>แผงควบคุมของ Admin</title>
 </head>
 
 <body>
     <header>
-        <a href="/" class="logo">DIY Computer Admin</a>
+        <a href="/" class="logo">DIY Computer</a>
+
+        <form class="search-bar" action="/search" method="GET">
+            <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
+            <button type="submit">ค้นหา</button>
+        </form>
+
         <nav>
             <div><a href="/">หน้าแรก</a></div>
-            <div><a href="/admin/products">จัดการสินค้า</a></div>
-            <div><a href="/admin/categories">จัดการหมวดหมู่</a></div>
-            <div><a href="/admin/suppliers">จัดการซัพพลายเออร์</a></div>
-            <div><a href="/admin/orders">จัดการคำสั่งซื้อ</a></div>
-            <div><a href="/admin/settings">การตั้งค่า</a></div>
+            <div><a href="/logout">ออกจากระบบ</a></div>
         </nav>
     </header>
 
     <div class="container">
-        <h2 class="section-title">ระบบจัดการ Admin</h2>
+        <h2 class="section-title">แผงควบคุมสำหรับ Admin</h2>
 
-        <div class="admin-dashboard">
-            <div class="admin-card">
-                <h3>จัดการสินค้า</h3>
-                <p>เพิ่ม แก้ไข หรือลบสินค้าทั้งหมด</p>
-                <a href="/admin/products" class="btn">จัดการสินค้า</a>
-            </div>
+        <div class="admin-panel">
+            <p><strong>คุณเป็น Admin</strong></p>
 
-            <div class="admin-card">
-                <h3>จัดการหมวดหมู่</h3>
-                <p>เพิ่ม แก้ไข หรือลบหมวดหมู่สินค้า</p>
-                <a href="/admin/categories" class="btn">จัดการหมวดหมู่</a>
-            </div>
-
-            <div class="admin-card">
-                <h3>จัดการซัพพลายเออร์</h3>
-                <p>เพิ่ม แก้ไข หรือลบข้อมูลซัพพลายเออร์</p>
-                <a href="/admin/suppliers" class="btn">จัดการซัพพลายเออร์</a>
-            </div>
-
-            <div class="admin-card">
-                <h3>จัดการคำสั่งซื้อ</h3>
-                <p>ดูและอัปเดตสถานะคำสั่งซื้อ</p>
-                <a href="/admin/orders" class="btn">จัดการคำสั่งซื้อ</a>
-            </div>
-
-            <div class="admin-card">
-                <h3>การตั้งค่า</h3>
-                <p>ตั้งค่าระบบและผู้ใช้งาน</p>
-                <a href="/admin/settings" class="btn">การตั้งค่า</a>
+            <div class="card-menu">
+                <div class="card">
+                    <h3>จัดการลูกค้า</h3>
+                    <p>ดูและจัดการข้อมูลลูกค้าทั้งหมด</p>
+                    <a href="/manage/customers" class="btn-card">จัดการ</a>
+                </div>
+                <div class="card">
+                    <h3>จัดการแบรนด์</h3>
+                    <p>เพิ่ม, แก้ไข หรือ ลบแบรนด์</p>
+                    <a href="/manage/brands" class="btn-card">จัดการ</a>
+                </div>
+                <div class="card">
+                    <h3>จัดการหมวดหมู่</h3>
+                    <p>สร้างและจัดการหมวดหมู่สินค้าต่างๆ</p>
+                    <a href="/manage/categories" class="btn-card">จัดการ</a>
+                </div>
+                <div class="card">
+                    <h3>จัดการสินค้า</h3>
+                    <p>เพิ่ม, แก้ไข, หรือ ลบสินค้า</p>
+                    <a href="/manage/products" class="btn-card">จัดการ</a>
+                </div>
+                <div class="card">
+                    <h3>จัดการคำสั่งซื้อ</h3>
+                    <p>ตรวจสอบและจัดการคำสั่งซื้อทั้งหมด</p>
+                    <a href="/manage/orders" class="btn-card">จัดการ</a>
+                </div>
             </div>
         </div>
     </div>
 
-    <footer>
-        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
-    </footer>
-
 </body>
+
+<footer>
+    &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+</footer>
 
 </html>

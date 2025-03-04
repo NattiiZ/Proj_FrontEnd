@@ -113,7 +113,7 @@ app.get("/detail", async (req, res) =>
         const category = await axios.get(base_url + '/category');
         const { brand, Id } = req.query;
 
-        res.render("customer/productDetail", { products: product.data, category: category.data, brand, Id});
+        res.render("customer/productDetail", { products: product.data, category: category.data, brand, Id });
     }
     catch(err) {
         console.error(err);
@@ -136,16 +136,20 @@ app.get("/login", async (req, res) =>
 });
 
 app.get("/dashboard", async (req, res) => 
-    {
-        try {
-    
-            res.render("dashboard");
-        } 
-        catch(err){
-            console.error(err);
-            res.status(500).send('Error');
-        }
-    });
+{
+    try {
+        const users = await axios.get(base_url + '/users');
+        const orders = await axios.get(base_url + '/orders');
+        const product = await axios.get(base_url + '/products');
+        const category = await axios.get(base_url + '/category');
+
+        res.render("dashboard", { users: users.data, orders: orders.data, products: product.data, category: category.data });
+    } 
+    catch(err){
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
     
 
 

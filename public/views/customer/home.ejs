@@ -47,7 +47,7 @@
                     <img src="<%= products[i].img_url %>" alt="<%= products[i].name %>">
                     <div class="product-info">
                         <% for(var k=0; k< brands.length; k++) { %>
-                            <% if (products[i].brand_ID==brands[k].brand_ID) { %>
+                            <% if (products[i].brand_ID == brands[k].brand_ID) { %>
                                 <h3>
                                     <% brand = brands[k].name %>
                                     <%= brands[k].name %>
