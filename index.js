@@ -46,9 +46,12 @@ app.get("/search", async (req, res) =>
         const brand = await axios.get(base_url + '/brands');
         const categories = await axios.get(base_url + '/category');
 
-        const filteredProducts = productList.data.filter(product =>
-            product.name.toLowerCase().includes(query.toLowerCase())
-        );
+        
+        const filteredProducts = productList.data.filter(product => {
+            const productBrand = brand.data.find(b => b.brand_ID === product.brand_ID);
+            const brandName = productBrand ? productBrand.name : '';
+            return (brandName + product.name).toLowerCase().includes(query.toLowerCase());
+        });
 
         res.render("customer/productSearch", {
             products: filteredProducts,
