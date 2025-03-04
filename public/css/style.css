@@ -13,7 +13,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 35px;
+    padding: 20px 60px;
     border-bottom: 1px solid #a5a5a5;
 }
 
@@ -33,7 +33,7 @@ header {
 .search-bar input {
     font-size: 100%;
     margin-right: 10px;
-    width: 70%;
+    width: 60%;
     padding: 10px;
     border: 1px solid #b6b6b6;
     border-radius: 10px;

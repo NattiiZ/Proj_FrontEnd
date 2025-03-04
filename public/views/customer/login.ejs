@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <title>เข้าสู่ระบบ - DIY Computer</title>
+</head>
+
+<body>
+    <header>
+        <a href="/" class="logo">DIY Computer</a>
+
+        <form class="search-bar" action="/search" method="GET">
+            <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
+            <button type="submit">ค้นหา</button>
+        </form>
+
+        <nav>
+            <a href="/">หน้าแรก</a>
+            <a href="/category">หมวดหมู่</a>
+            <a href="/cart">ตะกร้า</a>
+            <a href="/account">ข้อมูลส่วนตัว</a>
+        </nav>
+    </header>
+
+    <div class="banner"></div>
+
+    <div class="container">
+        <h2 class="section-title">เข้าสู่ระบบ</h2>
+
+        <div class="login-form">
+            <form action="/login" method="POST">
+                <div class="input-group">
+                    <label for="username">ชื่อผู้ใช้</label>
+                    <input type="text" id="username" name="username" required placeholder="กรุณากรอกชื่อผู้ใช้">
+                </div>
+
+                <div class="input-group">
+                    <label for="password">รหัสผ่าน</label>
+                    <input type="password" id="password" name="password" required placeholder="กรุณากรอกรหัสผ่าน">
+                </div>
+
+                <!-- แสดงข้อความข้อผิดพลาดหากล็อคอินไม่สำเร็จ -->
+                <% if (error) { %>
+                    <div class="error-message">
+                        <p><%= error %></p>
+                    </div>
+                <% } %>
+
+                <button type="submit" class="btn">เข้าสู่ระบบ</button>
+
+                <p class="signup-link">ยังไม่มีบัญชี? <a href="/signup">สมัครสมาชิก</a></p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+    </footer>
+
+</body>
+
+</html>
