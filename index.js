@@ -5,11 +5,6 @@ const app = express();
 const axios = require('axios');
 const path = require("path");
 const bodyParser = require('body-parser');
-const { log } = require("console");
-
-
-const api_port = process.env.API_PORT || 3000;
-const base_url = `http://localhost:${api_port}`;
 
 
 app.set("views" , path.join(__dirname, "/public/views"));
@@ -20,23 +15,30 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(__dirname + '/public'));
 
 
+const api_port = process.env.API_PORT || 3000;
+const base_url = `http://localhost:${api_port}`;
 
 
-app.get("/", async (req, res) => {
-    try{
+
+
+app.get("/", async (req, res) => 
+{
+    try {
         const product = await axios.get(base_url + '/products');
         const brand = await axios.get(base_url + '/brands');
         const category = await axios.get(base_url + '/category');
 
         res.render("customer/home", { products: product.data, category: category.data, brands: brand.data });
-    }catch(err){
+    }
+    catch(err) {
         console.error(err);
         res.status(500).send('Error');
     }
 });
 
 
-app.get("/search", async (req, res) => {
+app.get("/search", async (req, res) => 
+{
     const query = req.query.query;
     
     try {
@@ -54,67 +56,103 @@ app.get("/search", async (req, res) => {
             brands: brand.data,
             query: query
         });
-    } catch (err) {
+    } 
+    catch (err) {
         console.error(err);
         res.status(500).send('Error during search.');
     }
 });
 
-app.get("/category", async (req, res) => {
-    try{
+app.get("/category", async (req, res) => 
+{
+    try {
         const category = await axios.get(base_url + '/category');
 
         res.render("customer/category", { category: category.data });
-    }catch(err){
+    }
+    catch(err) {
         console.error(err);
         res.status(500).send('Error');
     }
 });
 
-app.get("/cart", async (req, res) => {
-    try{
+app.get("/cart", async (req, res) => 
+{
+    try {
         const product = await axios.get(base_url + '/products');
         const category = await axios.get(base_url + '/category');
         const brand = await axios.get(base_url + '/brands');
 
         res.render("customer/cart", { products: product.data, category: category.data, brands: brand.data });
-    }catch(err){
+    }
+    catch(err) {
         console.error(err);
         res.status(500).send('Error');
     }
 });
 
-app.get("/account", async (req, res) => {
+app.get("/account", async (req, res) => 
+{
     const category = await axios.get(base_url + '/category');
     const account = await axios.get(base_url + '/users');
     const customer = await axios.get(base_url + '/customers');
 
-    try{
+    try {
         res.render("customer/account", { category: category.data });
-    }catch(err){
+    }
+    catch(err) {
         console.error(err);
         res.status(500).send('Error');
     }
 });
 
-app.get("/detail", async (req, res) => {
-    try{
+app.get("/detail", async (req, res) => 
+{
+    try {
         const product = await axios.get(base_url + '/products');
         const category = await axios.get(base_url + '/category');
-        const brand = req.query.brand;
-        const Id = req.query.Id;
+        const { brand, Id } = req.query;
 
         res.render("customer/productDetail", { products: product.data, category: category.data, brand, Id});
-    }catch(err){
+    }
+    catch(err) {
         console.error(err);
         res.status(500).send('Error');
     }
 });
 
 
+app.get("/login", async (req, res) => 
+{
+    try {
+        const category = await axios.get(base_url + '/category');
 
-const port = process.env.PORT || 5000;
+        res.render("login", { category: category.data});
+    } 
+    catch(err){
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
 
-app.listen(port, () => {
-    console.log(`Server listening at http://localhost:${port}`);
+app.get("/dashboard", async (req, res) => 
+    {
+        try {
+    
+            res.render("dashboard");
+        } 
+        catch(err){
+            console.error(err);
+            res.status(500).send('Error');
+        }
+    });
+    
+
+
+
+
+const host_port = process.env.HOST_PORT || 5000;
+
+app.listen(host_port, () => {
+    console.log(`Server listening at http://localhost:${host_port}`);
     });

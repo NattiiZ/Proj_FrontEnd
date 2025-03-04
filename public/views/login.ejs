@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
     <title>เข้าสู่ระบบ - DIY Computer</title>
 </head>
 
@@ -18,36 +19,34 @@
         </form>
 
         <nav>
-            <a href="/">หน้าแรก</a>
-            <a href="/category">หมวดหมู่</a>
-            <a href="/cart">ตะกร้า</a>
-            <a href="/account">ข้อมูลส่วนตัว</a>
+            <div><a href="/">หน้าแรก</a></div>
+            <div class="dropdown">
+                <a href="/category" class="dropbtn">หมวดหมู่</a>
+                <div class="dropdown-content">
+                    <% for(var i=0; i< category.length; i++) { %>
+                        <a href=""><%= category[i].name %></a>
+                    <% } %>
+                </div>
+            </div>
+            <div><a href="/cart">ตะกร้า</a></div>
+            <div><a href="/account">ข้อมูลส่วนตัว</a></div>
         </nav>
     </header>
-
-    <div class="banner"></div>
 
     <div class="container">
         <h2 class="section-title">เข้าสู่ระบบ</h2>
 
         <div class="login-form">
-            <form action="/login" method="POST">
+            <form action="/go" method="POST">
                 <div class="input-group">
                     <label for="username">ชื่อผู้ใช้</label>
-                    <input type="text" id="username" name="username" required placeholder="กรุณากรอกชื่อผู้ใช้">
+                    <input type="text" name="username" required placeholder="กรุณากรอกชื่อผู้ใช้">
                 </div>
 
                 <div class="input-group">
                     <label for="password">รหัสผ่าน</label>
-                    <input type="password" id="password" name="password" required placeholder="กรุณากรอกรหัสผ่าน">
+                    <input type="password" name="password" required placeholder="กรุณากรอกรหัสผ่าน">
                 </div>
-
-                <!-- แสดงข้อความข้อผิดพลาดหากล็อคอินไม่สำเร็จ -->
-                <% if (error) { %>
-                    <div class="error-message">
-                        <p><%= error %></p>
-                    </div>
-                <% } %>
 
                 <button type="submit" class="btn">เข้าสู่ระบบ</button>
 
