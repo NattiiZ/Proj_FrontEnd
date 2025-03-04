@@ -50,14 +50,26 @@
                                     <%= brands[k].name %>
                                         <%= products[i].name %>
                                 </h3>
-                                <% } %>
-                                    <% } %>
+                            <% } %>
+                        <% } %>
 
-                                        <p>ราคา: <%= products[i].unitPrice %> บาท</p>
-                                        <a href="#" class="btn"
-                                            onclick="alert('เพิ่ม <%= products[i].name %> ลงตะกร้า')">เพิ่มลงตะกร้า</a>
-                                        <a href="#" class="btn"
-                                            onclick="alert('รายละเอียดสินค้า: <%= products[i].name %> - ราคา: <%= products[i].price %> บาท')">ดูรายละเอียด</a>
+                        <p>ราคา: <%= products[i].unitPrice %> บาท</p>
+                        <div class="btn-product">
+
+                            <form action="" method="GET">
+                                <button class="btn" onclick="alert('เพิ่ม <%= products[i].name %> ลงตะกร้าแล้ว')" type="submit">เพิ่มลงตะกร้า</button>
+                            </form>
+                            <!-- <a href="#" class="btn"
+                                onclick="alert('เพิ่ม <%= products[i].name %> ลงตะกร้า')">เพิ่มลงตะกร้า</a> -->
+
+                            <form action="/detail" method="GET">
+                                <input type="hidden" name="id" value="<%= products[i].product_ID %>">
+                                <button class="btn" type="submit">รายละเอียด</button>
+                            </form>
+                            <!-- <a href="/" class="btn"
+                            onclick="alert('รายละเอียดสินค้า: <%= products[i].name %> - ราคา: <%= products[i].price %> บาท')">ดูรายละเอียด</a> -->
+
+                        </div>
                     </div>
                 </div>
                 <% } %>

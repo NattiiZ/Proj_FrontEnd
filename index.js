@@ -34,9 +34,9 @@ app.get("/", async (req, res) => {
     }
 });
 
-
 app.get("/search", async (req, res) => {
     const query = req.query.query;
+    
     try {
         const productList = await axios.get(base_url + '/products');
         const categories = await axios.get(base_url + '/category');
@@ -58,34 +58,16 @@ app.get("/search", async (req, res) => {
     }
 });
 
-
-app.get("/login", async (req, res) => {
-    try{
-        const product = await axios.get(base_url + '/products');
-        const category = await axios.get(base_url + '/category');
-        const brand = await axios.get(base_url + '/brands');
-
-        res.render("customer/login", { products: product.data, category: category.data, brands: brand.data });
-    }catch(err){
-        console.error(err);
-        res.status(500).send('Error');
-    }
-});
-
-
 app.get("/category", async (req, res) => {
     try{
-        const product = await axios.get(base_url + '/products');
         const category = await axios.get(base_url + '/category');
-        const brand = await axios.get(base_url + '/brands');
 
-        res.render("customer/category", { products: product.data, category: category.data, brands: brand.data });
+        res.render("customer/category", { category: category.data });
     }catch(err){
         console.error(err);
         res.status(500).send('Error');
     }
 });
-
 
 app.get("/cart", async (req, res) => {
     try{
@@ -100,26 +82,21 @@ app.get("/cart", async (req, res) => {
     }
 });
 
-
 app.get("/account", async (req, res) => {
     try{
-        const product = await axios.get(base_url + '/products');
-        const category = await axios.get(base_url + '/category');
-        const brand = await axios.get(base_url + '/brands');
-
-        res.render("customer/account", { products: product.data, category: category.data, brands: brand.data });
+        res.render("customer/account");
     }catch(err){
         console.error(err);
         res.status(500).send('Error');
     }
 });
 
-
 app.get("/detail", async (req, res) => {
     try{
         const product = await axios.get(base_url + '/products');
         const category = await axios.get(base_url + '/category');
         const brand = await axios.get(base_url + '/brands');
+        const productId = parseInt((req.query.id).substring(4), 10);
 
         res.render("customer/productDetail", { products: product.data, category: category.data, brands: brand.data });
     }catch(err){
