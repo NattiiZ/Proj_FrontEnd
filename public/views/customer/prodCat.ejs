@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <title>ร้านขายอุปกรณ์คอม DIY</title>
+    <title>สินค้าในหมวดหมู่ - ร้านขายอุปกรณ์คอม DIY</title>
 </head>
 
 <body>
     <header>
-        <a href="/" class="logo"><img src="../../img/_logo_store.png" alt=""></a>
+        <a href="/" class="logo"><img src="../../img/_logo_store.png" alt="โลโก้ร้าน"></a>
 
         <form class="search-bar" action="/search" method="GET">
             <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
@@ -32,12 +32,12 @@
         </nav>
     </header>
 
-
-    <div class="banner"></div>
-
-
     <div class="container">
-        <h2 class="section-title">สินค้าทั้งหมด</h2>
+        <% if (products.length == 0) { %>
+            <h2 class="section-title">ไม่พบสินค้าในหมวดหมู่ <%=name%></h2>        
+        <% } else { %>
+            <h2 class="section-title">สินค้าในหมวดหมู่ <%=name%></h2>        
+        <% } %>
 
         <div class="product-grid">
             <% for(var i=0; i< products.length; i++) { %>
@@ -64,6 +64,7 @@
                             </form>
 
                             <form action="/detail" method="GET">
+                                
                                 <input type="hidden" name="brand" value="<%= brand %>">
                                 <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
 
@@ -76,10 +77,9 @@
         </div>
     </div>
 
+    <footer>
+        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+    </footer>
 </body>
-
-<footer>
-    &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
-</footer>
 
 </html>

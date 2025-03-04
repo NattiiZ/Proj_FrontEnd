@@ -20,10 +20,10 @@
         <nav>
             <div><a href="/">หน้าแรก</a></div>
             <div class="dropdown">
-                <a href="/category" class="dropbtn">หมวดหมู่</a>
+                <a href="/all_category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href=""><%= category[i].name %></a>
+                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
                     <% } %>
                 </div>
             </div>
@@ -40,8 +40,13 @@
                     <img src="<%= category[i].img_url %>" alt="">
                     <div class="product-info">
                         <h3><%= category[i].name %></h3>
+                        
                         <p><%= category[i].description %></p>
-                        <a href="#" class="btn">ดูรายการสินค้า</a>
+                        
+                        <form action="/category/<%= category[i].category_ID %>" method="GET">
+                            <!-- <input type="hidden" name="categoryName" value="<%= category[i].name %>"> -->
+                            <button class="btn" type="submit">ดูรายการสินค้า</button>
+                        </form>
                     </div>
                 </div>
             <% } %>

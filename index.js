@@ -28,7 +28,34 @@ app.get("/", async (req, res) =>
         const brand = await axios.get(base_url + '/brands');
         const category = await axios.get(base_url + '/category');
 
-        res.render("customer/home", { products: product.data, category: category.data, brands: brand.data });
+
+        res.render("customer/home", { 
+            products: product.data, 
+            category: category.data, 
+            brands: brand.data 
+        });
+    }
+    catch(err) {
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
+
+app.get("/detail", async (req, res) => 
+{
+    const { brand, Id } = req.query;
+
+    try {
+        const product = await axios.get(base_url + '/products/');
+        const category = await axios.get(base_url + '/category');
+
+
+        res.render("customer/detail", { 
+            products: product.data, 
+            category: category.data, 
+            brand, 
+            Id 
+        });
     }
     catch(err) {
         console.error(err);
@@ -58,7 +85,8 @@ app.get("/search", async (req, res) =>
             return searchText.includes(query.toLowerCase());
         });
 
-        res.render("customer/productSearch", {
+
+        res.render("customer/search", {
             products: filteredProducts,
             category: categories.data,
             brands: brand.data,
@@ -70,18 +98,59 @@ app.get("/search", async (req, res) =>
     }
 });
 
-app.get("/category", async (req, res) => 
+app.get("/all_category", async (req, res) => 
 {
     try {
         const category = await axios.get(base_url + '/category');
 
-        res.render("customer/category", { category: category.data });
+
+        res.render("customer/category", { 
+            category: category.data 
+        });
     }
     catch(err) {
         console.error(err);
         res.status(500).send('Error');
     }
 });
+
+app.get("/category/:id", async (req, res) => 
+{
+    try {
+        const categoryId = parseInt(req.params.id);
+
+        const [categoriesRes, productsRes, brandsRes] = await Promise.all([
+            axios.get(base_url + '/category'),
+            axios.get(base_url + '/products'),
+            axios.get(base_url + '/brands')
+        ]);
+
+        const categories = categoriesRes.data;
+        const products = productsRes.data; 
+
+        const selectedCategory = categories.find(cat => cat.category_ID === categoryId);
+
+        if (!selectedCategory)
+            return res.status(404).send("ไม่พบหมวดหมู่");
+
+        const filteredProducts = products.filter(product => product.category_ID === categoryId);
+
+
+        res.render("customer/prodCat", {
+            category: categories,
+            products: filteredProducts,
+            name: selectedCategory.name,
+            brands: brandsRes.data
+        });
+
+    } 
+    catch (err) {
+        console.error(err);
+        res.status(500).send('เกิดข้อผิดพลาด');
+    }
+});
+
+
 
 app.get("/cart", async (req, res) => 
 {
@@ -90,7 +159,11 @@ app.get("/cart", async (req, res) =>
         const category = await axios.get(base_url + '/category');
         const brand = await axios.get(base_url + '/brands');
 
-        res.render("customer/cart", { products: product.data, category: category.data, brands: brand.data });
+        res.render("customer/cart", { 
+            products: product.data, 
+            category: category.data, 
+            brands: brand.data 
+        });
     }
     catch(err) {
         console.error(err);
@@ -100,33 +173,20 @@ app.get("/cart", async (req, res) =>
 
 app.get("/account", async (req, res) => 
 {
-    const category = await axios.get(base_url + '/category');
-    const account = await axios.get(base_url + '/users');
-    const customer = await axios.get(base_url + '/customers');
-
     try {
-        res.render("customer/account", { category: category.data });
-    }
-    catch(err) {
-        console.error(err);
-        res.status(500).send('Error');
-    }
-});
-
-app.get("/detail", async (req, res) => 
-{
-    try {
-        const product = await axios.get(base_url + '/products');
         const category = await axios.get(base_url + '/category');
-        const { brand, Id } = req.query;
-
-        res.render("customer/productDetail", { products: product.data, category: category.data, brand, Id });
+        const account = await axios.get(base_url + '/users');
+        const customer = await axios.get(base_url + '/customers');
+        res.render("customer/account", { 
+            category: category.data 
+        });
     }
     catch(err) {
         console.error(err);
         res.status(500).send('Error');
     }
 });
+
 
 
 app.get("/login", async (req, res) => 
@@ -134,7 +194,9 @@ app.get("/login", async (req, res) =>
     try {
         const category = await axios.get(base_url + '/category');
 
-        res.render("login", { category: category.data});
+        res.render("login", { 
+            category: category.data
+        });
     } 
     catch(err){
         console.error(err);
@@ -147,7 +209,9 @@ app.get("/register", async (req, res) =>
     try {
         const category = await axios.get(base_url + '/category');
 
-        res.render("register", { category: category.data});
+        res.render("register", { 
+            category: category.data
+        });
     } 
     catch(err){
         console.error(err);
@@ -163,15 +227,18 @@ app.get("/dashboard", async (req, res) =>
         const product = await axios.get(base_url + '/products');
         const category = await axios.get(base_url + '/category');
 
-        res.render("dashboard", { users: users.data, orders: orders.data, products: product.data, category: category.data });
+        res.render("dashboard", { 
+            users: users.data, 
+            orders: orders.data, 
+            products: product.data, 
+            category: category.data 
+        });
     } 
     catch(err){
         console.error(err);
         res.status(500).send('Error');
     }
 });
-    
-
 
 
 
