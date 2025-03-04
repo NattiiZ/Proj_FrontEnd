@@ -1,0 +1,41 @@
+/* ส่วนของข้อมูลบัญชี */
+.account-info {
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+}
+
+.account-info h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.account-info p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0.5rem 0;
+}
+
+/* ส่วนของปุ่มจัดการบัญชี */
+.account-actions {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.account-actions .btn {
+    padding: 0.8rem 1.5rem;
+    background-color: #1a73e8;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.account-actions .btn:hover {
+    background-color: #1558b0;
+}

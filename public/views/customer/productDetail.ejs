@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../css/productDetail.css">
+    <title>รายละเอียดสินค้า - DIY Computer</title>
+</head>
+
+<body>
+    <header>
+        <a href="/" class="logo">DIY Computer</a>
+        <form class="search-bar" action="/search" method="GET">
+            <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
+            <button type="submit">ค้นหา</button>
+        </form>
+
+        <nav>
+            <a href="/">หน้าแรก</a>
+            <div class="dropdown">
+                <a href="/category" class="dropbtn">หมวดหมู่สินค้า</a>
+                <div class="dropdown-content">
+                    <a href="#">การ์ดจอ</a>
+                    <a href="#">เมนบอร์ด</a>
+                    <a href="#">RAM</a>
+                    <a href="#">ซีพียู</a>
+                </div>
+            </div>
+            <a href="/cart">ตะกร้า</a>
+            <a href="/account">บัญชี</a>
+        </nav>
+    </header>
+
+
+    <div class="container">
+        <h2 class="section-title">รายละเอียดสินค้า</h2>
+
+        <div class="product-details">
+            <div class="product-image">
+                <img src="product-image.jpg" alt="Product Image" />
+            </div>
+
+            <div class="product-info">
+                <h3>ชื่อสินค้า: การ์ดจอ NVIDIA RTX 4090</h3>
+                <p><strong>ราคา:</strong> 80,000 บาท</p>
+
+                <h4>สเปคสินค้า:</h4>
+                <ul>
+                    <li><strong>ชิปเซ็ต:</strong> NVIDIA GeForce RTX 4090</li>
+                    <li><strong>หน่วยความจำ:</strong> 24GB GDDR6X</li>
+                    <li><strong>ความเร็ว:</strong> 2.52 GHz</li>
+                    <li><strong>เชื่อมต่อ:</strong> PCIe 4.0</li>
+                    <li><strong>พอร์ตเชื่อมต่อ:</strong> 3x DisplayPort 1.4a, 1x HDMI 2.1</li>
+                    <li><strong>รองรับการใช้งาน:</strong> 8K Gaming, Ray Tracing</li>
+                    <li><strong>ระบบระบายความร้อน:</strong> 3 พัดลม, Vapor Chamber</li>
+                </ul>
+
+                <a href="#" class="btn" onclick="addToCart()">เพิ่มลงตะกร้า</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+    </footer>
+
+    <script>
+        // ฟังก์ชันเพิ่มสินค้าไปยังตะกร้า
+        function addToCart() {
+            alert("การ์ดจอ NVIDIA RTX 4090 ได้ถูกเพิ่มลงตะกร้า");
+        }
+    </script>
+</body>
+
+</html>
