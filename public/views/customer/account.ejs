@@ -25,8 +25,10 @@
                 <a href="/all_category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
-                    <% } %>
+                        <a href="/category/<%=i+1%>">
+                            <%= category[i].name %>
+                        </a>
+                        <% } %>
                 </div>
             </div>
             <div><a href="/cart">ตะกร้า</a></div>
@@ -47,33 +49,24 @@
             <p><strong>เบอร์โทรศัพท์:</strong> <span id="phone">098-765-4321</span></p>
         </div>
 
-        <div class="account-actions">
-            <a href="#" class="btn" onclick="editAccount()">แก้ไขข้อมูล</a>
-            <a href="#" class="btn" onclick="changePassword()">เปลี่ยนรหัสผ่าน</a>
-            <a href="#" class="btn" onclick="logout()">ออกจากระบบ</a>
-        </div>
+        <form action="" method="POST">
+            <button class="btn" type="submit">แก้ไขข้อมูล</button>
+        </form>
+
+        <form action="" method="POST">
+            <button class="btn" type="submit">เปลี่ยนรหัสผ่าน</button>
+        </form>
+
+        <form action="/logout" method="POST">
+            <button class="btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+        </form>
+
     </div>
 
-    <footer>
-        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
-    </footer>
-
-    <script>
-        // ฟังก์ชันแก้ไขข้อมูล
-        function editAccount() {
-            alert("คุณสามารถแก้ไขข้อมูลส่วนตัวได้ที่นี่");
-        }
-
-        // ฟังก์ชันเปลี่ยนรหัสผ่าน
-        function changePassword() {
-            alert("คุณสามารถเปลี่ยนรหัสผ่านได้ที่นี่");
-        }
-
-        // ฟังก์ชันออกจากระบบ
-        function logout() {
-            alert("คุณได้ออกจากระบบแล้ว");
-        }
-    </script>
 </body>
+
+<footer>
+    &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+</footer>
 
 </html>

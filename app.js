@@ -34,6 +34,10 @@ const base_url = `http://localhost:${api_port}`;
 app.get("/", async (req, res) => 
 {
     try {
+        const loginSession = req.session.loginSession;
+        console.log(req.session.loginSession);
+        
+
         const product = await axios.get(base_url + '/product');
         const brand = await axios.get(base_url + '/brand');
         const category = await axios.get(base_url + '/category');
@@ -42,7 +46,8 @@ app.get("/", async (req, res) =>
         res.render("customer/home", { 
             products: product.data, 
             category: category.data, 
-            brands: brand.data 
+            brands: brand.data,
+            loginSession
         });
     }
     catch(err) {
@@ -213,10 +218,26 @@ app.post("/login", async (req, res) =>
 
         const users = await axios.get(base_url + '/user');
 
+        let authenticated = false;
         for (var i=0; i<users.data.length; i++) {
             if (( users.data[i].username === data.username ) && (users.data[i].password === data.password )) {
-                return res.redirect("/account");
+                authenticated = true;
+
+                req.session.loginSession = { role_Id: users.data[i].userType_ID, UID: users.data[i].user_ID };
+                
+                if (users.data[i].userType_ID == 1)
+                    return res.redirect("/dashboard");
+                else
+                    return res.redirect("/");
             }
+        }
+        if (!authenticated) {
+            return res.send(`
+                <script>
+                    alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง"); 
+                    window.location.href = "/signin";
+                </script>
+            `);
         }
     } 
     catch(err){
@@ -224,6 +245,20 @@ app.post("/login", async (req, res) =>
         res.status(500).send('Error');
     }
 });
+
+
+app.post("/logout", async (req, res) => 
+    {
+        try {
+            req.session.destroy(() => {
+                res.redirect('/');
+            });
+        } 
+        catch(err){
+            console.error(err);
+            res.status(500).send('Error');
+        }
+    });
 
 
 app.get("/signup", async (req, res) => 
@@ -341,12 +376,6 @@ app.get("/dashboard", async (req, res) =>
 
 
 
-// app.listen(host_port, () => {
-//     console.log(`\x1b[37mHost has started!\x1b[0m`);
-//     console.log(`\x1b[45mWebpage running on http://localhost:${host_port}\x1b[0m`);
-// });
-
-
 const { execSync } = require('child_process');
 
 
@@ -359,11 +388,10 @@ const clearPort = (port) =>
             const parts = line.trim().split(/\s+/);
             const pid = parts[parts.length - 1];
             execSync(`taskkill /PID ${pid} /F`);
-            // console.log(`✅ Cleared port ${port} (PID: ${pid})`);
         });
     } 
     catch (error) {
-        // console.log(`⚠️ No process found on port ${port}`);
+        console.log(`No process found on port ${port}`);
     }
 };
 
@@ -377,12 +405,11 @@ const server = app.listen(host_port, () => {
 
 const exitHandler = () => {
     server.close(() => {
-        // console.log('\x1b[31mServer closed. Cleaning up...\x1b[0m');
-        clearPort(host_port); // เคลียร์อีกครั้งเพื่อความมั่นใจ
+        clearPort(host_port);
         process.exit();
     });
 };
 
-process.on('SIGINT', exitHandler);   // จับ ctrl + c
-process.on('SIGTERM', exitHandler);  // จับการสั่งหยุด
-process.on('SIGUSR2', exitHandler);  // จับ nodemon restart (สำคัญ)
+process.on('SIGINT', exitHandler);
+process.on('SIGTERM', exitHandler);
+process.on('SIGUSR2', exitHandler);
