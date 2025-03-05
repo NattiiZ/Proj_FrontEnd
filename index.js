@@ -24,8 +24,8 @@ const base_url = `http://localhost:${api_port}`;
 app.get("/", async (req, res) => 
 {
     try {
-        const product = await axios.get(base_url + '/products');
-        const brand = await axios.get(base_url + '/brands');
+        const product = await axios.get(base_url + '/product');
+        const brand = await axios.get(base_url + '/brand');
         const category = await axios.get(base_url + '/category');
 
 
@@ -46,7 +46,7 @@ app.get("/detail", async (req, res) =>
     const { brand, Id } = req.query;
 
     try {
-        const product = await axios.get(base_url + '/products/');
+        const product = await axios.get(base_url + '/product/');
         const category = await axios.get(base_url + '/category');
 
 
@@ -69,8 +69,8 @@ app.get("/search", async (req, res) =>
 
     try {
         const [productList, brand, categories] = await Promise.all([
-            axios.get(base_url + '/products'),
-            axios.get(base_url + '/brands'),
+            axios.get(base_url + '/product'),
+            axios.get(base_url + '/brand'),
             axios.get(base_url + '/category')
         ]);
 
@@ -121,8 +121,8 @@ app.get("/category/:id", async (req, res) =>
 
         const [categoriesRes, productsRes, brandsRes] = await Promise.all([
             axios.get(base_url + '/category'),
-            axios.get(base_url + '/products'),
-            axios.get(base_url + '/brands')
+            axios.get(base_url + '/product'),
+            axios.get(base_url + '/brand')
         ]);
 
         const categories = categoriesRes.data;
@@ -155,9 +155,9 @@ app.get("/category/:id", async (req, res) =>
 app.get("/cart", async (req, res) => 
 {
     try {
-        const product = await axios.get(base_url + '/products');
+        const product = await axios.get(base_url + '/product');
         const category = await axios.get(base_url + '/category');
-        const brand = await axios.get(base_url + '/brands');
+        const brand = await axios.get(base_url + '/brand');
 
         res.render("customer/cart", { 
             products: product.data, 
@@ -175,8 +175,8 @@ app.get("/account", async (req, res) =>
 {
     try {
         const category = await axios.get(base_url + '/category');
-        const account = await axios.get(base_url + '/users');
-        const customer = await axios.get(base_url + '/customers');
+        const account = await axios.get(base_url + '/user');
+        const customer = await axios.get(base_url + '/customer');
         res.render("customer/account", { 
             category: category.data 
         });
@@ -222,9 +222,9 @@ app.get("/register", async (req, res) =>
 app.get("/dashboard", async (req, res) => 
 {
     try {
-        const users = await axios.get(base_url + '/users');
-        const orders = await axios.get(base_url + '/orders');
-        const product = await axios.get(base_url + '/products');
+        const users = await axios.get(base_url + '/user');
+        const orders = await axios.get(base_url + '/order');
+        const product = await axios.get(base_url + '/product');
         const category = await axios.get(base_url + '/category');
 
         res.render("dashboard", { 
