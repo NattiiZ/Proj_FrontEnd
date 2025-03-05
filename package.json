@@ -2,12 +2,12 @@
   "name": "proj_frontend",
   "version": "1.0.0",
   "description": "Project - Computer Hardware Store",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
+    "start": "node app.js",
     "format": "prettier --write .",
-    "dev": "nodemon index.js"
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
