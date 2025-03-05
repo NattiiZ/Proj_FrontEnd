@@ -106,9 +106,7 @@ app.get("/all_category", async (req, res) =>
         const category = await axios.get(base_url + '/category');
 
 
-        res.render("customer/category", { 
-            category: category.data 
-        });
+        res.render("customer/category", { category: category.data });
     }
     catch(err) {
         console.error(err);
@@ -179,9 +177,7 @@ app.get("/account", async (req, res) =>
         const category = await axios.get(base_url + '/category');
         const account = await axios.get(base_url + '/user');
         const customer = await axios.get(base_url + '/customer');
-        res.render("customer/account", { 
-            category: category.data 
-        });
+        res.render("customer/account", { category: category.data });
     }
     catch(err) {
         console.error(err);
@@ -189,15 +185,25 @@ app.get("/account", async (req, res) =>
     }
 });
 
+app.get("/signin", async (req, res) => 
+{
+    try {
+        const category = await axios.get(base_url + '/category');
+
+        res.render("signup", { category: category.data });
+    } 
+    catch(err){
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
 
 app.get("/signup", async (req, res) => 
 {
     try {
         const category = await axios.get(base_url + '/category');
 
-        res.render("signup", { 
-            category: category.data
-        });
+        res.render("signup", { category: category.data });
     } 
     catch(err){
         console.error(err);
@@ -208,19 +214,23 @@ app.get("/signup", async (req, res) =>
 app.post("/register", async (req, res) => 
 {
     try {
-        const {username, password, email, check_password} = req.body;
-
-        console.log(username, email, password, check_password);
-        
+        const { username, password, email, check_password } = req.body;
 
         const users = await axios.get(base_url + '/user');
 
-        const existUser = users.data.find(user => user.email === email);
-        
-        if (existUser) {
+        if ( users.data.find(user => user.username === username) ) {
             return res.send(`
                 <script>
-                    alert("อีเมลนี้ถูกสมัครใช้งานแล้ว"); 
+                    alert("ชื่อผู้ใช้นี้ถูกใช้งานแล้ว กรุณาลองใหม่อีกครั้ง"); 
+                    window.location.href = "/signup";
+                </script>
+            `);
+        }
+
+        if ( users.data.find(user => user.email === email) ) {
+            return res.send(`
+                <script>
+                    alert("อีเมลนี้ถูกสมัครใช้งานแล้ว กรุณาลองใหม่อีกครั้ง"); 
                     window.location.href = "/signup";
                 </script>
             `);
@@ -235,7 +245,8 @@ app.post("/register", async (req, res) =>
             `);
         }
 
-        await axios.post(base_url + '/user', { username, password, email , userType_ID: 2});
+        
+        await axios.post(base_url + '/user', { username, password, email, userType_ID: 2 });
 
         res.redirect("/");
     } 
