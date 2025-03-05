@@ -2,11 +2,19 @@ const express = require('express');
 const axios = require('axios');
 const path = require("path");
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 require("dotenv").config();
 
 
 const app = express();
+
+app.use(session({
+    secret: process.env.SECRET_KEY || '', // ใช้คีย์ที่ปลอดภัย
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  // ใช้ true ถ้าใช้ HTTPS
+}));
 
 app.set("views" , path.join(__dirname, "/public/views"));
 app.set('view engine', 'ejs');
@@ -190,13 +198,33 @@ app.get("/signin", async (req, res) =>
     try {
         const category = await axios.get(base_url + '/category');
 
-        res.render("signup", { category: category.data });
+        res.render("signin", { category: category.data });
     } 
     catch(err){
         console.error(err);
         res.status(500).send('Error');
     }
 });
+
+app.post("/login", async (req, res) => 
+{
+    try {
+        const data = req.body;
+
+        const users = await axios.get(base_url + '/user');
+
+        for (var i=0; i<users.data.length; i++) {
+            if (( users.data[i].username === data.username ) && (users.data[i].password === data.password )) {
+                return res.redirect("/account");
+            }
+        }
+    } 
+    catch(err){
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
+
 
 app.get("/signup", async (req, res) => 
 {
@@ -244,11 +272,43 @@ app.post("/register", async (req, res) =>
                 </script>
             `);
         }
-
         
-        await axios.post(base_url + '/user', { username, password, email, userType_ID: 2 });
+        req.session.userData = { username, password, email };
+
+        res.redirect(`/reg-form`);
+    } 
+    catch (err) {
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
+
+app.get("/reg-form", async (req, res) => 
+{
+    try {
+        const category = await axios.get(base_url + '/category');
+
+        res.render("customer/reg_form", { category: category.data });
+    } 
+    catch (err) {
+        console.error(err);
+        res.status(500).send('Error');
+    }
+});
+
+app.post("/add-userInfo", async (req, res) => 
+{
+    try {
+        const { username, password, email } = req.session.userData || {};
+        const { name, phone, address } = req.body;
+
+        await axios.post(base_url + '/user', { username, password, email});
+        const user = await axios.get(base_url + '/user');
+        await axios.post(base_url + '/customer', { name, phone, address, user_ID: user.data[user.data.length-1].user_ID });
 
         res.redirect("/");
+
+        delete req.session.userData;
     } 
     catch (err) {
         console.error(err);
@@ -281,7 +341,48 @@ app.get("/dashboard", async (req, res) =>
 
 
 
-app.listen(host_port, () => {
+// app.listen(host_port, () => {
+//     console.log(`\x1b[37mHost has started!\x1b[0m`);
+//     console.log(`\x1b[45mWebpage running on http://localhost:${host_port}\x1b[0m`);
+// });
+
+
+const { execSync } = require('child_process');
+
+
+const clearPort = (port) => 
+{
+    try {
+        const result = execSync(`netstat -ano | findstr :${port}`).toString();
+        const lines = result.trim().split('\n');
+        lines.forEach(line => {
+            const parts = line.trim().split(/\s+/);
+            const pid = parts[parts.length - 1];
+            execSync(`taskkill /PID ${pid} /F`);
+            // console.log(`✅ Cleared port ${port} (PID: ${pid})`);
+        });
+    } 
+    catch (error) {
+        // console.log(`⚠️ No process found on port ${port}`);
+    }
+};
+
+clearPort(host_port);
+
+
+const server = app.listen(host_port, () => {
     console.log(`\x1b[37mHost has started!\x1b[0m`);
     console.log(`\x1b[45mWebpage running on http://localhost:${host_port}\x1b[0m`);
 });
+
+const exitHandler = () => {
+    server.close(() => {
+        // console.log('\x1b[31mServer closed. Cleaning up...\x1b[0m');
+        clearPort(host_port); // เคลียร์อีกครั้งเพื่อความมั่นใจ
+        process.exit();
+    });
+};
+
+process.on('SIGINT', exitHandler);   // จับ ctrl + c
+process.on('SIGTERM', exitHandler);  // จับการสั่งหยุด
+process.on('SIGUSR2', exitHandler);  // จับ nodemon restart (สำคัญ)

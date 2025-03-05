@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../css/signup.css">
+    <link rel="shortcut icon" href="../img/logo/favico.png" type="image/x-icon">
+    <title>ข้อมูลผู้ใช้</title>
+</head>
+
+<style>
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .input-group input,
+    .input-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .input-group textarea {
+        resize: none; /* ปิดการขยายขนาด textarea */
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .input-group input::placeholder,
+    .input-group textarea::placeholder {
+        color: #aaa;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+
+
+<body>
+    <header>
+        <a href="/" class="logo"><img src="../img/logo/logo_store.png" alt="DIY Computer"></a>
+
+        <form class="search-bar" action="/search" method="GET">
+            <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
+            <button type="submit">ค้นหา</button>
+        </form>
+
+        <nav>
+            <a href="/">หน้าแรก</a>
+            <a href="/category">หมวดหมู่</a>
+            <a href="/cart">ตะกร้า</a>
+            <a href="/account">ข้อมูลส่วนตัว</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="section-title">ข้อมูลผู้ใช้</h1>
+
+        <div class="register-form">
+            <form action="/add-userInfo" method="POST">
+                <div class="input-group">
+                    <label for="fullname">ชื่อ-นามสกุล</label>
+                    <input type="text" name="name" required placeholder="กรอกชื่อ-นามสกุล">
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">เบอร์โทร</label>
+                    <input type="text" name="phone" required placeholder="กรอกเบอร์โทร">
+                </div>
+
+                <div class="input-group">
+                    <label for="address">ที่อยู่</label>
+                    <textarea name="address" required placeholder="กรอกที่อยู่"></textarea>
+                </div>
+
+                <button type="submit" class="btn">บันทึกข้อมูล</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+    </footer>
+
+</body>
+
+</html>
