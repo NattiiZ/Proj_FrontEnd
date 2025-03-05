@@ -25,10 +25,8 @@
                 <a href="/all_category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>">
-                            <%= category[i].name %>
-                        </a>
-                        <% } %>
+                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
+                    <% } %>
                 </div>
             </div>
             <div><a href="/cart">ตะกร้า</a></div>

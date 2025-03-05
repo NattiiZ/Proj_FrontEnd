@@ -35,8 +35,6 @@ app.get("/", async (req, res) =>
 {
     try {
         const loginSession = req.session.loginSession;
-        console.log(req.session.loginSession);
-        
 
         const product = await axios.get(base_url + '/product');
         const brand = await axios.get(base_url + '/brand');
@@ -340,10 +338,12 @@ app.post("/add-userInfo", async (req, res) =>
         await axios.post(base_url + '/user', { username, password, email});
         const user = await axios.get(base_url + '/user');
         await axios.post(base_url + '/customer', { name, phone, address, user_ID: user.data[user.data.length-1].user_ID });
+        const userId = await axios.get(`${base_url}/user/${user.data[user.data.length-1].user_ID}`);
+
+        req.session.loginSession = { role_Id: userId.data.userType_ID, UID: userId.data.user_ID };
+        delete req.session.userData;
 
         res.redirect("/");
-
-        delete req.session.userData;
     } 
     catch (err) {
         console.error(err);
