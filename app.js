@@ -1,11 +1,12 @@
-require("dotenv").config();
-
 const express = require('express');
-const app = express();
 const axios = require('axios');
 const path = require("path");
 const bodyParser = require('body-parser');
 
+require("dotenv").config();
+
+
+const app = express();
 
 app.set("views" , path.join(__dirname, "/public/views"));
 app.set('view engine', 'ejs');
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(express.static(__dirname + '/public'));
 
 
+const host_port = process.env.HOST_PORT || 5000;
 const api_port = process.env.API_PORT || 3000;
 const base_url = `http://localhost:${api_port}`;
 
@@ -188,13 +190,12 @@ app.get("/account", async (req, res) =>
 });
 
 
-
-app.get("/login", async (req, res) => 
+app.get("/signup", async (req, res) => 
 {
     try {
         const category = await axios.get(base_url + '/category');
 
-        res.render("login", { 
+        res.render("signup", { 
             category: category.data
         });
     } 
@@ -204,20 +205,46 @@ app.get("/login", async (req, res) =>
     }
 });
 
-app.get("/register", async (req, res) => 
+app.post("/register", async (req, res) => 
 {
     try {
-        const category = await axios.get(base_url + '/category');
+        const {username, password, email, check_password} = req.body;
 
-        res.render("register", { 
-            category: category.data
-        });
+        console.log(username, email, password, check_password);
+        
+
+        const users = await axios.get(base_url + '/user');
+
+        const existUser = users.data.find(user => user.email === email);
+        
+        if (existUser) {
+            return res.send(`
+                <script>
+                    alert("อีเมลนี้ถูกสมัครใช้งานแล้ว"); 
+                    window.location.href = "/signup";
+                </script>
+            `);
+        }
+
+        if (password !== check_password) {
+            return res.send(`
+                <script>
+                    alert("รหัสผ่านยืนยันไม่ตรงกัน กรุณาลองใหม่อีกครั้ง");
+                    window.location.href = "/signup";
+                </script>
+            `);
+        }
+
+        await axios.post(base_url + '/user', { username, password, email , userType_ID: 2});
+
+        res.redirect("/");
     } 
-    catch(err){
+    catch (err) {
         console.error(err);
         res.status(500).send('Error');
     }
 });
+
 
 app.get("/dashboard", async (req, res) => 
 {
@@ -242,8 +269,8 @@ app.get("/dashboard", async (req, res) =>
 
 
 
-const host_port = process.env.HOST_PORT || 5000;
 
 app.listen(host_port, () => {
-    console.log(`Server listening at http://localhost:${host_port}`);
-    });
+    console.log(`\x1b[37mHost has started!\x1b[0m`);
+    console.log(`\x1b[45mWebpage running on http://localhost:${host_port}\x1b[0m`);
+});
