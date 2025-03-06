@@ -24,7 +24,7 @@
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=category[i].name%>"><%= category[i].name %></a>
+                        <a href="/category/<%=category[i].category_name%>"><%= category[i].name %></a>
                     <% } %>
                 </div>
             </div>
@@ -64,14 +64,15 @@
                         <p>ราคา <%= products[i].unitPrice %> บาท</p>
 
                         <div class="btn-product">
-                            <form action="getProduct" method="POST">
+                            <form action="/getProduct" method="POST">
+                                <input type="hidden" name="url" value="/">
+                                <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
                                 <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
                             </form>
-
+                        
                             <form action="/detail" method="GET">
                                 <input type="hidden" name="brand" value="<%= brand %>">
                                 <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
-
                                 <button class="btn" type="submit">รายละเอียด</button>
                             </form>
                         </div>

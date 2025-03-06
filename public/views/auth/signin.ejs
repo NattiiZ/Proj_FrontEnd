@@ -22,7 +22,7 @@
         <nav>
             <div><a href="/">หน้าแรก</a></div>
             <div class="dropdown">
-                <a href="/all_category" class="dropbtn">หมวดหมู่</a>
+                <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
                         <a href="/category/<%=i+1%>"><%= category[i].name %></a>
@@ -38,7 +38,7 @@
         <h1 class="section-title">เข้าสู่ระบบ</h1>
 
         <div class="login-form">
-            <form action="/checkLogin" method="POST">
+            <form action="/checkLogin?from=<%= encodeURIComponent(url) %>" method="POST">
                 <div class="input-group">
                     <label for="username">ชื่อผู้ใช้</label>
                     <input type="text" name="username" required placeholder="กรุณากรอกชื่อผู้ใช้">

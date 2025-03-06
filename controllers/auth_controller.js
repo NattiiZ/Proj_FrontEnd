@@ -9,9 +9,11 @@ const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
 exports.signin = async (req, res) => 
 {
     try {
-        const category = await axios.get(base_url + '/category');
+        const url = req.query.from || '/';
 
-        res.render("auth/signin", { category: category.data });
+        const category = await axios.get(base_url + '/category');
+        
+        res.render("auth/signin", { category: category.data, url});
     } 
     catch (err) {
         console.error(err);
@@ -19,34 +21,31 @@ exports.signin = async (req, res) =>
     }
 };
 
+
 exports.checkLogin = async (req, res) => 
 {
     try {
         const data = req.body;
-        let authenticated = false;
+        const lastUrl = req.query.from || '/';
 
         const users = await axios.get(base_url + '/user');
 
-        for (var i = 0; i < users.data.length; i++) 
-        {
-            if ((users.data[i].username === data.username) && (users.data[i].password === data.password)) 
-            {
-                authenticated = true;
+        const user = users.data.find(user => 
+            user.username === data.username && user.password === data.password
+        );
 
-                req.session.loginSession = { 
-                    role_Id: users.data[i].userType_ID, 
-                    UID: users.data[i].user_ID 
-                };
+        if (user) {
+            req.session.loginSession = { 
+                role_Id: user.userType_ID, 
+                UID: user.user_ID 
+            };
 
-                return res.redirect(users.data[i].userType_ID == process.env.ADMIN_ROLE ? '/admin-dashboard' : '/');
-            }
-        }
-
-        if (!authenticated) {
+            return res.redirect(user.userType_ID == process.env.ADMIN_ROLE ? '/admin-dashboard' : lastUrl);
+        } else {
             res.send(`
                 <script>
                     alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง"); 
-                    window.location.href = "/signin";
+                    window.location.href = "/signin?from=${encodeURIComponent(lastUrl)}";
                 </script>
             `);
         }

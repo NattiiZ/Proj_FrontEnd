@@ -21,7 +21,7 @@
         <nav>
             <div><a href="/">หน้าแรก</a></div>
             <div class="dropdown">
-                <a href="/all_category" class="dropbtn">หมวดหมู่</a>
+                <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
                         <a href="/category/<%=i+1%>"><%= category[i].name %></a>
@@ -64,15 +64,15 @@
                         <p>ราคา <%= products[i].unitPrice %> บาท</p>
 
                         <div class="btn-product">
-                            <form action="getProduct" method="POST">
+                            <form action="/getProduct" method="POST">
+                                <input type="hidden" name="url" value="/category/<%= products[i].category_ID %>">
+                                <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
                                 <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
                             </form>
-
+                        
                             <form action="/detail" method="GET">
-                                
                                 <input type="hidden" name="brand" value="<%= brand %>">
                                 <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
-
                                 <button class="btn" type="submit">รายละเอียด</button>
                             </form>
                         </div>
@@ -81,10 +81,11 @@
             <% } %>
         </div>
     </div>
-
-    <footer>
-        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
-    </footer>
 </body>
 
+<footer>
+    &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+</footer>
+
 </html>
+

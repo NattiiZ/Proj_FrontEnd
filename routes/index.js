@@ -24,7 +24,7 @@ router.get('/account', account_controller.accountMenu);
 
 router.get('/signin', auth_controller.signin);
 router.post('/checkLogin', auth_controller.checkLogin);
-router.get('/logout', auth_controller.logout);
+router.post('/logout', auth_controller.logout);
 
 router.get('/signup', register_controller.signup);
 router.post('/checkReg', register_controller.checkReg);
