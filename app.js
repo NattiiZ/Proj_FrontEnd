@@ -29,7 +29,6 @@ const host_port = process.env.HOST_PORT || 5000;
 
 
 const { execSync } = require('child_process');
-const { count, log } = require('console');
 
 
 const clearPort = (port) => 
@@ -46,7 +45,6 @@ const clearPort = (port) =>
         });
     } 
     catch (error) {
-        console.log(`No process found on port ${port}`);
     }
 };
 
@@ -63,13 +61,11 @@ const server = app.listen(host_port, () => {
 
 
 
-const exitHandler = () => {
-    server.close(() => {
-        clearPort(host_port);
-        process.exit();
+['SIGINT', 'SIGTERM', 'SIGUSR2'].forEach(signal => {
+    process.on(signal, () => {
+        server.close(() => {
+            clearPort(host_port);
+            process.exit();
+        });
     });
-};
-
-process.on('SIGINT', exitHandler);
-process.on('SIGTERM', exitHandler);
-process.on('SIGUSR2', exitHandler);
+});

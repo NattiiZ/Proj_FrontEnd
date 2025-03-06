@@ -11,7 +11,7 @@ exports.signin = async (req, res) =>
     try {
         const category = await axios.get(base_url + '/category');
 
-        res.render("signin", { category: category.data });
+        res.render("auth/signin", { category: category.data });
     } 
     catch (err) {
         console.error(err);
@@ -38,7 +38,7 @@ exports.checkLogin = async (req, res) =>
                     UID: users.data[i].user_ID 
                 };
 
-                return res.redirect(users.data[i].userType_ID == process.env.ADMIN_ROLE ? '/dashboard' : '/');
+                return res.redirect(users.data[i].userType_ID == process.env.ADMIN_ROLE ? '/admin-dashboard' : '/');
             }
         }
 

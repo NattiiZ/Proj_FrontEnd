@@ -97,7 +97,7 @@ exports.categoryList = async (req, res) =>
         const category = await axios.get(base_url + '/category');
 
 
-        res.render("customer/cat_list", { category: category.data, loginSession });
+        res.render("customer/category", { category: category.data, loginSession });
     }
     catch(err) {
         console.error(err);
@@ -109,7 +109,7 @@ exports.categorySelected = async (req, res) =>
 {
     try {
         const loginSession = req.session.loginSession;
-        const category = req.params.name;
+        const categoryId = parseInt(req.params.id);
 
         const [categoriesRes, productsRes, brandsRes] = await Promise.all([
             axios.get(base_url + '/category'),
@@ -128,7 +128,7 @@ exports.categorySelected = async (req, res) =>
         const filteredProducts = products.filter(product => product.category_ID === categoryId);
 
 
-        res.render("customer/cat_prods", {
+        res.render("customer/thisCategory", {
             category: categories,
             products: filteredProducts,
             name: selectedCategory.name,

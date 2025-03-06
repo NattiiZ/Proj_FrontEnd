@@ -12,10 +12,10 @@ const admin_controller = require('../controllers/admin_controller');
 
 
 router.get('/', user_controller.home);
-router.post('/search', user_controller.search);
-router.get('/detail/:product', user_controller.productDetail);
-router.post('/category', user_controller.categoryList);
-router.get('/category/:name', user_controller.categorySelected);
+router.get('/search', user_controller.search);
+router.get('/detail/', user_controller.productDetail);
+router.get('/category', user_controller.categoryList);
+router.get('/category/:id', user_controller.categorySelected);
 
 router.get('/cart', customer_controller.cart);
 router.post('/getProduct', customer_controller.getProduct);

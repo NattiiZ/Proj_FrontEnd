@@ -11,7 +11,7 @@ exports.signup = async (req, res) =>
     try {
         const category = await axios.get(base_url + '/category');
 
-        res.render("signup", { category: category.data });
+        res.render("auth/signup", { category: category.data });
     } 
     catch(err){
         console.error(err);
