@@ -33,6 +33,7 @@ const Admin = process.env.ADMIN_ROLE;
 
 
 
+
 app.get("/", async (req, res) => 
 {
     try {
@@ -58,6 +59,7 @@ app.get("/", async (req, res) =>
 
 app.get("/detail", async (req, res) => 
 {
+    const loginSession = req.session.loginSession;
     const { brand, Id } = req.query;
 
     try {
@@ -69,7 +71,8 @@ app.get("/detail", async (req, res) =>
             products: product.data, 
             category: category.data, 
             brand, 
-            Id 
+            Id,
+            loginSession
         });
     }
     catch(err) {
@@ -80,6 +83,7 @@ app.get("/detail", async (req, res) =>
 
 app.get("/search", async (req, res) => 
 {
+    const loginSession = req.session.loginSession
     const query = req.query.query;
 
     try {
@@ -105,7 +109,8 @@ app.get("/search", async (req, res) =>
             products: filteredProducts,
             category: categories.data,
             brands: brand.data,
-            query: query
+            query: query,
+            loginSession
         });
     } catch (err) {
         console.error(err);
@@ -121,7 +126,7 @@ app.get("/all_category", async (req, res) =>
         const category = await axios.get(base_url + '/category');
 
 
-        res.render("customer/category", { category: category.data, loginSession });
+        res.render("customer/cat_name", { category: category.data, loginSession });
     }
     catch(err) {
         console.error(err);
@@ -132,6 +137,7 @@ app.get("/all_category", async (req, res) =>
 app.get("/category/:id", async (req, res) => 
 {
     try {
+        const loginSession = req.session.loginSession;
         const categoryId = parseInt(req.params.id);
 
         const [categoriesRes, productsRes, brandsRes] = await Promise.all([
@@ -151,11 +157,12 @@ app.get("/category/:id", async (req, res) =>
         const filteredProducts = products.filter(product => product.category_ID === categoryId);
 
 
-        res.render("customer/prodCat", {
+        res.render("customer/cat_prods", {
             category: categories,
             products: filteredProducts,
             name: selectedCategory.name,
-            brands: brandsRes.data
+            brands: brandsRes.data,
+            loginSession
         });
 
     } 
@@ -232,9 +239,6 @@ app.get("/account", async (req, res) => {
 app.get("/signin", async (req, res) => 
 {
     try {
-        if (req.session.loginSession)
-            return res.location(req.get("Referrer") || "/")
-
         const category = await axios.get(base_url + '/category');
 
         res.render("signin", { category: category.data });
@@ -249,9 +253,6 @@ app.get("/signin", async (req, res) =>
 app.post("/login", async (req, res) => 
 {
     try {
-        if (req.session.loginSession)
-            return res.redirect('back');
-
         const data = req.body;
 
         const users = await axios.get(base_url + '/user');
@@ -316,10 +317,6 @@ app.post("/logout", async (req, res) =>
 app.get("/signup", async (req, res) => 
 {
     try {
-
-        if (req.session.loginSession)
-            return res.redirect('back');
-        
         const category = await axios.get(base_url + '/category');
 
         res.render("signup", { category: category.data });
@@ -334,9 +331,6 @@ app.get("/signup", async (req, res) =>
 app.post("/register", async (req, res) => 
 {
     try {
-        if (req.session.loginSession)
-            return res.redirect('back');
-
         const { username, password, email, check_password } = req.body;
 
         const users = await axios.get(base_url + '/user');
@@ -382,9 +376,6 @@ app.post("/register", async (req, res) =>
 app.get("/reg-form", async (req, res) => 
 {
     try {
-        if (req.session.loginSession)
-            return res.redirect('back');
-
         const category = await axios.get(base_url + '/category');
 
         res.render("customer/reg_form", { category: category.data });
@@ -399,9 +390,6 @@ app.get("/reg-form", async (req, res) =>
 app.post("/add-userInfo", async (req, res) => 
 {
     try {
-        if (req.session.loginSession)
-            return res.redirect('back');
-
         const { username, password, email } = req.session.userData || {};
         const { name, phone, address } = req.body;
 
