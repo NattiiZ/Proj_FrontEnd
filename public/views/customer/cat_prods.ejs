@@ -64,8 +64,8 @@
                         <p>ราคา <%= products[i].unitPrice %> บาท</p>
 
                         <div class="btn-product">
-                            <form action="" method="POST">
-                                <button class="btn" onclick="alert('เพิ่ม <%= products[i].name %> ลงตะกร้าแล้ว')" type="submit">เพิ่มลงตะกร้า</button>
+                            <form action="getProduct" method="POST">
+                                <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
                             </form>
 
                             <form action="/detail" method="GET">
