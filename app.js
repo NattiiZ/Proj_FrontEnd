@@ -28,6 +28,8 @@ const host_port = process.env.HOST_PORT || 5000;
 const api_port = process.env.API_PORT || 3000;
 const base_url = `http://localhost:${api_port}`;
 
+const Admin = process.env.ADMIN_ROLE;
+
 
 
 
@@ -114,10 +116,12 @@ app.get("/search", async (req, res) =>
 app.get("/all_category", async (req, res) => 
 {
     try {
+        const loginSession = req.session.loginSession;
+
         const category = await axios.get(base_url + '/category');
 
 
-        res.render("customer/category", { category: category.data });
+        res.render("customer/category", { category: category.data, loginSession });
     }
     catch(err) {
         console.error(err);
@@ -162,18 +166,23 @@ app.get("/category/:id", async (req, res) =>
 });
 
 
-
 app.get("/cart", async (req, res) => 
 {
     try {
+        const loginSession = req.session.loginSession;
+
         const product = await axios.get(base_url + '/product');
         const category = await axios.get(base_url + '/category');
         const brand = await axios.get(base_url + '/brand');
 
+        if (!loginSession)
+            return res.redirect('/signin')
+
         res.render("customer/cart", { 
             products: product.data, 
             category: category.data, 
-            brands: brand.data 
+            brands: brand.data,
+            loginSession
         });
     }
     catch(err) {
@@ -182,23 +191,50 @@ app.get("/cart", async (req, res) =>
     }
 });
 
-app.get("/account", async (req, res) => 
-{
+
+// ==================================================================
+// ----------------------------- Account ----------------------------
+// ==================================================================
+
+app.get("/account", async (req, res) => {
     try {
-        const category = await axios.get(base_url + '/category');
-        const account = await axios.get(base_url + '/user');
-        const customer = await axios.get(base_url + '/customer');
-        res.render("customer/account", { category: category.data });
-    }
-    catch(err) {
+        const loginSession = req.session.loginSession;
+
+        if (!loginSession) {
+            return res.redirect('/signin');
+        }
+
+        const [category, userInfo, customers] = await Promise.all([
+            axios.get(base_url + '/category'),
+            axios.get(`${base_url}/user/${loginSession.UID}`),
+            axios.get(base_url + '/customer')
+        ]);
+
+        const customerInfo = customers.data.find(c => c.user_ID == loginSession.UID);
+
+        res.render('customer/account', {
+            category: category.data,
+            userInfo: userInfo.data,
+            customerInfo
+        });
+
+    } catch (err) {
         console.error(err);
         res.status(500).send('Error');
     }
 });
 
+
+// ==================================================================
+// ----------------------------- Signin -----------------------------
+// ==================================================================
+
 app.get("/signin", async (req, res) => 
 {
     try {
+        if (req.session.loginSession)
+            return res.location(req.get("Referrer") || "/")
+
         const category = await axios.get(base_url + '/category');
 
         res.render("signin", { category: category.data });
@@ -209,9 +245,13 @@ app.get("/signin", async (req, res) =>
     }
 });
 
+
 app.post("/login", async (req, res) => 
 {
     try {
+        if (req.session.loginSession)
+            return res.redirect('back');
+
         const data = req.body;
 
         const users = await axios.get(base_url + '/user');
@@ -223,10 +263,20 @@ app.post("/login", async (req, res) =>
 
                 req.session.loginSession = { role_Id: users.data[i].userType_ID, UID: users.data[i].user_ID };
                 
-                if (users.data[i].userType_ID == 1)
-                    return res.redirect("/dashboard");
+                if (users.data[i].userType_ID == Admin)
+                    return res.send(`
+                        <script>
+                            window.location.href = "/dashboard";
+                            window.history.pushState({}, document.title, "/dashboard");
+                        </script>
+                    `);
                 else
-                    return res.redirect("/");
+                    return res.send(`
+                        <script>
+                            window.location.href = "/";
+                            window.history.pushState({}, document.title, "/");
+                        </script>
+                    `);
             }
         }
         if (!authenticated) {
@@ -259,9 +309,17 @@ app.post("/logout", async (req, res) =>
     });
 
 
+// ==================================================================
+// ----------------------------- Signup -----------------------------
+// ==================================================================
+
 app.get("/signup", async (req, res) => 
 {
     try {
+
+        if (req.session.loginSession)
+            return res.redirect('back');
+        
         const category = await axios.get(base_url + '/category');
 
         res.render("signup", { category: category.data });
@@ -272,9 +330,13 @@ app.get("/signup", async (req, res) =>
     }
 });
 
+
 app.post("/register", async (req, res) => 
 {
     try {
+        if (req.session.loginSession)
+            return res.redirect('back');
+
         const { username, password, email, check_password } = req.body;
 
         const users = await axios.get(base_url + '/user');
@@ -316,9 +378,13 @@ app.post("/register", async (req, res) =>
     }
 });
 
+
 app.get("/reg-form", async (req, res) => 
 {
     try {
+        if (req.session.loginSession)
+            return res.redirect('back');
+
         const category = await axios.get(base_url + '/category');
 
         res.render("customer/reg_form", { category: category.data });
@@ -329,9 +395,13 @@ app.get("/reg-form", async (req, res) =>
     }
 });
 
+
 app.post("/add-userInfo", async (req, res) => 
 {
     try {
+        if (req.session.loginSession)
+            return res.redirect('back');
+
         const { username, password, email } = req.session.userData || {};
         const { name, phone, address } = req.body;
 
@@ -352,9 +422,17 @@ app.post("/add-userInfo", async (req, res) =>
 });
 
 
+// =================================================================
+// ------------------------- Administrator -------------------------
+// =================================================================
+
 app.get("/dashboard", async (req, res) => 
 {
     try {
+        const loginSession = req.session.loginSession
+        if (!loginSession || loginSession.UID != Admin)
+            return res.redirect('back');
+
         const users = await axios.get(base_url + '/user');
         const orders = await axios.get(base_url + '/order');
         const product = await axios.get(base_url + '/product');
@@ -374,9 +452,10 @@ app.get("/dashboard", async (req, res) =>
 });
 
 
-
+// ===============================================================
 
 const { execSync } = require('child_process');
+const { count, log } = require('console');
 
 
 const clearPort = (port) => 
