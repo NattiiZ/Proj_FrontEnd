@@ -19,7 +19,7 @@ router.get('/category/:id', user_controller.categorySelected);
 
 router.get('/cart', customer_controller.cart);
 router.post('/getProduct', customer_controller.getProduct);
-router.post('/delelteItem', customer_controller.deleteItem);
+router.post('/deleteItem', customer_controller.deleteItem);
 
 router.get('/account', account_controller.accountMenu);
 

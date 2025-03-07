@@ -80,10 +80,9 @@
                             </td>
                             <td><h3><span id="total-<%= product.Product.product_ID %>"><%= itemTotal.toFixed(2) %> บาท</span></h3></td>
                             <td>
-                                <form action="/deleteItem?id=<%= product.Product.product_ID %>" method="post">
-                                    <button type="submit" onclick="deleteItem('<%= product.Product.product_ID %>')">ลบ</button>
-                                </form>
+                                <button type="button" onclick="deleteItem('<%= product.Product.product_ID %>')">ลบ</button>
                             </td>
+                            
                         </tr>
                     <% }); %>
                 </tbody>
@@ -139,13 +138,32 @@
         }
 
         // ฟังก์ชันลบสินค้าออกจากตะกร้า
-        function deleteItem(productId) {
-            const row = document.getElementById(`row-${productId}`);
-            row.remove(); // ลบแถวสินค้าที่ต้องการ
+        // ฟังก์ชันลบสินค้าออกจากตะกร้า
+        async function deleteItem(productId) 
+        {
+            if (!confirm('คุณแน่ใจหรือไม่ว่าต้องการลบสินค้านี้?')) return;
 
-            // คำนวณผลรวมใหม่
-            updateTotalPrice();
+            try {
+                const response = await fetch(`/deleteItem?id=${productId}`, {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    // ลบสินค้าจาก DOM
+                    const row = document.getElementById(`row-${productId}`);
+                    row.remove();
+
+                    // อัปเดตราคารวมทั้งหมด
+                    updateTotalPrice();
+                } else {
+                    alert('เกิดข้อผิดพลาดในการลบสินค้า');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์');
+            }
         }
+
 
     </script>
 
