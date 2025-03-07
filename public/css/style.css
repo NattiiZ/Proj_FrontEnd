@@ -129,7 +129,7 @@ nav a:hover {
 
 .container {
     padding: 2rem 1rem;
-    max-width: 90%;
+    max-width: 77%;
     margin: 0 auto;
     justify-content: center;
 }
@@ -141,18 +141,24 @@ nav a:hover {
     font-weight: 600;
 }
 .product-grid {
-    
     display: grid;
     grid-template-columns: repeat(4,1fr);
     gap: 3.5rem 2.5rem;
+    justify-content: center;
 }
 .product-card {
+    width: 300px; /* กำหนดความกว้างให้เท่ากัน */
+    height: 400px; /* กำหนดความสูงให้เท่ากัน */
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     background: white;
     overflow: hidden;
     transition: box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* จัดการเนื้อหาให้สมดุล */
 }
+
 .product-card:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }

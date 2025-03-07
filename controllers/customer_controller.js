@@ -1,7 +1,10 @@
 const axios = require('axios');
-const { check } = require('prettier');
+
 
 const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
+
+
+
 
 exports.cart = async (req, res) => {
     try {
@@ -13,19 +16,27 @@ exports.cart = async (req, res) => {
         const category = await axios.get(base_url + '/category');
         const brand = await axios.get(base_url + '/brand');
         const product = await axios.get(base_url + '/product');
-        const cart = await axios.get(base_url + '/cart');
 
-        const cartId = cart.data.find(cart => cart.user_ID == loginSession.UID);
+        const carts = await axios.get(base_url + '/cart');
+        let checkCart = carts.data.find(cart => cart.user_ID == loginSession.UID);
+
+        if (!checkCart) {
+            const newCart = await axios.post(base_url + '/cart', { user_ID: loginSession.UID });
+            checkCart = newCart.data
+        }
+
+        const cartId = checkCart.cart_ID;
+        const cartItems = await axios.get(base_url + '/cart-item/' + cartId);
         
-        const cartItem = await axios.get(base_url + '/cart-item/' + cartId.cart_ID);
+        let items = cartItems.data;
 
         res.render("customer/cart", { 
             loginSession,
             category: category.data, 
             brands: brand.data,
             products: product.data, 
-            cartId: cartId.cart_ID,
-            cartItem: cartItem.data
+            cartId,
+            cartItem: items
         });
     }
     catch(err) {
@@ -43,15 +54,15 @@ exports.getProduct = async (req, res) => {
             return res.redirect(`/signin?from=${encodeURIComponent(url)}`);
         }
 
-        const checkCart = await axios.get(base_url + '/cart');
-        let cart = checkCart.data.find(cartItem => cartItem.user_ID === loginSession.UID);
+        const carts = await axios.get(base_url + '/cart');
+        let checkCart = carts.data.find(cartItem => cartItem.user_ID === loginSession.UID);
 
-        if (!cart) {
+        if (!checkCart) {
             const newCart = await axios.post(base_url + '/cart', { user_ID: loginSession.UID });
-            cart = newCart.data;
+            checkCart = newCart.data;
         }
 
-        const cartId = cart.cart_ID;
+        const cartId = checkCart.cart_ID;
 
         const cartItems = await axios.get(base_url + '/cart-item');
         const findItem = cartItems.data.find(item => item.cart_ID == cartId && item.product_ID == Id);

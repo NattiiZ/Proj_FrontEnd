@@ -25,7 +25,7 @@
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
+                        <a href="/category/<%=category[i].category_name%>"><%= category[i].name %></a>
                     <% } %>
                 </div>
             </div>
@@ -37,67 +37,117 @@
             <% } %>
         </nav>
     </header>
-    </header>
 
+    <div class="banner"></div>
 
     <div class="container">
-        <h1 class="section-title">ตะกร้าสินค้าของคุณ</h1>
-        
-        <div class="cart-items">
-            <% cartItem.forEach(product => { %>
-                <div class="cart-item">
-                    <img src="path_to_image.jpg" alt="Product Image" class="cart-item-image">
-                    <div class="cart-item-info">
-                        <% const brandName = brands.find(brand => brand.brand_ID == product.Product.brand_ID); %>
-                        <h1><%= brandName ? `${brandName.name} ${product.Product.name}` : product.Product.name %></h1>
-                    </div>
-                </div>
-            <% }); %>
-        </div>
+        <h1 class="section-title">ตะกร้าสินค้า</h1>
 
-        <div class="cart-summary">
-            <p>รวมทั้งสิ้น: <span id="total-price">18,900</span> บาท</p>
-            <a href="/checkout" class="btn">ชำระเงิน</a>
+        <div class="cart-items">
+            <table class="data">
+                <thead>
+                    <tr>
+                        <th>ภาพสินค้า</th>
+                        <th>ชื่อสินค้า</th>
+                        <th>ราคา/ชิ้น</th>
+                        <th>จำนวน</th>
+                        <th>ราคารวม</th>
+                        <th>ลบ</th> <!-- เพิ่มคอลัมน์สำหรับปุ่มลบ -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <% let totalPrice = 0; %> <!-- ประกาศ totalPrice แค่ครั้งเดียวที่นี่ -->
+                    <% cartItem.forEach(product => { %>
+                        <% 
+                            const brandName = brands.find(brand => brand.brand_ID == product.Product.brand_ID); 
+                            const itemTotal = product.quantity * product.Product.unitPrice;
+                            totalPrice += itemTotal; // คำนวณผลรวมของตะกร้า
+                        %>
+                        <tr id="row-<%= product.Product.product_ID %>">
+                            <td>
+                                <a href="/detail?brand=<%= brandName.name %>&Id=<%= product.Product.product_ID %>">
+                                    <img src="../../img/product/Major-cineplex-logo.png" alt="Product Image" class="cart-item-image">
+                                </a>
+                            </td>
+                            <td>
+                                <h2><%= brandName ? `${brandName.name} ${product.Product.name}` : product.Product.name %></h2>
+                            </td>
+                            <td><h3 id="price-<%= product.Product.product_ID %>"><%= parseFloat(product.Product.unitPrice).toFixed(2) %> บาท</h3></td>
+                            <td>
+                                <button type="button" onclick="updateQuantity('<%= product.Product.product_ID %>', -1)">-</button>
+                                <span id="quantity-<%= product.Product.product_ID %>"><%= product.quantity %></span>
+                                <button type="button" onclick="updateQuantity('<%= product.Product.product_ID %>', 1)">+</button>
+                            </td>
+                            <td><h3><span id="total-<%= product.Product.product_ID %>"><%= itemTotal.toFixed(2) %> บาท</span></h3></td>
+                            <td>
+                                <button type="button" onclick="deleteItem('<%= product.Product.product_ID %>')">ลบ</button> <!-- ปุ่มลบ -->
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <div class="cart-summary">
+                <h3>ราคารวมทั้งหมด: <span id="all"><%= totalPrice.toFixed(2) %> บาท</span></h3>
+                <a href="/checkout" class="checkout-btn">
+                    <button type="button">ชำระเงิน</button>
+                </a>
+            </div>
         </div>
     </div>
 
     <footer>
         &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
     </footer>
-</body>
 
-<!-- <h3>ASUS ROG Strix XG27AQ</h3>
-                        <p>ราคา: 18,900 บาท</p>
-                        <div class="quantity-control">
-                            <button class="btn quantity-btn" onclick="decreaseQuantity()">-</button>
-                            <span id="quantity">1</span>
-                            <button class="btn quantity-btn" onclick="increaseQuantity()">+</button>
-                        </div>
-                        <a href="#" class="btn" onclick="alert('ลบสินค้าออกจากตะกร้า')">ลบ</a> -->
+    <script>
+        // ฟังก์ชันอัปเดตจำนวนสินค้า
+        function updateQuantity(productId, change) {
+            const quantityElement = document.getElementById(`quantity-${productId}`);
+            const totalElement = document.getElementById(`total-${productId}`);
+            let quantity = parseInt(quantityElement.innerText);
 
+            // เปลี่ยนแปลงจำนวนสินค้า
+            quantity += change;
+            if (quantity < 1) quantity = 1; // ห้ามให้จำนวนต่ำกว่า 1
 
-<script>
-    let quantity = 1;
-    let price = 18900;
+            // อัปเดตจำนวน
+            quantityElement.innerText = quantity;
 
-    function updateTotalPrice() {
-        let totalPrice = quantity * price;
-        document.getElementById("total-price").innerText = totalPrice.toLocaleString();
-        document.getElementById("quantity").innerText = quantity;
-    }
+            // อัปเดตราคารวมของสินค้า
+            const price = parseFloat(document.getElementById(`price-${productId}`).innerText);
+            totalElement.innerText = (price * quantity).toFixed(2) + " บาท";
 
-    function increaseQuantity() {
-        quantity++;
-        updateTotalPrice();
-    }
-
-    function decreaseQuantity() {
-        if (quantity > 1) {
-            quantity--;
+            // คำนวณผลรวมทั้งหมด
             updateTotalPrice();
         }
-    }
-</script>
 
+        // ฟังก์ชันคำนวณผลรวมทั้งหมด
+        function updateTotalPrice() {
+            let totalPrice = 0;
+
+            // คำนวณผลรวมทั้งหมดจากทุกสินค้าที่อยู่ในตะกร้า
+            const allTotalElements = document.querySelectorAll('[id^="total-"]');
+            allTotalElements.forEach((totalElement) => {
+                const itemTotal = parseFloat(totalElement.innerText.replace(' บาท', ''));
+                totalPrice += itemTotal;
+            });
+
+            // อัปเดตราคารวมทั้งหมด
+            document.getElementById('all').innerText = totalPrice.toFixed(2) + " บาท";
+        }
+
+        // ฟังก์ชันลบสินค้าออกจากตะกร้า
+        // ฟังก์ชันลบสินค้าออกจากตะกร้า
+        function deleteItem(productId) {
+            const row = document.getElementById(`row-${productId}`);
+            row.remove(); // ลบแถวสินค้าที่ต้องการ
+
+            // คำนวณผลรวมใหม่
+            updateTotalPrice();
+        }
+
+    </script>
+
+</body>
 
 </html>
