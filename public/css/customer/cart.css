@@ -1,5 +1,6 @@
 .cart-items {
     margin-bottom: 2rem;
+
 }
 
 .data {
@@ -7,10 +8,51 @@
     border-collapse: collapse;
 }
 
+.data tbody {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+}
+
 .data th, .data td {
+    width: 100px;
     padding: 10px;
     text-align: center;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 3px solid #e0e0e0;
+
+}
+
+#name {
+    width: 380px;
+}
+
+#price {
+    width: 150px;
+}
+
+.edit {
+    span {
+        margin: 0 10px;
+    }
+
+    button {
+        font-size: larger;
+        padding: 0.5px 10px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-width: 0.5px;
+}
+}
+
+#del-Btn {
+    padding: 5px 15px;
+    background: rgb(218, 49, 49);
+    border-radius: 10px;
+    border-width: 0.5px;
+    color: white;
+
 }
 
 .cart-item-image {
@@ -21,13 +63,36 @@
 
 .cart-summary {
     margin-top: 20px;
-    padding: 1rem;
+    padding: 1rem 6rem;
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+
+    button {
+        font-size: large;
+        font-weight: bolder;
+        color: white;
+        background:#1a73e8;
+        padding: 15px 40px;
+        border-radius: 5px;
+        border-width: 0.5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+}
+}
+
+.cart-summary h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .cart-summary p {
@@ -38,7 +103,7 @@
 .cart-summary .btn {
     background: #1a73e8;
     color: white;
-    padding: 0.75rem 1.5rem;
+    padding: 2rem 1.5rem;
     border-radius: 8px;
     text-decoration: none;
     transition: background 0.3s;
@@ -60,7 +125,7 @@
 /* The main container style */
 .container {
     padding: 2rem 1rem;
-    max-width: 90%;
+    max-width: 85%;
     margin: 0 auto;
     justify-content: center;
 }

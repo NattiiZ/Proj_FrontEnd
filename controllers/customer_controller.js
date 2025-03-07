@@ -6,7 +6,8 @@ const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
 
 
 
-exports.cart = async (req, res) => {
+exports.cart = async (req, res) => 
+{
     try {
         const loginSession = req.session.loginSession;
 
@@ -45,7 +46,8 @@ exports.cart = async (req, res) => {
     }
 };
 
-exports.getProduct = async (req, res) => {
+exports.getProduct = async (req, res) => 
+{
     try {
         const loginSession = req.session.loginSession;
         const { url, Id } = req.body;
@@ -82,20 +84,52 @@ exports.getProduct = async (req, res) => {
         res.send(`
             <script>
                 alert("เพิ่ม ${brand.data.name} ${product.data.name} ลงตะกร้าเรียบร้อยแล้ว");
-                window.location.href = "${url}";
+                location.reload();
             </script>
         `);
-    } catch (error) {
+    } 
+    catch (error) {
         console.error("Error:", error);
         res.status(500).send('Error');
     }
 };
 
-exports.deleteItem = async (req, res) =>
+exports.deleteItem = async (req, res) => 
 {
-    const loginSession = req.session.loginSession;
-    const itemID = req.params.id;
+    try {
+        const { id, item } = req.query;
 
-    console.log("tresadad");
-    
+        if (!id || !item)
+            return res.status(400).json({ error: 'Missing cartId or productId' });
+
+        const response = await axios.delete(`${base_url}/cart-item`, { params: { id, item } });
+
+        if (response.status === 200) {
+            console.log('Item deleted successfully');
+            return res.status(200).json({ message: 'Item deleted successfully' });
+        }
+
+        res.status(response.status).json({ error: 'Failed to delete item' });
+
+    } 
+    catch (error) {
+        console.error('Error:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.checkOut = async (req, res) => 
+{
+    try {
+        const loginSession = req.session.loginSession;
+        const { cart } = req.query;
+        
+        await axios.delete(base_url + '/cart/' + cart);
+
+        res.status(200).json({ message: 'Cart cleared' });
+    } 
+    catch (error) {
+        console.error('Error clearing cart:', error);
+        res.status(500).json({ message: 'Failed to clear cart' });
+    }
 };

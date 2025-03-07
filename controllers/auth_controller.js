@@ -44,7 +44,7 @@ exports.checkLogin = async (req, res) =>
         } else {
             res.send(`
                 <script>
-                    alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง"); 
+                    alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
                     window.location.href = "/signin?from=${encodeURIComponent(lastUrl)}";
                 </script>
             `);
