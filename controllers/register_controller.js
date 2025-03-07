@@ -55,7 +55,7 @@ exports.checkReg = async (req, res) =>
         
         req.session.userData = { username, password, email };
 
-        res.redirect(`/reg-form`);
+        res.redirect(`/regForm`);
     } 
     catch (err) {
         console.error(err);
