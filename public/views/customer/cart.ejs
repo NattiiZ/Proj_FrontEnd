@@ -80,7 +80,9 @@
                             </td>
                             <td><h3><span id="total-<%= product.Product.product_ID %>"><%= itemTotal.toFixed(2) %> บาท</span></h3></td>
                             <td>
-                                <button type="button" onclick="deleteItem('<%= product.Product.product_ID %>')">ลบ</button> <!-- ปุ่มลบ -->
+                                <form action="/deleteItem?id=<%= product.Product.product_ID %>" method="post">
+                                    <button type="submit" onclick="deleteItem('<%= product.Product.product_ID %>')">ลบ</button>
+                                </form>
                             </td>
                         </tr>
                     <% }); %>
@@ -136,7 +138,6 @@
             document.getElementById('all').innerText = totalPrice.toFixed(2) + " บาท";
         }
 
-        // ฟังก์ชันลบสินค้าออกจากตะกร้า
         // ฟังก์ชันลบสินค้าออกจากตะกร้า
         function deleteItem(productId) {
             const row = document.getElementById(`row-${productId}`);

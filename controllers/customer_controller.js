@@ -91,3 +91,11 @@ exports.getProduct = async (req, res) => {
     }
 };
 
+exports.deleteItem = async (req, res) =>
+{
+    const loginSession = req.session.loginSession;
+    const itemID = req.params.id;
+
+    console.log("tresadad");
+    
+};
