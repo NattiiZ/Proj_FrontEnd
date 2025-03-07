@@ -44,19 +44,15 @@
         <h1 class="section-title">ตะกร้าสินค้าของคุณ</h1>
         
         <div class="cart-items">
-            <div class="cart-item">
-                <img src="path_to_image.jpg" alt="Product Image" class="cart-item-image">
-                <div class="cart-item-info">
-                    <h3>ASUS ROG Strix XG27AQ</h3>
-                    <p>ราคา: 18,900 บาท</p>
-                    <div class="quantity-control">
-                        <button class="btn quantity-btn" onclick="decreaseQuantity()">-</button>
-                        <span id="quantity">1</span>
-                        <button class="btn quantity-btn" onclick="increaseQuantity()">+</button>
+            <% cartItem.forEach(product => { %>
+                <div class="cart-item">
+                    <img src="path_to_image.jpg" alt="Product Image" class="cart-item-image">
+                    <div class="cart-item-info">
+                        <% const brandName = brands.find(brand => brand.brand_ID == product.Product.brand_ID); %>
+                        <h1><%= brandName ? `${brandName.name} ${product.Product.name}` : product.Product.name %></h1>
                     </div>
-                    <a href="#" class="btn" onclick="alert('ลบสินค้าออกจากตะกร้า')">ลบ</a>
                 </div>
-            </div>
+            <% }); %>
         </div>
 
         <div class="cart-summary">
@@ -69,6 +65,15 @@
         &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
     </footer>
 </body>
+
+<!-- <h3>ASUS ROG Strix XG27AQ</h3>
+                        <p>ราคา: 18,900 บาท</p>
+                        <div class="quantity-control">
+                            <button class="btn quantity-btn" onclick="decreaseQuantity()">-</button>
+                            <span id="quantity">1</span>
+                            <button class="btn quantity-btn" onclick="increaseQuantity()">+</button>
+                        </div>
+                        <a href="#" class="btn" onclick="alert('ลบสินค้าออกจากตะกร้า')">ลบ</a> -->
 
 
 <script>
