@@ -10,6 +10,13 @@
     <title>รายละเอียดสินค้า</title>
 </head>
 
+<script>
+    if (!window.performance.navigation.type) {
+        window.location.reload();
+    }
+</script>
+
+
 <body>
     <header>
         <a href="/" class="logo"><img src="../img/logo/logo_store.png" alt="logo"></a>
@@ -69,8 +76,8 @@
                             <li><strong>ระบบระบายความร้อน:</strong> 3 พัดลม, Vapor Chamber</li>
                         </ul>
 
-                        <form action="/getProduct" method="POST">
-                            <input type="hidden" name="url" value="/category/<%= products[i].category_ID %>">
+                        <form action="/getProduct" method="POST" onsubmit="setTimeout(() => location.reload(), 500);">
+                            <input type="hidden" name="url" value="/detail?brand=<%= brand %>&Id=<%= Id %>">
                             <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
                             <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
                         </form>
@@ -86,3 +93,5 @@
 </footer>
 
 </html>
+
+

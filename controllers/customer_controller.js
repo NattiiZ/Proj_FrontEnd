@@ -36,8 +36,8 @@ exports.getProduct = async (req, res) =>
 {
     try {
         const loginSession = req.session.loginSession;
-        const { url } = req.body;
-        
+        const { url, Id } = req.body;
+
         if (!loginSession)
             return res.redirect(`/signin?from=${encodeURIComponent(url)}`);
 
@@ -51,12 +51,23 @@ exports.getProduct = async (req, res) =>
 
         const cart = carts.data.find(cart => cart.user_ID === loginSession.UID);
         const cartId = cart.cart_ID;
-
-        const findProduct = await axios.get(base_url + '/cart-item/' + cartId);
-        console.log('Find Product:', JSON.stringify(findProduct.data, null, 2));
+        console.log("Cart_ID : " + cartId);
         
 
-    } catch (error) {
+        const inCart = await axios.get(base_url + '/cart-item/' + cartId);
+        const findProduct = inCart.data.find(product => product.product_ID === Id)
+
+        if (!findProduct) {
+            console.log("Go!!!");
+            
+            await axios.post(base_url + '/cart-item', { 
+                cart_ID: cartId,
+                product_ID: Id,
+                quantity: 1
+            });
+        };
+    } 
+    catch (error) {
         console.error(error);
         res.status(500).send('Error');
     }
