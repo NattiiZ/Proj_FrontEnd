@@ -29,7 +29,7 @@ router.post('/logout', auth_controller.logout);
 router.get('/signup', register_controller.signup);
 router.post('/checkReg', register_controller.checkReg);
 router.get('/regForm', register_controller.regForm);
-router.get('/createUser', register_controller.createUser);
+router.post('/createUser', register_controller.createUser);
 
 router.get('/admin-dashboard', admin_controller.dashboard);
 
