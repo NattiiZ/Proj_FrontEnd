@@ -58,8 +58,8 @@ exports.checkReg = async (req, res) =>
         res.redirect(`/reg-form`);
     } 
     catch (err) {
-        console.error(err);
-        res.status(500).send('Error');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };
 
@@ -71,8 +71,8 @@ exports.regForm = async (req, res) =>
         res.render("customer/reg_form", { category: category.data });
     } 
     catch (err) {
-        console.error(err);
-        res.status(500).send('Error');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };
 
@@ -93,7 +93,7 @@ exports.createUser = async (req, res) =>
         res.redirect("/");
     } 
     catch (err) {
-        console.error(err);
-        res.status(500).send('Error');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };

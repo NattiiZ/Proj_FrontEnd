@@ -16,8 +16,8 @@ exports.signin = async (req, res) =>
         res.render("auth/signin", { category: category.data, url});
     } 
     catch (err) {
-        console.error(err);
-        res.status(500).send('Error');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };
 
@@ -51,8 +51,8 @@ exports.checkLogin = async (req, res) =>
         }
     } 
     catch (err) {
-        console.error(err);
-        res.status(500).send('Error');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };
 

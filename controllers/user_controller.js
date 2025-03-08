@@ -23,8 +23,8 @@ exports.home = async (req, res) =>
         });
     } 
     catch (err) {
-        console.error(err);
-        res.status(500).send('Error');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };
 
@@ -60,8 +60,8 @@ exports.search = async (req, res) =>
             loginSession
         });
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Error during search.');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };
 
@@ -100,8 +100,8 @@ exports.categoryList = async (req, res) =>
         res.render("customer/category", { category: category.data, loginSession });
     }
     catch(err) {
-        console.error(err);
-        res.status(500).send('Error');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };
 
@@ -122,8 +122,8 @@ exports.categorySelected = async (req, res) =>
 
         const selectedCategory = categories.find(cat => cat.category_ID === categoryId);
 
-        if (!selectedCategory)
-            return res.status(404).send("ไม่พบหมวดหมู่");
+        // if (!selectedCategory)
+        //     return res.status(404).send("ไม่พบหมวดหมู่");
 
         const filteredProducts = products.filter(product => product.category_ID === categoryId);
 
@@ -138,7 +138,7 @@ exports.categorySelected = async (req, res) =>
 
     } 
     catch (err) {
-        console.error(err);
-        res.status(500).send('เกิดข้อผิดพลาด');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };

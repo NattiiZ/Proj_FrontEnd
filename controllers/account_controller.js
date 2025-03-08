@@ -31,8 +31,8 @@ exports.accountMenu = async (req, res) =>
         });
 
     } catch (err) {
-        console.error(err);
-        res.status(500).send('Error');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };
 
@@ -53,7 +53,7 @@ exports.myOders = async (req, res) =>
     } 
     catch (error) {
         console.error('Error:', error.message);
-        res.status(500).json({ error: 'Internal Server Error' })
+        res.redirect('/')
     }
 }
 
@@ -70,8 +70,6 @@ exports.editInfo = async (req, res) =>
         const user = await axios.get(base_url + '/user/' + loginSession.UID)
         const findCustomer = customers.data.find(customer => customer.user_ID == loginSession.UID)
 
-        console.log(findCustomer.address);
-
         res.render('customer/editInfo', { 
             category: category.data, 
             customer: findCustomer,
@@ -82,33 +80,31 @@ exports.editInfo = async (req, res) =>
     } 
     catch (error) {
         console.error('Error:', error.message);
-        res.status(500).json({ error: 'Internal Server Error' })
+        res.redirect('/')
     }
 }
 
 exports.newInfo = async (req, res) =>
 {
     try {
-        const { name, phone, email, address } = req.body;
         const loginSession = req.session.loginSession;
+        const { name, email, phone, address } = req.body;
 
-        const category = await axios.get(base_url + '/category');
+        if (!loginSession) {
+            return res.redirect('/signin');
+        }
+
         const customers = await axios.get(base_url + '/customer')
-        const user = await axios.get(base_url + '/user/' + loginSession.UID)
-        const findCustomer = customers.data.find(customer => customer.user_ID == loginSession.UID)
+        const findCustomer = customers.data.find(customer => customer.user_ID == loginSession.UID);
 
-        
+        await axios.put(base_url + '/customer/' + findCustomer.customer_ID, { name, phone, address })
+        await axios.put(base_url + '/user/' + loginSession.UID, { email })
 
-        res.render('customer/editInfo', { 
-            category: category.data, 
-            customer: findCustomer,
-            userId: loginSession.UID, 
-            user: user.data 
-        })
+        res.redirect('/account')
     } 
     catch (error) {
         console.error('Error:', error.message);
-        res.status(500).json({ error: 'Internal Server Error' })
+        res.redirect('/')
     }
 }
 
@@ -119,6 +115,6 @@ exports.resetPass = async (req, res) =>
     } 
     catch (error) {
         console.error('Error:', error.message);
-        res.status(500).json({ error: 'Internal Server Error' })
+        res.redirect('/')
     }
 }
