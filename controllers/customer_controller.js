@@ -135,19 +135,3 @@ exports.deleteItem = async (req, res) =>
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
-exports.checkOut = async (req, res) => 
-{
-    try {
-        const loginSession = req.session.loginSession;
-        const { cart } = req.query;
-        
-        await axios.delete(base_url + '/cart/' + cart);
-
-        res.status(200).json({ message: 'Cart cleared' });
-    } 
-    catch (error) {
-        console.error('Error clearing cart:', error);
-        res.status(500).json({ message: 'Failed to clear cart' });
-    }
-};

@@ -129,30 +129,30 @@
             updateTotalPrice();
 
             // ส่งข้อมูลการเปลี่ยนแปลงไปยังเซิร์ฟเวอร์
-            try {
-                const cartId = document.getElementById('cartId').value; // Assuming you have cartId available in the page
-                const response = await fetch(`/updateQty`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        cartId: cartId,
-                        productId: productId,
-                        quantity: quantity,
-                    }),
-                });
+            // try {
+            //     const cartId = document.getElementById('cartId').value; // Assuming you have cartId available in the page
+            //     const response = await fetch(`/updateQty`, {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify({
+            //             cartId: cartId,
+            //             productId: productId,
+            //             quantity: quantity,
+            //         }),
+            //     });
 
-                const result = await response.json();
-                if (result.success) {
-                    console.log('Quantity updated successfully');
-                } else {
-                    alert('เกิดข้อผิดพลาดในการอัปเดตจำนวนสินค้า');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์');
-            }
+            //     const result = await response.json();
+            //     if (result.success) {
+            //         console.log('Quantity updated successfully');
+            //     } else {
+            //         alert('เกิดข้อผิดพลาดในการอัปเดตจำนวนสินค้า');
+            //     }
+            // } catch (error) {
+            //     console.error('Error:', error);
+            //     alert('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์');
+            // }
         }
 
         function updateTotalPrice() {
