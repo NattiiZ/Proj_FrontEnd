@@ -157,17 +157,28 @@ nav a:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* จัดการเนื้อหาให้สมดุล */
+    gap: 10px;
+    justify-content: center;
+}
+
+.borderImg {
+    height: 180px;
+    align-self: center;
 }
 
 .product-card:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 .product-card img {
-    width: 100%;
-    display: block;
+    width: 270px;
+    height: 180px;
+    object-fit: contain;
+
+
 }
 .product-info {
-    padding: 1.5rem;
+    padding: 0 1.5rem ;
+    height: 180px;
 }
 .product-info h3 {
     margin: 0 0 0.75rem 0;

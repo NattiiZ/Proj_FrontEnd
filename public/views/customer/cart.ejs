@@ -103,12 +103,13 @@
     </div>
 
     <footer>
-        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+        &copy; 2025 The Computer Store | Copyright
     </footer>
 
     <script>
         // ฟังก์ชันอัปเดตจำนวนสินค้า
-        function updateQuantity(productId, change) {
+        async function updateQuantity(productId, change) 
+        {
             const quantityElement = document.getElementById(`quantity-${productId}`);
             const totalElement = document.getElementById(`total-${productId}`);
             let quantity = parseInt(quantityElement.innerText);
@@ -124,7 +125,34 @@
             const price = parseFloat(document.getElementById(`price-${productId}`).innerText);
             totalElement.innerText = (price * quantity).toFixed(2) + " บาท";
 
+            // อัปเดตผลรวมทั้งหมด
             updateTotalPrice();
+
+            // ส่งข้อมูลการเปลี่ยนแปลงไปยังเซิร์ฟเวอร์
+            try {
+                const cartId = document.getElementById('cartId').value; // Assuming you have cartId available in the page
+                const response = await fetch(`/updateQty`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cartId: cartId,
+                        productId: productId,
+                        quantity: quantity,
+                    }),
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    console.log('Quantity updated successfully');
+                } else {
+                    alert('เกิดข้อผิดพลาดในการอัปเดตจำนวนสินค้า');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์');
+            }
         }
 
         function updateTotalPrice() {

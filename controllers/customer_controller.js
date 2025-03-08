@@ -84,13 +84,31 @@ exports.getProduct = async (req, res) =>
         res.send(`
             <script>
                 alert("เพิ่ม ${brand.data.name} ${product.data.name} ลงตะกร้าเรียบร้อยแล้ว");
-                location.reload();
+                window.location.href = "${url}";
             </script>
         `);
     } 
     catch (error) {
         console.error("Error:", error);
         res.status(500).send('Error');
+    }
+};
+
+exports.updateQty = async (req, res) => 
+    {
+    const { cartId, productId, quantity } = req.body;
+
+    try {
+        await CartItem.update(
+            { quantity: quantity },
+            { where: { cartId: cartId, productId: productId } }
+        );
+
+        res.json({ success: true });
+    } 
+    catch (error) {
+        console.error('Error updating quantity:', error);
+        res.json({ success: false });
     }
 };
 
@@ -102,7 +120,7 @@ exports.deleteItem = async (req, res) =>
         if (!id || !item)
             return res.status(400).json({ error: 'Missing cartId or productId' });
 
-        const response = await axios.delete(`${base_url}/cart-item`, { params: { id, item } });
+        const response = await axios.delete(base_url + '/cart-item', { params: { id, item } });
 
         if (response.status === 200) {
             console.log('Item deleted successfully');

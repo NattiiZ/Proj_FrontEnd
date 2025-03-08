@@ -49,7 +49,8 @@
                 <div class="product-card">
                     <% var brand %>
 
-                    <img src="<%= products[i].img_url %>" alt="<%= products[i].name %>">
+                    <div class="borderImg"><img src="../../img/logo/favico.png" alt="<%= products[i].name %>"></div>
+
                     <div class="product-info">
                         <% for(var k=0; k< brands.length; k++) { %>
                             <% if (products[i].brand_ID == brands[k].brand_ID) { %>
@@ -84,7 +85,7 @@
 </body>
 
 <footer>
-    &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+    &copy; 2025 The Computer Store | Copyright
 </footer>
 
 </html>

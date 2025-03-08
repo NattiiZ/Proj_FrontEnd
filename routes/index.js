@@ -19,6 +19,7 @@ router.get('/category/:id', user_controller.categorySelected);
 
 router.get('/cart', customer_controller.cart);
 router.post('/getProduct', customer_controller.getProduct);
+router.post('/updateQty', customer_controller.updateQty)
 router.post('/deleteItem', customer_controller.deleteItem);
 router.post('/checkOut', customer_controller.checkOut)
 
@@ -30,7 +31,7 @@ router.post('/logout', auth_controller.logout);
 
 router.get('/signup', register_controller.signup);
 router.post('/checkReg', register_controller.checkReg);
-router.get('/regForm', register_controller.regForm);
+router.get('/reg-form', register_controller.regForm);
 router.post('/createUser', register_controller.createUser);
 
 router.get('/admin-dashboard', admin_controller.dashboard);
