@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/customer/category.css">
     <link rel="shortcut icon" href="../img/logo/favico.png" type="image/x-icon">
     <title>หมวดหมู่สินค้า</title>
 </head>
@@ -41,14 +41,15 @@
         <h1 class="section-title">หมวดหมู่สินค้า</h1>
         <div class="product-grid">
             <% for(var i=0; i < category.length; i++) { %>
+
                 <div class="product-card">
-                    <img src="<%= category[i].img_url %>" alt="">
+                    <img class="borderImg" src="../../img/logo/favico.png" alt="">
                     <div class="product-info">
                         <h3><%= category[i].name %></h3>
                         
                         <p><%= category[i].description %></p>
                         
-                        <form action="/category/<%= category[i].category_ID %>" method="GET">
+                        <form  action="/category/<%= category[i].category_ID %>" method="GET">
                             <button class="btn" type="submit">ดูรายการสินค้า</button>
                         </form>
                     </div>
