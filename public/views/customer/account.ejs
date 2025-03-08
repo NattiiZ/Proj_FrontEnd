@@ -25,16 +25,18 @@
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
-                    <% } %>
+                        <a href="/category/<%=i+1%>">
+                            <%= category[i].name %>
+                        </a>
+                        <% } %>
                 </div>
             </div>
             <div><a href="/cart">ตะกร้า</a></div>
             <% if (loginSession) { %>
                 <div><a href="/account">ข้อมูลส่วนตัว</a></div>
-            <% } else { %>
-                <div><a href="/signin">เข้าสู่ระบบ</a></div>
-            <% } %>
+                <% } else { %>
+                    <div><a href="/signin">เข้าสู่ระบบ</a></div>
+                    <% } %>
         </nav>
     </header>
 
@@ -45,11 +47,21 @@
             <div class="account-info">
                 <div class="text">
                     <h3>ข้อมูลส่วนตัว</h3>
-                    <p><strong>ชื่อผู้ใช้ : </strong> <span id="username"><%= userInfo.username %></span></p>
-                    <p><strong>ชื่อ-นามสกุล : </strong> <span id="username"><%= customerInfo.name %></span></p>
-                    <p><strong>อีเมล : </strong> <span id="email"><%= userInfo.email %></span></p>
-                    <p><strong>ที่อยู่ : </strong> <span id="address"><%= customerInfo.address %></span></p>
-                    <p><strong>เบอร์โทรศัพท์ : </strong> <span id="phone"><%= customerInfo.phone %></span></p>
+                    <p><strong>ชื่อผู้ใช้ : </strong> <span id="username">
+                            <%= userInfo.username %>
+                        </span></p>
+                    <p><strong>ชื่อ-นามสกุล : </strong> <span id="username">
+                            <%= customerInfo.name %>
+                        </span></p>
+                    <p><strong>อีเมล : </strong> <span id="email">
+                            <%= userInfo.email %>
+                        </span></p>
+                    <p><strong>ที่อยู่ : </strong> <span id="address">
+                            <%= customerInfo.address %>
+                        </span></p>
+                    <p><strong>เบอร์โทรศัพท์ : </strong> <span id="phone">
+                            <%= customerInfo.phone %>
+                        </span></p>
                 </div>
             </div>
             <div class="account-actions">
@@ -60,13 +72,14 @@
                 <form action="/edit-info" method="GET">
                     <button class="btn" type="submit">แก้ไขข้อมูล</button>
                 </form>
-        
+
                 <form action="/change-password" method="GET">
                     <button class="btn" type="submit">เปลี่ยนรหัสผ่าน</button>
                 </form>
-        
+
                 <form action="/logout" method="POST">
-                    <button class="btn" id="logout" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+                    <button class="btn" id="logout" onclick="alert('คุณได้ออกจากระบบแล้ว')"
+                        type="submit">ออกจากระบบ</button>
                 </form>
             </div>
         </div>
