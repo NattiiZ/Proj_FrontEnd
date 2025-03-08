@@ -108,11 +108,47 @@ exports.changePass = async (req, res) =>
         const loginSession = req.session.loginSession;
         const category = await axios.get(base_url + '/category');
 
+        if (!loginSession)
+            return res.redirect('/signin');
+
+        res.render('customer/changePass', { category: category.data });
+    } 
+    catch (error) {
+        console.error('Error:', err.message);
+        res.redirect('/account')
+    }
+}
+
+exports.newPass = async (req, res) =>
+{
+    try {
+        const { oldPass, newPass, confirmPass } = req.body;
+        const loginSession = req.session.loginSession;
+        const user = await axios.get(base_url + '/user/' + loginSession.UID);
 
         if (!loginSession)
             return res.redirect('/signin');
 
-        res.render('auth/changePass', { category: category.data });
+        if (user.data.password != oldPass) {
+            return res.send(`
+                <script>
+                    alert("รหัสผ่านเดิมไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง"); 
+                    window.location.href = "/change-password";
+                </script>
+            `);
+        }
+        
+        if (newPass != confirmPass) {
+            return res.send(`
+                <script>
+                    alert("รหัสผ่านไม่ตรงกัน กรุณาลองใหม่อีกครั้ง"); 
+                    window.location.href = "/change-password";
+                </script>
+            `);
+        }
+
+        await axios.put(base_url + '/user/' + loginSession.UID, { password: newPass })
+        res.redirect('/account')
     } 
     catch (error) {
         console.error('Error:', err.message);

@@ -36,16 +36,16 @@
 
     <div class="container">
         <h1 class="account-info-header">เปลี่ยนรหัสผ่าน</h1>
-        <form action="/updatePassword" method="POST">
+        <form action="/updatePass" method="POST">
             <div class="password-form">
-                <label for="oldPassword">รหัสผ่านเดิม:</label>
-                <input type="password" id="oldPassword" name="oldPassword" required>
+                <label for="oldPassword">รหัสผ่านเดิม : </label>
+                <input type="password" id="oldPassword" name="oldPass" minlength="8" required>
 
-                <label for="newPassword">รหัสผ่านใหม่:</label>
-                <input type="password" id="newPassword" name="newPassword" required>
+                <label for="newPassword">รหัสผ่านใหม่ : </label>
+                <input type="password" id="newPassword" name="newPass" minlength="8" required>
 
-                <label for="confirmPassword">ยืนยันรหัสผ่านใหม่:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <label for="confirmPassword">ยืนยันรหัสผ่านใหม่ : </label>
+                <input type="password" id="confirmPassword" name="confirmPass" minlength="8" required>
 
                 <button type="submit" class="btn">บันทึกรหัสผ่านใหม่</button>
             </div>
