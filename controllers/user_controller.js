@@ -16,7 +16,7 @@ exports.home = async (req, res) => {
             axios.get(base_url + '/category')
         ]);
 
-        res.render("customer/home", { 
+        res.render('user/home', { 
             products: product.data, 
             category: category.data, 
             brands: brand.data,
@@ -50,7 +50,7 @@ exports.search = async (req, res) => {
             return searchText.includes(query.toLowerCase());
         });
 
-        res.render("customer/search", {
+        res.render('user/search', {
             products: filteredProducts,
             category: categories.data,
             brands: brand.data,
@@ -71,7 +71,7 @@ exports.productDetail = async (req, res) => {
         const product = await axios.get(base_url + '/product/');
         const category = await axios.get(base_url + '/category');
 
-        res.render("customer/detail", { 
+        res.render('user/detail', { 
             products: product.data, 
             category: category.data, 
             brand, 
@@ -90,7 +90,7 @@ exports.categoryList = async (req, res) => {
 
         const category = await axios.get(base_url + '/category');
 
-        res.render("customer/category", { category: category.data, loginSession });
+        res.render('user/category', { category: category.data, loginSession });
     } catch (err) {
         console.error('Error in categoryList:', err.message);
         res.status(500).send('An error occurred while loading the category list. Please try again later.');
@@ -118,7 +118,7 @@ exports.categorySelected = async (req, res) => {
 
         const filteredProducts = products.filter(product => product.category_ID === categoryId);
 
-        res.render("customer/thisCategory", {
+        res.render('user/thisCategory', {
             category: categories,
             products: filteredProducts,
             name: selectedCategory.name,

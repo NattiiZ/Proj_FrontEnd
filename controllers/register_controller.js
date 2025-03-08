@@ -14,7 +14,7 @@ exports.signup = async (req, res) => {
             return res.redirect('/');
 
         const category = await axios.get(base_url + '/category');
-        res.render("auth/signup", { category: category.data });
+        res.render('auth/signup', { category: category.data });
     } catch (err) {
         console.error('Error in signup:', err.message);
         res.status(500).send('An error occurred while loading the signup page. Please try again later.');
@@ -70,7 +70,7 @@ exports.regForm = async (req, res) => {
             return res.redirect('/');
 
         const category = await axios.get(base_url + '/category');
-        res.render("customer/reg_form", { category: category.data });
+        res.render('auth/reg_form', { category: category.data });
     } catch (error) {
         console.error('Error in regForm:', error.message);
         res.status(500).send('An error occurred while loading the registration form. Please try again later.');

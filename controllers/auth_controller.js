@@ -17,7 +17,7 @@ exports.signin = async (req, res) => {
 
         const category = await axios.get(base_url + '/category');
         
-        res.render("auth/signin", { category: category.data, url });
+        res.render('auth/signin', { category: category.data, url });
     } 
     catch (error) {
         console.error('Error in signin:', error.message);

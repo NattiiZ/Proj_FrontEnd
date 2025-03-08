@@ -21,7 +21,7 @@ exports.dashboard = async (req, res) => {
             axios.get(base_url + '/category')
         ]);
 
-        res.render("admin/dashboard", {
+        res.render('admin/dashboard', {
             users: users.data,
             orders: orders.data,
             products: products.data,

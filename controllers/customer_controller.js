@@ -31,7 +31,7 @@ exports.cart = async (req, res) => {
         
         let items = cartItems.data;
 
-        res.render("customer/cart", { 
+        res.render('customer/cart', { 
             loginSession,
             category: category.data, 
             brands: brand.data,
