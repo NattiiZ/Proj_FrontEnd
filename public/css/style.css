@@ -24,8 +24,11 @@ header {
     border-bottom: 1px solid #a5a5a5;
     height: fit-content;
     gap: 60px;
-
+    z-index: 100; /* ตั้งค่า z-index ให้สูงกว่า dropdown */
+    position: relative; /* ตั้งค่า position เพื่อให้ z-index ทำงาน */
+    background: white; /* เพิ่ม background เพื่อให้ header ไม่โปร่งแสง */
 }
+
 
 .logo img {
     width: 150px;
@@ -94,22 +97,49 @@ nav a:hover {
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    z-index: 0;
+    z-index: 99; /* ตั้งค่า z-index ให้ต่ำกว่า header */
     font-size: medium;
-    margin-top: 5px;
+    margin-top: 15px; /* ขยับ dropdown ลงมาข้างล่างเพิ่มเติม */
+    opacity: 0; /* เริ่มต้นให้ dropdown ไม่แสดง */
+    transition: opacity 0.5s ease-in-out; /* เพิ่ม transition สำหรับ opacity */
 }
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    transition: background 0.3s ease-in-out; /* เพิ่ม transition สำหรับ background */
 }
-.dropdown-content a:hover{
-    background: white;
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 1;
+    font-size: medium;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none; /* ปิดการรับเหตุการณ์ของเมาส์ชั่วคราว */
 }
+
 .dropdown:hover .dropdown-content {
     display: block;
+    opacity: 1;
+    animation: fade 0.5s ease-in-out; /* เพิ่ม animation สำหรับ fade effect */
+    transition-delay: 0.5s;
+    pointer-events: auto; /* เปิดการรับเหตุการณ์ของเมาส์เมื่อแสดง dropdown */
 }
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .dropbtn {
     margin-bottom: 50px;
 }

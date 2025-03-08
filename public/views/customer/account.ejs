@@ -36,36 +36,43 @@
 
 
     <div class="container">
-        <h1 class="section-title">ข้อมูลบัญชีของคุณ</h1>
+        <h1 class="account-info-header">ข้อมูลบัญชีของคุณ</h1>
+        <div class="row">
+            <div class="account-info">
+                <div class="text">
+                    <h3>ข้อมูลส่วนตัว</h3>
+                    <p><strong>ชื่อผู้ใช้:</strong> <span id="username"><%= userInfo.user_ID %></span></p>
+                    <p><strong>ชื่อผู้ใช้:</strong> <span id="username"><%= userInfo.username %></span></p>
+                    <p><strong>ชื่อ-นามสกุล:</strong> <span id="username"><%= customerInfo.name %></span></p>
+                    <p><strong>อีเมล์:</strong> <span id="email"><%= userInfo.email %></span></p>
+                    <p><strong>ที่อยู่:</strong> <span id="address"><%= customerInfo.address %></span></p>
+                    <p><strong>เบอร์โทรศัพท์:</strong> <span id="phone"><%= customerInfo.phone %></span></p>
+                </div>
+            </div>
+            <div class="account-actions">
+                <form action="" method="POST">
+                    <button class="btn" type="submit">ดูรายการสั่งซื้อ</button>
+                </form>
 
-        <div class="account-info">
-            <h3>ข้อมูลส่วนตัว</h3>
-            <p><strong>ชื่อผู้ใช้:</strong> <span id="username"><%= userInfo.user_ID %></span></p>
-            <p><strong>ชื่อผู้ใช้:</strong> <span id="username"><%= userInfo.username %></span></p>
-            <p><strong>ชื่อ-นามสกุล:</strong> <span id="username"><%= customerInfo.name %></span></p>
-            <p><strong>อีเมล์:</strong> <span id="email"><%= userInfo.email %></span></p>
-            <p><strong>ที่อยู่:</strong> <span id="address"><%= customerInfo.address %></span></p>
-            <p><strong>เบอร์โทรศัพท์:</strong> <span id="phone"><%= customerInfo.phone %></span></p>
+                <form action="" method="POST">
+                    <button class="btn" type="submit">แก้ไขข้อมูล</button>
+                </form>
+        
+                <form action="" method="POST">
+                    <button class="btn" type="submit">เปลี่ยนรหัสผ่าน</button>
+                </form>
+        
+                <form action="/logout" method="POST">
+                    <button class="btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+                </form>
+            </div>
         </div>
-
-        <form action="" method="POST">
-            <button class="btn" type="submit">แก้ไขข้อมูล</button>
-        </form>
-
-        <form action="" method="POST">
-            <button class="btn" type="submit">เปลี่ยนรหัสผ่าน</button>
-        </form>
-
-        <form action="/logout" method="POST">
-            <button class="btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
-        </form>
-    
     </div>
 
 </body>
 
 <footer>
-    &copy; 2025 The Computer Store | Copyright
+    &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
 </footer>
 
 </html>
