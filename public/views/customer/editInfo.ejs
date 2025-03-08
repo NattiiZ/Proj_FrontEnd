@@ -5,10 +5,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/customer/edit-profile.css">
+    <link rel="stylesheet" href="../css/signup.css">
     <link rel="shortcut icon" href="../img/logo/favico.png" type="image/x-icon">
-    <title>แก้ไขข้อมูลส่วนตัว</title>
+    <title>ข้อมูลผู้ใช้</title>
 </head>
+
+<style>
+    .input-group {
+        margin-bottom: 15px;
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .input-group input,
+    .input-group textarea {
+        width: 96%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .input-group textarea {
+        resize: none; /* ปิดการขยายขนาด textarea */
+    }
+
+    .input-group input:focus,
+    .input-group textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    .input-group input::placeholder,
+    .input-group textarea::placeholder {
+        color: #aaa;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+
 
 <body>
     <header>
@@ -30,32 +81,48 @@
                 </div>
             </div>
             <div><a href="/cart">ตะกร้า</a></div>
-            <div><a href="/account">ข้อมูลส่วนตัว</a></div>
+            <% if (loginSession) { %>
+                <div><a href="/account">ข้อมูลส่วนตัว</a></div>
+            <% } else { %>
+                <div><a href="/signin">เข้าสู่ระบบ</a></div>
+            <% } %>
         </nav>
     </header>
 
     <div class="container">
-        <h1 class="account-info-header">แก้ไขข้อมูลส่วนตัว</h1>
-        <form action="/updateProfile" method="POST">
-            <div class="edit-form">
-                <label for="name">ชื่อ-นามสกุล:</label>
-                <input type="text" id="name" name="name" value="<%= customerInfo.name %>" required>
-                
-                <label for="address">ที่อยู่:</label>
-                <input type="text" id="address" name="address" value="<%= customerInfo.address %>" required>
+        <h1 class="section-title">แก้ไขข้อมูลผู้ใช้</h1>
 
-                <label for="phone">เบอร์โทรศัพท์:</label>
-                <input type="text" id="phone" name="phone" value="<%= customerInfo.phone %>" required>
+        <div class="register-form">
+            <form action="/newInfo" method="POST">
+                <div class="input-group">
+                    <label for="name">ชื่อ-นามสกุล</label>
+                    <input type="text" name="name" value="<%= customer.name %>" placeholder="กรอกชื่อ-นามสกุล">
+                </div>
 
-                <button type="submit" class="btn">บันทึกการเปลี่ยนแปลง</button>
-            </div>
-        </form>
+                <div class="input-group">
+                    <label for="email">อีเมล</label>
+                    <input type="text" name="email" value="<%= email %>" placeholder="กรอกเบอร์โทร">
+                </div>
+
+                <div class="input-group">
+                    <label for="phone">เบอร์โทร</label>
+                    <input type="text" name="phone" value="<%= customer.phone %>" placeholder="กรอกเบอร์โทร">
+                </div>
+
+                <div class="input-group">
+                    <label for="address">ที่อยู่</label>
+                    <textarea name="address" placeholder="กรอกที่อยู่"><%= customer.address %></textarea>
+                </div>
+
+                <button type="submit" class="btn">บันทึกข้อมูล</button>
+            </form>
+        </div>
     </div>
 
-</body>
+    <footer>
+        &copy; 2025 The Computer Store | Copyright
+    </footer>
 
-<footer>
-    &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
-</footer>
+</body>
 
 </html>

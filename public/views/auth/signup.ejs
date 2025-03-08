@@ -30,7 +30,11 @@
                 </div>
             </div>
             <div><a href="/cart">ตะกร้า</a></div>
-            <div><a href="/account">เข้าสู่ระบบ</a></div>
+            <% if (loginSession) { %>
+                <div><a href="/account">ข้อมูลส่วนตัว</a></div>
+            <% } else { %>
+                <div><a href="/signin">เข้าสู่ระบบ</a></div>
+            <% } %>
         </nav>
     </header>
 

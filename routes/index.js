@@ -20,11 +20,12 @@ router.get('/category/:id', user_controller.categorySelected);
 router.get('/cart', customer_controller.cart);
 router.post('/getProduct', customer_controller.getProduct);
 router.post('/deleteItem', customer_controller.deleteItem);
-router.get('/my-orders', customer_controller.myOders)
-router.post('/edit-info', customer_controller.editInfo)
-router.post('/reset-pass', customer_controller.resetPass)
 
 router.get('/account', account_controller.accountMenu);
+router.get('/my-orders', account_controller.myOders)
+router.get('/edit-info', account_controller.editInfo)
+router.post('/newInfo', account_controller.newInfo)
+router.get('/reset-pass', account_controller.resetPass)
 
 router.get('/signin', auth_controller.signin);
 router.post('/checkLogin', auth_controller.checkLogin);
