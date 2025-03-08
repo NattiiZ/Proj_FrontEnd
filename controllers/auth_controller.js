@@ -52,7 +52,7 @@ exports.checkLogin = async (req, res) =>
     } 
     catch (err) {
         console.error('Error:', error.message);
-        res.redirect('/')
+        res.redirect('/sigin')
     }
 };
 

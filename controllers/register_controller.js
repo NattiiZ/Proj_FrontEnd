@@ -14,8 +14,8 @@ exports.signup = async (req, res) =>
         res.render("auth/signup", { category: category.data });
     } 
     catch(err){
-        console.error(err);
-        res.status(500).send('Error');
+        console.error('Error:', error.message);
+        res.redirect('/')
     }
 };
 
@@ -59,7 +59,7 @@ exports.checkReg = async (req, res) =>
     } 
     catch (err) {
         console.error('Error:', error.message);
-        res.redirect('/')
+        res.redirect('/signup')
     }
 };
 
@@ -72,7 +72,7 @@ exports.regForm = async (req, res) =>
     } 
     catch (err) {
         console.error('Error:', error.message);
-        res.redirect('/')
+        res.redirect('/signup')
     }
 };
 
@@ -94,6 +94,6 @@ exports.createUser = async (req, res) =>
     } 
     catch (err) {
         console.error('Error:', error.message);
-        res.redirect('/')
+        res.redirect('/signup')
     }
 };

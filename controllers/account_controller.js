@@ -53,7 +53,7 @@ exports.myOders = async (req, res) =>
     } 
     catch (error) {
         console.error('Error:', error.message);
-        res.redirect('/')
+        res.redirect('/account')
     }
 }
 
@@ -80,7 +80,7 @@ exports.editInfo = async (req, res) =>
     } 
     catch (error) {
         console.error('Error:', error.message);
-        res.redirect('/')
+        res.redirect('/account')
     }
 }
 
@@ -104,17 +104,26 @@ exports.newInfo = async (req, res) =>
     } 
     catch (error) {
         console.error('Error:', error.message);
-        res.redirect('/')
+        res.redirect('/account')
     }
 }
 
 exports.resetPass = async (req, res) =>
 {
     try {
-        res.render('customer/resetPass')
+        const loginSession = req.session.loginSession;
+
+        if (!loginSession) {
+            return res.redirect('/signin');
+        }
+
+        const customers = await axios.get(base_url + '/user/' + loginSession.UID)
+
+
+        res.redirect('/account')
     } 
     catch (error) {
         console.error('Error:', error.message);
-        res.redirect('/')
+        res.redirect('/account')
     }
 }
