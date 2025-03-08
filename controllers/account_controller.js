@@ -9,13 +9,11 @@ const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
 exports.accountMenu = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
-
-        if (!loginSession)
-            return res.redirect('/signin');
+        if (!loginSession) return res.redirect('/signin');
 
         const [category, userInfo, customers] = await Promise.all([
             axios.get(base_url + '/category'),
-            axios.get(`${base_url}/user/${loginSession.UID}`),
+            axios.get(base_url + '/user/' + loginSession.UID),
             axios.get(base_url + '/customer')
         ]);
 
@@ -27,19 +25,16 @@ exports.accountMenu = async (req, res) => {
             customerInfo,
             loginSession
         });
-
     } catch (error) {
-        console.error('Error in accountMenu:', error.message);
-        res.status(500).send('An error occurred while fetching account information. Please try again later.');
+        console.error(error.message);
+        res.status(500).send('Error. Try again.');
     }
 };
 
 exports.myOrders = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
-
-        if (!loginSession)
-            return res.redirect(`/signin?from=${encodeURIComponent(req.url)}`);
+        if (!loginSession) return res.redirect(`/signin?from=${encodeURIComponent(req.url)}`);
 
         const category = await axios.get(base_url + '/category');
         const customers = await axios.get(base_url + '/customer');
@@ -48,17 +43,15 @@ exports.myOrders = async (req, res) => {
 
         res.render('customer/myOrder', { category: category.data, orders: orders.data });
     } catch (error) {
-        console.error('Error in myOrders:', error.message);
-        res.status(500).send('An error occurred while fetching your orders. Please try again later.');
+        console.error(error.message);
+        res.status(500).send('Error fetching orders.');
     }
 };
 
 exports.editInfo = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
-
-        if (!loginSession)
-            return res.redirect(`/signin?from=${encodeURIComponent(req.url)}`);
+        if (!loginSession) return res.redirect(`/signin?from=${encodeURIComponent(req.url)}`);
 
         const category = await axios.get(base_url + '/category');
         const customers = await axios.get(base_url + '/customer');
@@ -73,8 +66,8 @@ exports.editInfo = async (req, res) => {
             loginSession
         });
     } catch (error) {
-        console.error('Error in editInfo:', error.message);
-        res.status(500).send('An error occurred while editing your information. Please try again later.');
+        console.error(error.message);
+        res.status(500).send('Error loading info.');
     }
 };
 
@@ -90,8 +83,8 @@ exports.newInfo = async (req, res) => {
 
         res.redirect('/account');
     } catch (error) {
-        console.error('Error in newInfo:', error.message);
-        res.status(500).send('An error occurred while updating your information. Please try again later.');
+        console.error(error.message);
+        res.status(500).send('Error updating info.');
     }
 };
 
@@ -99,14 +92,12 @@ exports.changePass = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
         const category = await axios.get(base_url + '/category');
-
-        if (!loginSession)
-            return res.redirect('/signin');
+        if (!loginSession) return res.redirect('/signin');
 
         res.render('customer/changePass', { category: category.data });
     } catch (error) {
-        console.error('Error in changePass:', error.message);
-        res.status(500).send('An error occurred while loading the password change page. Please try again later.');
+        console.error(error.message);
+        res.status(500).send('Error loading password page.');
     }
 };
 
@@ -116,13 +107,12 @@ exports.newPass = async (req, res) => {
         const loginSession = req.session.loginSession;
         const user = await axios.get(base_url + '/user/' + loginSession.UID);
 
-        if (!loginSession)
-            return res.redirect('/signin');
+        if (!loginSession) return res.redirect('/signin');
 
         if (user.data.password != oldPass) {
             return res.send(`
                 <script>
-                    alert("The old password is incorrect. Please try again.");
+                    alert("Old password incorrect.");
                     window.location.href = "/change-password";
                 </script>
             `);
@@ -131,7 +121,7 @@ exports.newPass = async (req, res) => {
         if (newPass != confirmPass) {
             return res.send(`
                 <script>
-                    alert("The new password does not match. Please try again.");
+                    alert("Passwords don't match.");
                     window.location.href = "/change-password";
                 </script>
             `);
@@ -140,8 +130,8 @@ exports.newPass = async (req, res) => {
         await axios.put(base_url + '/user/' + loginSession.UID, { password: newPass });
         res.redirect('/account');
     } catch (error) {
-        console.error('Error in newPass:', error.message);
-        res.status(500).send('An error occurred while changing your password. Please try again later.');
+        console.error(error.message);
+        res.status(500).send('Error changing password.');
     }
 };
 
@@ -152,9 +142,9 @@ exports.checkOut = async (req, res) => {
 
         await axios.delete(base_url + '/cart/' + cart);
 
-        res.status(200).json({ message: 'Cart cleared' });
+        res.status(200).json({ message: 'Cart cleared.' });
     } catch (error) {
-        console.error('Error in checkOut:', error.message);
-        res.status(500).json({ message: 'Failed to clear cart. Please try again later.' });
+        console.error(error.message);
+        res.status(500).json({ message: 'Error clearing cart.' });
     }
 };
