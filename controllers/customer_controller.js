@@ -42,7 +42,7 @@ exports.cart = async (req, res) =>
         });
     }
     catch(err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -90,7 +90,7 @@ exports.getProduct = async (req, res) =>
         `);
     } 
     catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -108,7 +108,7 @@ exports.updateQty = async (req, res) =>
         res.json({ success: true });
     } 
     catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -132,7 +132,7 @@ exports.deleteItem = async (req, res) =>
 
     } 
     catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };

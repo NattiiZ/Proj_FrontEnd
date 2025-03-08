@@ -23,7 +23,7 @@ exports.home = async (req, res) =>
         });
     } 
     catch (err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -60,7 +60,7 @@ exports.search = async (req, res) =>
             loginSession
         });
     } catch (err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -84,7 +84,7 @@ exports.productDetail = async (req, res) =>
         });
     }
     catch(err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -100,7 +100,7 @@ exports.categoryList = async (req, res) =>
         res.render("customer/category", { category: category.data, loginSession });
     }
     catch(err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -138,7 +138,7 @@ exports.categorySelected = async (req, res) =>
 
     } 
     catch (err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };

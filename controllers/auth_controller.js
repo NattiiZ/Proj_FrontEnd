@@ -9,14 +9,18 @@ const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
 exports.signin = async (req, res) => 
 {
     try {
+        const loginSession = req.session.loginSession
         const url = req.query.from || '/';
+
+        if (loginSession)
+            res.redirect('/')
 
         const category = await axios.get(base_url + '/category');
         
         res.render("auth/signin", { category: category.data, url});
     } 
     catch (err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -51,7 +55,7 @@ exports.checkLogin = async (req, res) =>
         }
     } 
     catch (err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/sigin')
     }
 };

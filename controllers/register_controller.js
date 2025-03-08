@@ -9,12 +9,17 @@ const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
 exports.signup = async (req, res) => 
 {
     try {
+        const loginSession = req.session.loginSession
+
+        if (loginSession)
+            res.redirect('/')
+
         const category = await axios.get(base_url + '/category');
 
         res.render("auth/signup", { category: category.data });
     } 
     catch(err){
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -58,7 +63,7 @@ exports.checkReg = async (req, res) =>
         res.redirect(`/reg-form`);
     } 
     catch (err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/signup')
     }
 };
@@ -66,12 +71,17 @@ exports.checkReg = async (req, res) =>
 exports.regForm = async (req, res) => 
 {
     try {
+        const loginSession = req.session.loginSession
+
+        if (loginSession)
+            res.redirect('/')
+
         const category = await axios.get(base_url + '/category');
 
         res.render("customer/reg_form", { category: category.data });
     } 
     catch (err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/signup')
     }
 };
@@ -93,7 +103,7 @@ exports.createUser = async (req, res) =>
         res.redirect("/");
     } 
     catch (err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/signup')
     }
 };

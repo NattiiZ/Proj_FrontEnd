@@ -11,9 +11,8 @@ exports.accountMenu = async (req, res) =>
     try {
         const loginSession = req.session.loginSession;
 
-        if (!loginSession) {
+        if (!loginSession)
             return res.redirect('/signin');
-        }
 
         const [category, userInfo, customers] = await Promise.all([
             axios.get(base_url + '/category'),
@@ -31,7 +30,7 @@ exports.accountMenu = async (req, res) =>
         });
 
     } catch (err) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/')
     }
 };
@@ -52,7 +51,7 @@ exports.myOders = async (req, res) =>
         res.render('customer/myOrder', { category: category.data, orders: orders.data })
     } 
     catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/account')
     }
 }
@@ -79,7 +78,7 @@ exports.editInfo = async (req, res) =>
         })
     } 
     catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/account')
     }
 }
@@ -87,13 +86,8 @@ exports.editInfo = async (req, res) =>
 exports.newInfo = async (req, res) =>
 {
     try {
-        const loginSession = req.session.loginSession;
         const { name, email, phone, address } = req.body;
-
-        if (!loginSession) {
-            return res.redirect('/signin');
-        }
-
+        const loginSession = req.session.loginSession;
         const customers = await axios.get(base_url + '/customer')
         const findCustomer = customers.data.find(customer => customer.user_ID == loginSession.UID);
 
@@ -103,27 +97,25 @@ exports.newInfo = async (req, res) =>
         res.redirect('/account')
     } 
     catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/account')
     }
 }
 
-exports.resetPass = async (req, res) =>
+exports.changePass = async (req, res) =>
 {
     try {
         const loginSession = req.session.loginSession;
+        const category = await axios.get(base_url + '/category');
 
-        if (!loginSession) {
+
+        if (!loginSession)
             return res.redirect('/signin');
-        }
 
-        const customers = await axios.get(base_url + '/user/' + loginSession.UID)
-
-
-        res.redirect('/account')
+        res.render('auth/changePass', { category: category.data });
     } 
     catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error:', err.message);
         res.redirect('/account')
     }
 }

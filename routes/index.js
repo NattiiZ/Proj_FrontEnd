@@ -25,11 +25,11 @@ router.get('/account', account_controller.accountMenu);
 router.get('/my-orders', account_controller.myOders)
 router.get('/edit-info', account_controller.editInfo)
 router.post('/newInfo', account_controller.newInfo)
-router.get('/reset-pass', account_controller.resetPass)
 
 router.get('/signin', auth_controller.signin);
 router.post('/checkLogin', auth_controller.checkLogin);
 router.post('/logout', auth_controller.logout);
+router.get('/change-password', account_controller.changePass)
 
 router.get('/signup', register_controller.signup);
 router.post('/checkReg', register_controller.checkReg);
