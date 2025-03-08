@@ -45,9 +45,8 @@
         <h1 class="section-title">สินค้าทั้งหมด</h1>
 
         <div class="product-grid">
-            <div class="product-card">
-                <% for(var i=0; i< products.length; i++) { %>
-
+            <% for(var i=0; i< products.length; i++) { %>
+                <div class="product-card">
                     <% var brand %>
 
                     <div class="borderImg"><img src="../../img/logo/favico.png" alt="<%= products[i].name %>"></div>
@@ -79,8 +78,8 @@
                             </form>
                         </div>
                     </div>
-                <% } %>
-            </div>
+                </div>
+            <% } %>
         </div>
     </div>
 

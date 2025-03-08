@@ -44,12 +44,13 @@
 
                 <div class="product-card">
                     <img class="borderImg" src="../../img/logo/favico.png" alt="">
+
                     <div class="product-info">
-                        <h3><%= category[i].name %></h3>
+                        <h2><%= category[i].name %></h2>
                         
                         <p><%= category[i].description %></p>
                         
-                        <form  action="/category/<%= category[i].category_ID %>" method="GET">
+                        <form class="btn-product" action="/category/<%= category[i].category_ID %>" method="GET">
                             <button class="btn" type="submit">ดูรายการสินค้า</button>
                         </form>
                     </div>

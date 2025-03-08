@@ -50,20 +50,20 @@
                 </div>
             </div>
             <div class="account-actions">
-                <form action="" method="POST">
+                <form action="/my-orders" method="GET">
                     <button class="btn" type="submit">ดูรายการสั่งซื้อ</button>
                 </form>
 
-                <form action="" method="POST">
+                <form action="/edit-info" method="POST">
                     <button class="btn" type="submit">แก้ไขข้อมูล</button>
                 </form>
         
-                <form action="" method="POST">
+                <form action="/reset-pass" method="POST">
                     <button class="btn" type="submit">เปลี่ยนรหัสผ่าน</button>
                 </form>
         
                 <form action="/logout" method="POST">
-                    <button class="btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+                    <button class="btn" id="logout" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
                 </form>
             </div>
         </div>
