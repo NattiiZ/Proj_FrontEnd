@@ -113,12 +113,13 @@ exports.updateQty = async (req, res) => {
 
 exports.deleteItem = async (req, res) => {
     try {
-        const { id, item } = req.query;
+        const { id, item } = req.query;  
 
         if (!id || !item)
             return res.status(400).json({ error: 'Missing cartId or productId' });
 
-        const response = await axios.delete(base_url + '/cart-item', { params: { id, item } });
+        const response = await axios.delete(base_url + `/cart-item/${id}/${item}`);
+        // const response = await axios.delete(base_url + '/cart-item', { params: { id, item } });
 
         if (response.status === 200) {
             console.log('Item deleted successfully');
@@ -126,7 +127,6 @@ exports.deleteItem = async (req, res) => {
         }
 
         res.status(response.status).json({ error: 'Failed to delete item' });
-
     } 
     catch (error) {
         console.error('Error in deleteItem:', error.message);
