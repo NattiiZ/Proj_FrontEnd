@@ -113,9 +113,9 @@ app.get("/search", async (req, res) =>
             query: query,
             loginSession
         });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Error during search.');
+    } 
+    catch (error) {
+        console.error('Error:', error.message);
     }
 });
 
@@ -165,11 +165,9 @@ app.get("/category/:id", async (req, res) =>
             brands: brandsRes.data,
             loginSession
         });
-
     } 
-    catch (err) {
-        console.error(err);
-        res.status(500).send('เกิดข้อผิดพลาด');
+    catch (error) {
+        console.error('Error:', error.message);
     }
 });
 
@@ -207,8 +205,9 @@ app.post("/getProduct", async (req, res) =>
 
         if (!loginSession)
             return res.redirect('/signin')
-    } catch (error) {
-        
+    } 
+    catch (error) {
+        console.error('Error:', error.message);
     }
 });
 
@@ -238,8 +237,9 @@ app.get("/account", async (req, res) => {
             customerInfo
         });
 
-    } catch (err) {
-        console.error(err);
+    } 
+    catch (error) {
+        console.error(error);
         res.status(500).send('Error');
     }
 });
@@ -381,8 +381,8 @@ app.post("/register", async (req, res) =>
 
         res.redirect(`/reg-form`);
     } 
-    catch (err) {
-        console.error(err);
+    catch (error) {
+        console.error(error);
         res.status(500).send('Error');
     }
 });
@@ -395,8 +395,8 @@ app.get("/reg-form", async (req, res) =>
 
         res.render("customer/reg_form", { category: category.data });
     } 
-    catch (err) {
-        console.error(err);
+    catch (error) {
+        console.error(error);
         res.status(500).send('Error');
     }
 });
@@ -418,8 +418,8 @@ app.post("/add-userInfo", async (req, res) =>
 
         res.redirect("/");
     } 
-    catch (err) {
-        console.error(err);
+    catch (error) {
+        console.error(error);
         res.status(500).send('Error');
     }
 });

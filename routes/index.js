@@ -22,7 +22,7 @@ router.post('/getProduct', customer_controller.getProduct);
 router.post('/deleteItem', customer_controller.deleteItem);
 
 router.get('/account', account_controller.accountMenu);
-router.get('/my-orders', account_controller.myOders)
+router.get('/my-orders', account_controller.myOrders)
 router.get('/edit-info', account_controller.editInfo)
 router.post('/newInfo', account_controller.newInfo)
 router.get('/change-password', account_controller.changePass)

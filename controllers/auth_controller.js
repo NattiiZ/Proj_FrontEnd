@@ -6,28 +6,26 @@ const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
 
 
 
-exports.signin = async (req, res) => 
-{
+exports.signin = async (req, res) => {
     try {
-        const loginSession = req.session.loginSession
+        const loginSession = req.session.loginSession;
         const url = req.query.from || '/';
 
-        if (loginSession)
-            res.redirect('/')
+        if (loginSession) {
+            return res.redirect('/');
+        }
 
         const category = await axios.get(base_url + '/category');
         
-        res.render("auth/signin", { category: category.data, url});
+        res.render("auth/signin", { category: category.data, url });
     } 
-    catch (err) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+    catch (error) {
+        console.error('Error in signin:', error.message);
+        res.status(500).send('An error occurred while loading the sign-in page. Please try again later.');
     }
 };
 
-
-exports.checkLogin = async (req, res) => 
-{
+exports.checkLogin = async (req, res) => {
     try {
         const data = req.body;
         const lastUrl = req.query.from || '/';
@@ -54,14 +52,13 @@ exports.checkLogin = async (req, res) =>
             `);
         }
     } 
-    catch (err) {
-        console.error('Error:', err.message);
-        res.redirect('/sigin')
+    catch (error) {
+        console.error('Error in checkLogin:', error.message);
+        res.status(500).send('An error occurred while checking the login credentials. Please try again later.');
     }
 };
 
-exports.logout = (req, res) => 
-{
+exports.logout = (req, res) => {
     req.session.destroy(() => {
         res.redirect('/');
     });

@@ -7,13 +7,12 @@ const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
 
 
 
-exports.cart = async (req, res) => 
-{
+exports.cart = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
 
         if (!loginSession)
-            return res.redirect(`/signin?from=${encodeURIComponent('/cart')}`)
+            return res.redirect(`/signin?from=${encodeURIComponent('/cart')}`);
 
         const category = await axios.get(base_url + '/category');
         const brand = await axios.get(base_url + '/brand');
@@ -24,7 +23,7 @@ exports.cart = async (req, res) =>
 
         if (!checkCart) {
             const newCart = await axios.post(base_url + '/cart', { user_ID: loginSession.UID });
-            checkCart = newCart.data
+            checkCart = newCart.data;
         }
 
         const cartId = checkCart.cart_ID;
@@ -41,14 +40,13 @@ exports.cart = async (req, res) =>
             cartItem: items
         });
     }
-    catch(err) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+    catch (err) {
+        console.error('Error in cart:', err.message);
+        res.status(500).send('An error occurred while fetching your cart. Please try again later.');
     }
 };
 
-exports.getProduct = async (req, res) => 
-{
+exports.getProduct = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
         const { url, Id } = req.body;
@@ -76,8 +74,9 @@ exports.getProduct = async (req, res) =>
                 product_ID: Id,
                 quantity: 1
             });
-        } else
+        } else {
             await axios.put(base_url + '/cart-item/' + findItem.cart_ID, { quantity: findItem.quantity + 1 });
+        }
 
         const product = await axios.get(base_url + '/product/' + Id);
         const brand = await axios.get(base_url + '/brand/' + product.data.brand_ID);
@@ -90,13 +89,12 @@ exports.getProduct = async (req, res) =>
         `);
     } 
     catch (error) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+        console.error('Error in getProduct:', error.message);
+        res.status(500).send('An error occurred while adding the product to your cart. Please try again later.');
     }
 };
 
-exports.updateQty = async (req, res) => 
-    {
+exports.updateQty = async (req, res) => {
     const { cartId, productId, quantity } = req.body;
 
     try {
@@ -108,13 +106,12 @@ exports.updateQty = async (req, res) =>
         res.json({ success: true });
     } 
     catch (error) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+        console.error('Error in updateQty:', error.message);
+        res.status(500).send('An error occurred while updating the quantity. Please try again later.');
     }
 };
 
-exports.deleteItem = async (req, res) => 
-{
+exports.deleteItem = async (req, res) => {
     try {
         const { id, item } = req.query;
 
@@ -132,7 +129,7 @@ exports.deleteItem = async (req, res) =>
 
     } 
     catch (error) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+        console.error('Error in deleteItem:', error.message);
+        res.status(500).send('An error occurred while deleting the item from your cart. Please try again later.');
     }
 };

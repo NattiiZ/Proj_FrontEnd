@@ -6,31 +6,30 @@ const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
 
 
 
-exports.home = async (req, res) => 
-{
+exports.home = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
 
-        const product = await axios.get(base_url + '/product');
-        const brand = await axios.get(base_url + '/brand');
-        const category = await axios.get(base_url + '/category');
-        
+        const [product, brand, category] = await Promise.all([
+            axios.get(base_url + '/product'),
+            axios.get(base_url + '/brand'),
+            axios.get(base_url + '/category')
+        ]);
+
         res.render("customer/home", { 
             products: product.data, 
             category: category.data, 
             brands: brand.data,
             loginSession
         });
-    } 
-    catch (err) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+    } catch (error) {
+        console.error('Error in home:', error.message);
+        res.status(500).send('An error occurred while loading the homepage. Please try again later.');
     }
 };
 
-exports.search = async (req, res) => 
-{
-    const loginSession = req.session.loginSession
+exports.search = async (req, res) => {
+    const loginSession = req.session.loginSession;
     const query = req.query.query;
 
     try {
@@ -51,7 +50,6 @@ exports.search = async (req, res) =>
             return searchText.includes(query.toLowerCase());
         });
 
-
         res.render("customer/search", {
             products: filteredProducts,
             category: categories.data,
@@ -59,21 +57,19 @@ exports.search = async (req, res) =>
             query: query,
             loginSession
         });
-    } catch (err) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+    } catch (error) {
+        console.error('Error in search:', error.message);
+        res.status(500).send('An error occurred while processing your search. Please try again later.');
     }
 };
 
-exports.productDetail = async (req, res) => 
-{
+exports.productDetail = async (req, res) => {
     const loginSession = req.session.loginSession;
     const { brand, Id } = req.query;
 
     try {
         const product = await axios.get(base_url + '/product/');
         const category = await axios.get(base_url + '/category');
-
 
         res.render("customer/detail", { 
             products: product.data, 
@@ -82,31 +78,26 @@ exports.productDetail = async (req, res) =>
             Id,
             loginSession
         });
-    }
-    catch(err) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+    } catch (err) {
+        console.error('Error in productDetail:', err.message);
+        res.status(500).send('An error occurred while loading the product details. Please try again later.');
     }
 };
 
-exports.categoryList = async (req, res) => 
-{
+exports.categoryList = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
 
         const category = await axios.get(base_url + '/category');
 
-
         res.render("customer/category", { category: category.data, loginSession });
-    }
-    catch(err) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+    } catch (err) {
+        console.error('Error in categoryList:', err.message);
+        res.status(500).send('An error occurred while loading the category list. Please try again later.');
     }
 };
 
-exports.categorySelected = async (req, res) => 
-{
+exports.categorySelected = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
         const categoryId = parseInt(req.params.id);
@@ -122,11 +113,10 @@ exports.categorySelected = async (req, res) =>
 
         const selectedCategory = categories.find(cat => cat.category_ID === categoryId);
 
-        // if (!selectedCategory)
-        //     return res.status(404).send("ไม่พบหมวดหมู่");
+        if (!selectedCategory)
+            return res.status(404).send("ไม่พบหมวดหมู่");
 
         const filteredProducts = products.filter(product => product.category_ID === categoryId);
-
 
         res.render("customer/thisCategory", {
             category: categories,
@@ -135,10 +125,8 @@ exports.categorySelected = async (req, res) =>
             brands: brandsRes.data,
             loginSession
         });
-
-    } 
-    catch (err) {
-        console.error('Error:', err.message);
-        res.redirect('/')
+    } catch (error) {
+        console.error('Error in categorySelected:', error.message);
+        res.status(500).send('An error occurred while loading the category details. Please try again later.');
     }
 };

@@ -30,9 +30,7 @@ const host_port = process.env.HOST_PORT || 5000;
 
 const { execSync } = require('child_process');
 
-
-const clearPort = (port) => 
-{
+const clearPort = (port) => {
     try {
         const result = execSync(`netstat -ano | findstr :${port}`).toString();
         const lines = result.trim().split('\n');
@@ -42,30 +40,20 @@ const clearPort = (port) =>
             const pid = parts[parts.length - 1];
         
             execSync(`taskkill /PID ${pid} /F`);
+            console.log(`\x1b[32mSuccessfully killed process on port ${port} (PID: ${pid})\x1b[0m`);
         });
     } 
     catch (error) {
+        console.error(`\x1b[31m[ERROR]\x1b[0m Failed to clear port ${port}`);
     }
 };
 
+
+
+
 clearPort(host_port);
-
-
-
 
 const server = app.listen(host_port, () => {
     console.log(`\x1b[37mHost has started!\x1b[0m`);
     console.log(`\x1b[45mWebpage running on http://localhost:${host_port}\x1b[0m`);
-});
-
-
-
-
-['SIGINT', 'SIGTERM', 'SIGUSR2'].forEach(signal => {
-    process.on(signal, () => {
-        server.close(() => {
-            clearPort(host_port);
-            process.exit();
-        });
-    });
 });
