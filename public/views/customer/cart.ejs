@@ -68,10 +68,10 @@
                                         <img src="../../img/product/Major-cineplex-logo.png" alt="Product Image" class="cart-item-image">
                                     </a>
                                 </td>
-                                <td>
-                                    <h2><%= brandName ? `${brandName.name} ${product.Product.name}` : product.Product.name %></h2>
+                                <td class="inRow">
+                                    <p><%= brandName ? `${brandName.name} ${product.Product.name}` : product.Product.name %></p>
                                 </td>
-                                <td><h3 id="price-<%= product.Product.product_ID %>"><%= parseFloat(product.Product.unitPrice).toFixed(2) %></h3></td>
+                                <td><p class="price-pcs" id="price-<%= product.Product.product_ID %>"><%= parseFloat(product.Product.unitPrice).toFixed(2) %></p></td>
                                 <td class="edit">
                                     <button type="button" onclick="updateQuantity('<%= product.Product.product_ID %>', -1)">-</button>
                                     <span id="quantity-<%= product.Product.product_ID %>"><%= product.quantity %></span>
@@ -90,7 +90,7 @@
                     </tbody>
                 </table>
                 <div class="cart-summary">
-                    <h3>ราคารวมสุทธิ : <span id="all"><%= totalPrice.toFixed(2) %> บาท</span></h3>
+                    <div style="display: flex;"><p>ราคารวมทั้งหมด&nbsp;</p><h3><span id="all"><%= totalPrice.toFixed(2) %></span></h3><p>&nbsp;฿</p></div>
                     <form action="/checkOut" method="POST">
                         <input type="hidden" name="cart" value="<%= JSON.stringify(cartItem) %>">
                         <button class="checkOut" type="submit">ชำระเงิน</button>
@@ -98,8 +98,8 @@
                 </div>
             </div>
         <% } else { %>
-            <div class="cart-summary">
-                <h3>ราคารวมทั้งหมด : 0.00 บาท</span></h3>
+            <div style="margin-top: 50px;" class="cart-summary">
+                <div style="display: flex;"><p>ราคารวมทั้งหมด&nbsp;</p><h3>0.00</h3><p>&nbsp;฿</p></div>
                 <h2>ไม่มีสินค้าในตะกร้า</h2>
             </div>
         <% }%>
@@ -130,7 +130,7 @@
             quantityElement.innerText = quantity;
 
             const price = parseFloat(document.getElementById(`price-${productId}`).innerText);
-            totalElement.innerText = (price * quantity).toFixed(2) + " บาท";
+            totalElement.innerText = (price * quantity).toFixed(2) + " ฿";
 
             updateTotalPrice();
 
@@ -155,9 +155,9 @@
         function updateTotalPrice() {
             let totalPrice = 0;
             document.querySelectorAll('[id^="total-"]').forEach(totalElement => {
-                totalPrice += parseFloat(totalElement.innerText.replace(' บาท', ''));
+                totalPrice += parseFloat(totalElement.innerText.replace(' ฿', ''));
             });
-            document.getElementById('all').innerText = totalPrice.toFixed(2) + " บาท";
+            document.getElementById('all').innerText = totalPrice.toFixed(2) + " ฿";
         }
     </script>
 

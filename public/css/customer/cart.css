@@ -1,11 +1,12 @@
 .cart-items {
     margin-bottom: 2rem;
-
 }
 
 .data {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 50px;
+
 }
 
 .data tbody {
@@ -15,7 +16,7 @@
 
 .data th, .data td {
     width: 100px;
-    padding: 10px;
+    padding: 10px 40px;
     text-align: center;
     border-bottom: 3px solid #e0e0e0;
 
@@ -26,7 +27,11 @@
 }
 
 #price {
-    width: 150px;
+    width: 190px;
+}
+
+.inRow p {
+    font-size: 1.3rem;
 }
 
 .edit {
@@ -87,7 +92,7 @@
         -moz-border-radius: 5px;
         -ms-border-radius: 5px;
         -o-border-radius: 5px;
-}
+    }
 }
 
 .cart-summary h3 {
@@ -97,7 +102,7 @@
 
 .cart-summary p {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .cart-summary .btn {

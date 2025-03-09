@@ -34,14 +34,36 @@ exports.accountMenu = async (req, res) => {
 exports.myOrders = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
-        if (!loginSession) return res.redirect(`/signin?from=${encodeURIComponent(req.url)}`);
+        if (!loginSession) 
+            return res.redirect(`/signin?from=${encodeURIComponent(req.url)}`);
 
         const category = await axios.get(base_url + '/category');
         const customers = await axios.get(base_url + '/customer');
         const findCustomer = customers.data.find(customer => customer.user_ID == loginSession.UID);
+        
         const orders = await axios.get(base_url + '/order/' + findCustomer.customer_ID);
+        
 
         res.render('customer/myOrder', { category: category.data, orders: orders.data });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Error fetching orders.');
+    }
+};
+
+exports.orderDetail = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const loginSession = req.session.loginSession;
+        if (!loginSession) 
+            return res.redirect(`/signin?from=${encodeURIComponent(req.url)}`);
+
+        console.log(id);
+        const category = await axios.get(base_url + '/category');
+        
+        
+
+        res.render('customer/myOrder', { category: category.data });
     } catch (error) {
         console.error(error.message);
         res.status(500).send('Error fetching orders.');

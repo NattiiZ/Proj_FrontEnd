@@ -39,14 +39,14 @@
         <div class="orders-list">
             <% if (orders.length > 0) { %>
                 <% orders.forEach(order => { %>
-                    <% orders.forEach(function(order) { %>
-                        <div class="order-card">
-                            <h3>คำสั่งซื้อที่ <%= order.order_id %></h3>
-                            <p><strong>วันที่สั่งซื้อ:</strong> <%= order.orderDate %></p>
-                            <p><strong>สถานะ:</strong> <%= order.status_ID %></p>
-                            <p><strong>รายละเอียด:</strong> <a href="/order/<%= order.order_ID %>">ดูรายละเอียด</a></p>
+                    <div class="order-card">
+                        <div>
+                            <h3>คำสั่งซื้อที่ <%= order.order_ID %></h3>
+                            <p><strong>วันที่สั่งซื้อ</strong> <%= order.orderDate %></p>
+                            <p><strong>รายละเอียด</strong> <a href="/order/<%= order.order_ID %>">ดูรายละเอียด</a></p>
                         </div>
-                    <% }) %>
+                        <p class="status"><strong><%= parseFloat(order.totalAmount).toFixed(2) %></strong> ฿</p>
+                    </div>
                 <% }); %>
             <% } else { %>
                 <p>คุณยังไม่มีคำสั่งซื้อ</p>
