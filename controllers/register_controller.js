@@ -17,7 +17,7 @@ exports.signup = async (req, res) => {
         res.render('auth/signup', { category: category.data });
     } catch (err) {
         console.error('Error in signup:', err.message);
-        res.status(500).send('An error occurred while loading the signup page. Please try again later.');
+        res.status(500).send('An error occurred while loading the signup page.');
     }
 };
 
@@ -58,7 +58,7 @@ exports.checkReg = async (req, res) => {
         res.redirect(`/reg-form`);
     } catch (error) {
         console.error('Error in checkReg:', error.message);
-        res.status(500).send('An error occurred while validating your registration. Please try again later.');
+        res.status(500).send('An error occurred while validating your registration.');
     }
 };
 
@@ -73,7 +73,7 @@ exports.regForm = async (req, res) => {
         res.render('auth/reg_form', { category: category.data });
     } catch (error) {
         console.error('Error in regForm:', error.message);
-        res.status(500).send('An error occurred while loading the registration form. Please try again later.');
+        res.status(500).send('An error occurred while loading the registration form.');
     }
 };
 
@@ -93,6 +93,6 @@ exports.createUser = async (req, res) => {
         res.redirect("/");
     } catch (error) {
         console.error('Error in createUser:', error.message);
-        res.status(500).send('An error occurred while creating your account. Please try again later.');
+        res.status(500).send('An error occurred while creating your account.');
     }
 };

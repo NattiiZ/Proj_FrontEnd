@@ -24,7 +24,7 @@ exports.home = async (req, res) => {
         });
     } catch (error) {
         console.error('Error in home:', error.message);
-        res.status(500).send('An error occurred while loading the homepage. Please try again later.');
+        res.status(500).send('An error occurred while loading the homepage.');
     }
 };
 
@@ -59,7 +59,7 @@ exports.search = async (req, res) => {
         });
     } catch (error) {
         console.error('Error in search:', error.message);
-        res.status(500).send('An error occurred while processing your search. Please try again later.');
+        res.status(500).send('An error occurred while processing your search.');
     }
 };
 
@@ -80,7 +80,7 @@ exports.productDetail = async (req, res) => {
         });
     } catch (err) {
         console.error('Error in productDetail:', err.message);
-        res.status(500).send('An error occurred while loading the product details. Please try again later.');
+        res.status(500).send('An error occurred while loading the product details.');
     }
 };
 
@@ -93,7 +93,7 @@ exports.categoryList = async (req, res) => {
         res.render('user/category', { category: category.data, loginSession });
     } catch (err) {
         console.error('Error in categoryList:', err.message);
-        res.status(500).send('An error occurred while loading the category list. Please try again later.');
+        res.status(500).send('An error occurred while loading the category list.');
     }
 };
 
@@ -127,6 +127,6 @@ exports.categorySelected = async (req, res) => {
         });
     } catch (error) {
         console.error('Error in categorySelected:', error.message);
-        res.status(500).send('An error occurred while loading the category details. Please try again later.');
+        res.status(500).send('An error occurred while loading the category details.');
     }
 };

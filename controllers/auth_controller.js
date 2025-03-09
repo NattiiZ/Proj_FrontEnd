@@ -21,7 +21,7 @@ exports.signin = async (req, res) => {
     } 
     catch (error) {
         console.error('Error in signin:', error.message);
-        res.status(500).send('An error occurred while loading the sign-in page. Please try again later.');
+        res.status(500).send('An error occurred while loading the sign-in page.');
     }
 };
 
@@ -33,7 +33,7 @@ exports.checkLogin = async (req, res) => {
         const users = await axios.get(base_url + '/user');
 
         const user = users.data.find(user => 
-            user.username === data.username && user.password === data.password
+            user.email === data.email && user.password === data.password
         );
 
         if (user) {
@@ -46,7 +46,7 @@ exports.checkLogin = async (req, res) => {
         } else {
             res.send(`
                 <script>
-                    alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
+                    alert("อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
                     window.location.href = "/signin?from=${encodeURIComponent(lastUrl)}";
                 </script>
             `);
@@ -54,7 +54,7 @@ exports.checkLogin = async (req, res) => {
     } 
     catch (error) {
         console.error('Error in checkLogin:', error.message);
-        res.status(500).send('An error occurred while checking the login credentials. Please try again later.');
+        res.status(500).send('An error occurred while checking the login credentials.');
     }
 };
 

@@ -18,8 +18,10 @@ router.get('/category', user_controller.categoryList);
 router.get('/category/:id', user_controller.categorySelected);
 
 router.get('/cart', customer_controller.cart);
-router.post('/getProduct', customer_controller.getProduct);
+router.get('/getProduct', customer_controller.getProduct);
+router.post('/updateQty', customer_controller.updateQty);
 router.post('/deleteItem', customer_controller.deleteItem);
+router.post('/deleteItem', customer_controller.checkOut);
 
 router.get('/account', account_controller.accountMenu);
 router.get('/my-orders', account_controller.myOrders)

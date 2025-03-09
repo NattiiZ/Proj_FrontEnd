@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { render } = require('ejs');
+const { check } = require('prettier');
 
 
 const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
@@ -42,7 +43,7 @@ exports.cart = async (req, res) => {
     }
     catch (err) {
         console.error('Error in cart:', err.message);
-        res.status(500).send('An error occurred while fetching your cart. Please try again later.');
+        res.status(500).send('An error occurred while fetching your cart.');
     }
 };
 
@@ -75,7 +76,7 @@ exports.getProduct = async (req, res) => {
                 quantity: 1
             });
         } else {
-            await axios.put(base_url + '/cart-item/' + findItem.cart_ID, { quantity: findItem.quantity + 1 });
+            await axios.put(base_url + '/cart-item', { cartId: findItem.cart_ID, quantity: findItem.quantity + 1 });
         }
 
         const product = await axios.get(base_url + '/product/' + Id);
@@ -90,36 +91,110 @@ exports.getProduct = async (req, res) => {
     } 
     catch (error) {
         console.error('Error in getProduct:', error.message);
-        res.status(500).send('An error occurred while adding the product to your cart. Please try again later.');
+        res.status(500).send('An error occurred while adding the product to your cart.');
     }
 };
+
+// exports.updateQty = async (req, res) => {
+//     try {
+//         const { cartId, productId, quantity } = req.body;
+
+//         console.log(productId, quantity);
+        
+
+//         await axios.put(base_url + '/cart-item', { cartId, productId, quantity });
+//     } 
+//     catch (error) {
+//         console.error('Error in updateQty:', error.message);
+//         res.status(500).send('An error occurred while updating the quantity.');
+//     }
+// };
+
+
+
+let previousProductId = null;  // ตัวแปรเก็บ productId ที่ส่งมาในคำขอก่อนหน้า
+let previousQuantity = null;   // ตัวแปรเก็บ quantity ที่ส่งมาในคำขอก่อนหน้า
 
 exports.updateQty = async (req, res) => {
-    const { cartId, productId, quantity } = req.body;
-
     try {
-        await CartItem.update(
-            { quantity: quantity },
-            { where: { cartId: cartId, productId: productId } }
-        );
+        const { cartId, productId, quantity } = req.body;
 
-        res.json({ success: true });
-    } 
-    catch (error) {
+        console.log("Received:", productId, quantity);
+
+        // ถ้าค่าซ้ำกับข้อมูลก่อนหน้า ให้หน่วงเวลาและลองส่งใหม่
+        if (previousProductId === productId && previousQuantity === quantity) {
+            console.log("ข้อมูลนี้ถูกส่งมาแล้วในรอบก่อนหน้า");
+
+            // ตั้งเวลารอ (2000ms หรือ 2 วินาที)
+            setTimeout(async () => {
+                console.log("รอ 2 วินาทีแล้วลองส่งข้อมูลใหม่");
+                await resendUpdate(cartId, productId, quantity, res);
+            }, 500);
+
+            return;  // ไม่ให้ส่งคำขอในครั้งนี้
+        }
+
+        // ถ้าไม่ซ้ำ อัปเดตตัวแปรเก็บค่า
+        previousProductId = productId;
+        previousQuantity = quantity;
+
+        // ส่งคำขอ PUT ไปยัง API
+        await axios.put(base_url + '/cart-item', { cartId, productId, quantity });
+
+        console.log(`อัปเดตสินค้า ${productId} เป็นจำนวน ${quantity}`);
+
+        res.status(200).json({ message: 'Quantity successfully updated' });
+
+    } catch (error) {
         console.error('Error in updateQty:', error.message);
-        res.status(500).send('An error occurred while updating the quantity. Please try again later.');
+        res.status(500).send('An error occurred while updating the quantity.');
     }
 };
+
+// ฟังก์ชันที่ใช้ในการส่งข้อมูลใหม่เมื่อผ่านดีเลย์
+const resendUpdate = async (cartId, productId, quantity, res) => {
+    try {
+        // ส่งคำขอ PUT ไปยัง API หลังจากที่หน่วงเวลาแล้ว
+        await axios.put(base_url + '/cart-item', { cartId, productId, quantity });
+
+        console.log(`อัปเดตสินค้า ${productId} เป็นจำนวน ${quantity} หลังจากหน่วงเวลา`);
+
+        res.status(200).json({ message: 'Quantity successfully updated after delay' });
+    } catch (error) {
+        console.error('Error in resendUpdate:', error.message);
+        res.status(500).send('An error occurred while updating the quantity after delay.');
+    }
+};
+
+
+
 
 exports.deleteItem = async (req, res) => {
     try {
-        const { id, item } = req.query;  
+        const { id, item } = req.body;
+        console.log('Deleting item:', id, item);
+
+        if (!id || !item)
+            return res.status(400).json({ error: 'Missing cartId or productId' });
+
+        // ใช้ axios.delete และส่งข้อมูลในรูปแบบ params หรือ query
+        await axios.delete(base_url + `/cart-item/${id}/${item}`);
+    } 
+    catch (error) {
+        console.error('Error in deleteItem:', error.message);
+        res.status(500).send('An error occurred while deleting the item from your cart.');
+    }
+};
+
+
+exports.checkOut = async (req, res) => {
+    try {
+        const { id } = req.query;  
 
         if (!id || !item)
             return res.status(400).json({ error: 'Missing cartId or productId' });
 
         const response = await axios.delete(base_url + `/cart-item/${id}/${item}`);
-        // const response = await axios.delete(base_url + '/cart-item', { params: { id, item } });
 
         if (response.status === 200) {
             console.log('Item deleted successfully');
@@ -130,6 +205,6 @@ exports.deleteItem = async (req, res) => {
     } 
     catch (error) {
         console.error('Error in deleteItem:', error.message);
-        res.status(500).send('An error occurred while deleting the item from your cart. Please try again later.');
+        res.status(500).send('An error occurred while deleting the item from your cart.');
     }
 };

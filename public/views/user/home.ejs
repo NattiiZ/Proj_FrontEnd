@@ -65,7 +65,7 @@
                         <p>ราคา <%= products[i].unitPrice %> บาท</p>
 
                         <div class="btn-product">
-                            <form action="/getProduct" method="POST">
+                            <form action="/getProduct" method="GET">
                                 <input type="hidden" name="url" value="/">
                                 <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
                                 <button class="btn" type="submit">เพิ่มลงตะกร้า</button>

@@ -80,18 +80,22 @@
                                 </td>
                                 <td><h3><span id="total-<%= product.Product.product_ID %>"><%= itemTotal.toFixed(2) %></span></h3></td>
                                 <td>
-                                    <button id="del-Btn" type="button" onclick="deleteItem('<%= cartId %>', '<%= product.Product.product_ID %>')">X</button>
+                                    <form action="/deleteItem" method="post">
+                                        <input type="hidden" name="id" value="<%= cartId %>">
+                                        <input type="hidden" name="item" value="<%= product.Product.product_ID %>">
+                                        <button id="del-Btn" type="submit">X</button>
+                                    </form>
                                 </td>
-                                
                             </tr>
                         <% }); %>
                     </tbody>
                 </table>
                 <div class="cart-summary">
                     <h3>ราคารวมสุทธิ : <span id="all"><%= totalPrice.toFixed(2) %> บาท</span></h3>
-                    <a href="javascript:void(0);" class="checkout-btn">
-                        <button type="button" onclick="checkOut('<%= cartId %>')">ชำระเงิน</button>
-                    </a>
+                    <form action="/checkOut" method="post">
+                        <input type="hidden" name="cartItem" value="<%= cartItem %>">
+                        <button class="checkout-btn" type="button" onclick="checkOut('<%= cartId %>')">ชำระเงิน</button>
+                    </form>
                 </div>
             </div>
         <% } else { %>
@@ -108,100 +112,55 @@
 
     <script>
         // ฟังก์ชันอัปเดตจำนวนสินค้า
-        async function updateQuantity(productId, change) 
-        {
+        function debounce(func, delay) {
+            let timer;
+            return function (...args) {
+                clearTimeout(timer);
+                timer = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+        const updateQuantity = debounce(async function (productId, change) {
             const quantityElement = document.getElementById(`quantity-${productId}`);
             const totalElement = document.getElementById(`total-${productId}`);
             let quantity = parseInt(quantityElement.innerText);
 
-            // เปลี่ยนแปลงจำนวนสินค้า
             quantity += change;
             if (quantity < 1) quantity = 1;
 
-            // อัปเดตจำนวน
             quantityElement.innerText = quantity;
 
-            // อัปเดตราคารวมของสินค้า
             const price = parseFloat(document.getElementById(`price-${productId}`).innerText);
             totalElement.innerText = (price * quantity).toFixed(2) + " บาท";
 
-            // อัปเดตผลรวมทั้งหมด
             updateTotalPrice();
 
-            // ส่งข้อมูลการเปลี่ยนแปลงไปยังเซิร์ฟเวอร์
-            // try {
-            //     const cartId = document.getElementById('cartId').value; // Assuming you have cartId available in the page
-            //     const response = await fetch(`/updateQty`, {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //         },
-            //         body: JSON.stringify({
-            //             cartId: cartId,
-            //             productId: productId,
-            //             quantity: quantity,
-            //         }),
-            //     });
-
-            //     const result = await response.json();
-            //     if (result.success) {
-            //         console.log('Quantity updated successfully');
-            //     } else {
-            //         alert('เกิดข้อผิดพลาดในการอัปเดตจำนวนสินค้า');
-            //     }
-            // } catch (error) {
-            //     console.error('Error:', error);
-            //     alert('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์');
-            // }
-        }
+            try {
+                await fetch(`/updateQty`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cartId: "<%= cartId %>",
+                        productId: productId,
+                        quantity: quantity
+                    }),
+                });
+                console.log("อัปเดตสำเร็จ");
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }, 800); // หน่วง 500 ms
 
         function updateTotalPrice() {
             let totalPrice = 0;
-
-            const allTotalElements = document.querySelectorAll('[id^="total-"]');
-            allTotalElements.forEach((totalElement) => {
-                const itemTotal = parseFloat(totalElement.innerText.replace(' บาท', ''));
-                totalPrice += itemTotal;
+            document.querySelectorAll('[id^="total-"]').forEach(totalElement => {
+                totalPrice += parseFloat(totalElement.innerText.replace(' บาท', ''));
             });
-
             document.getElementById('all').innerText = totalPrice.toFixed(2) + " บาท";
         }
 
-        // ฟังก์ชันลบสินค้า
-        async function deleteItem(cartId, productId) 
-        {
-            if (!confirm('ต้องการลบสินค้านี้หรือไม่')) return;
-
-            try {
-                const response = await fetch(`/deleteItem?id=${cartId}&item=${productId}`, { method: 'POST' });
-
-                location.reload();
-            } 
-            catch (error) {
-                console.error('Error:', error.message);
-                alert('Internal Server Error');
-                location.reload();
-            }
-        }
-
-        // ฟังก์ชันลบสินค้าทั้งหมดจากตะกร้า
-        async function checkOut(cartId) 
-        {
-            if (!confirm('ยืนยันการชำระเงินหรือไม่')) return;
-
-            try {
-                const response = await fetch(`/checkOut?cart=${cartId}`, { method: 'POST' });
-
-                alert('ชำระเงินเสร็จเรียบร้อย');
-
-                location.reload();
-            } 
-            catch (error) {
-                console.error('Error:', error.message);
-                alert('Internal Server Error');
-                location.reload();
-            }
-        }
 
     </script>
 
