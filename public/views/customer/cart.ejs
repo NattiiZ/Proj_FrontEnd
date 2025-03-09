@@ -41,7 +41,6 @@
 
     <div class="container">
         <h1 class="section-title">ตะกร้าสินค้า</h1>
-        
         <% if (cartItem.length > 0) { %>
             <div class="cart-items">
                 <table class="data">
@@ -80,7 +79,7 @@
                                 </td>
                                 <td><h3><span id="total-<%= product.Product.product_ID %>"><%= itemTotal.toFixed(2) %></span></h3></td>
                                 <td>
-                                    <form action="/deleteItem" method="post">
+                                    <form action="/deleteItem" method="POST">
                                         <input type="hidden" name="id" value="<%= cartId %>">
                                         <input type="hidden" name="item" value="<%= product.Product.product_ID %>">
                                         <button id="del-Btn" type="submit">X</button>
@@ -92,15 +91,15 @@
                 </table>
                 <div class="cart-summary">
                     <h3>ราคารวมสุทธิ : <span id="all"><%= totalPrice.toFixed(2) %> บาท</span></h3>
-                    <form action="/checkOut" method="post">
-                        <input type="hidden" name="cartItem" value="<%= cartItem %>">
-                        <button class="checkout-btn" type="button" onclick="checkOut('<%= cartId %>')">ชำระเงิน</button>
+                    <form action="/checkOut" method="POST">
+                        <input type="hidden" name="cart" value="<%= JSON.stringify(cartItem) %>">
+                        <button class="checkOut" type="submit">ชำระเงิน</button>
                     </form>
                 </div>
             </div>
         <% } else { %>
             <div class="cart-summary">
-                <h3>ราคารวมสุทธิ : 0.00 บาท</span></h3>
+                <h3>ราคารวมทั้งหมด : 0.00 บาท</span></h3>
                 <h2>ไม่มีสินค้าในตะกร้า</h2>
             </div>
         <% }%>
@@ -160,8 +159,6 @@
             });
             document.getElementById('all').innerText = totalPrice.toFixed(2) + " บาท";
         }
-
-
     </script>
 
 </body>

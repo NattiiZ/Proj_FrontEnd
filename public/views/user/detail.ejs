@@ -76,7 +76,7 @@
                             <li><strong>ระบบระบายความร้อน:</strong> 3 พัดลม, Vapor Chamber</li>
                         </ul>
 
-                        <form action="/getProduct" method="GET" onsubmit="setTimeout(() => location.reload(), 500);">
+                        <form action="/getProduct" method="POST"">
                             <input type="hidden" name="url" value="/detail?brand=<%= brand %>&Id=<%= Id %>">
                             <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
                             <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
