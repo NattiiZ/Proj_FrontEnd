@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="shortcut icon" href="../img/_logo/favico.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/favico.png" type="image/x-icon">
     <title>The Computer Store</title>
 </head>
 
 <body>
     <header>
-        <a href="/" class="logo"><img src="../img/_logo/logo_store.png" alt="logo"></a>
+        <a href="/" class="logo"><img src="../img/logo_store.png" alt="logo"></a>
 
         <form class="search-bar" action="/search" method="GET">
             <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
@@ -45,7 +45,7 @@
                 <% for(var i=0; i< products.length; i++) { %>
                     <div class="product-card">
 
-                        <div class="borderImg"><img src="../../img/CPU/<%= %><%= products[i].imgName %>" alt="<%= products[i].name %>"></div>
+                        <div class="borderImg"><img src="../../img/<%= products[i].category_ID %>/<%= products[i].imgName %>" alt="<%= products[i].name %>"></div>
                         
                         <div class="product-info">
                             <% for(var k=0; k< brands.length; k++) { %>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/customer/detail.css">
-    <link rel="shortcut icon" href="../img/_logo/favico.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/favico.png" type="image/x-icon">
     <title>รายละเอียดสินค้า</title>
 </head>
 
@@ -19,7 +19,7 @@
 
 <body>
     <header>
-        <a href="/" class="logo"><img src="../img/_logo/logo_store.png" alt="logo"></a>
+        <a href="/" class="logo"><img src="../img/logo_store.png" alt="logo"></a>
 
         <form class="search-bar" action="/search" method="GET">
             <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
@@ -51,7 +51,7 @@
 
         <div class="product-details">
             <div class="product-image">
-                <img src="../../img/<%= products[i].imgName %>" alt="Product Image" />
+                <img src="../../img/<%= products[i].category_ID %>/<%= products[i].imgName %>" alt="Product Image" />
             </div>
 
             <div class="product-info">

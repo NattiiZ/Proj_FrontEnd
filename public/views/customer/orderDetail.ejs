@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/customer/orders.css">
-    <link rel="shortcut icon" href="../img/_logo/favico.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/favico.png" type="image/x-icon">
     <title>รายการคำสั่งซื้อ</title>
 </head>
 
@@ -73,7 +73,7 @@
                                         <% if (product.brand_ID == brand.brand_ID) { %>
 
                                             <tr>
-                                                <td><img src="../../img/<%= product[i].imgName %>" alt=""></td>
+                                                <td><img src="../../img/<%= product.category_ID %>/<%= product.imgName %>" alt=""></td>
                                                 <td><p><%= brand.name %> <%= product.name %></p></td>
                                                 <td><p><%= product.unitPrice %></p></td>
                                                 <td><p><%= item.quantity %></p></td>
