@@ -90,7 +90,7 @@
                     </tbody>
                 </table>
                 <div class="cart-summary">
-                    <div style="display: flex;"><p>ราคารวมทั้งหมด&nbsp;</p><h3><span id="all"><%= totalPrice.toFixed(2) %></span></h3><p>&nbsp;฿</p></div>
+                    <div style="display: flex;"><p>ราคารวมทั้งหมด&nbsp;</p><h3><span id="all"><%= totalPrice.toFixed(2) %></span></h3><p>&nbsp;บาท</p></div>
                     <form action="/checkOut" method="POST">
                         <input type="hidden" name="cart" value="<%= JSON.stringify(cartItem) %>">
                         <button class="checkOut" type="submit">ชำระเงิน</button>
@@ -99,7 +99,7 @@
             </div>
         <% } else { %>
             <div style="margin-top: 50px;" class="cart-summary">
-                <div style="display: flex;"><p>ราคารวมทั้งหมด&nbsp;</p><h3>0.00</h3><p>&nbsp;฿</p></div>
+                <div style="display: flex;"><p>ราคารวมทั้งหมด&nbsp;</p><h3>0.00</h3><p>&nbsp;บาท</p></div>
                 <h2>ไม่มีสินค้าในตะกร้า</h2>
             </div>
         <% }%>
@@ -130,7 +130,7 @@
             quantityElement.innerText = quantity;
 
             const price = parseFloat(document.getElementById(`price-${productId}`).innerText);
-            totalElement.innerText = (price * quantity).toFixed(2) + " ฿";
+            totalElement.innerText = (price * quantity).toFixed(2) + " บาท";
 
             updateTotalPrice();
 
@@ -155,9 +155,9 @@
         function updateTotalPrice() {
             let totalPrice = 0;
             document.querySelectorAll('[id^="total-"]').forEach(totalElement => {
-                totalPrice += parseFloat(totalElement.innerText.replace(' ฿', ''));
+                totalPrice += parseFloat(totalElement.innerText.replace(' บาท', ''));
             });
-            document.getElementById('all').innerText = totalPrice.toFixed(2) + " ฿";
+            document.getElementById('all').innerText = totalPrice.toFixed(2) + " บาท";
         }
     </script>
 

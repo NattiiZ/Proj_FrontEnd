@@ -25,7 +25,8 @@ exports.accountMenu = async (req, res) => {
             customerInfo,
             loginSession
         });
-    } catch (error) {
+    } 
+    catch (error) {
         console.error(error.message);
         res.status(500).send('Error. Try again.');
     }
@@ -45,7 +46,8 @@ exports.myOrders = async (req, res) => {
         
 
         res.render('customer/myOrder', { category: category.data, orders: orders.data });
-    } catch (error) {
+    } 
+    catch (error) {
         console.error(error.message);
         res.status(500).send('Error fetching orders.');
     }
@@ -53,18 +55,34 @@ exports.myOrders = async (req, res) => {
 
 exports.orderDetail = async (req, res) => {
     try {
-        const id = req.params.id;
+        const fakeId = req.params.id;
+        const orderId = req.params.order;
         const loginSession = req.session.loginSession;
+
         if (!loginSession) 
             return res.redirect(`/signin?from=${encodeURIComponent(req.url)}`);
 
-        console.log(id);
         const category = await axios.get(base_url + '/category');
-        
-        
+        const user = await axios.get(base_url + '/user/' + loginSession.UID);
+        const customers = await axios.get(base_url + '/customer');
+        const findCustomer = customers.data.find(customer => customer.user_ID == loginSession.UID);
+        const orders = await axios.get(base_url + '/order/' + findCustomer.customer_ID);
+        const orderDetail = await axios.get(base_url + '/order-detail/' + orderId);
+        const product = await axios.get(base_url + '/product')
+        const brand = await axios.get(base_url + '/brand')
 
-        res.render('customer/myOrder', { category: category.data });
-    } catch (error) {
+        res.render('customer/orderDetail', { 
+            category: category.data, 
+            order: orders.data, 
+            detail: orderDetail.data, 
+            products: product.data,
+            brands: brand.data,
+            customer: findCustomer,
+            user: user.data,
+            fakeId
+        });
+    } 
+    catch (error) {
         console.error(error.message);
         res.status(500).send('Error fetching orders.');
     }
@@ -87,7 +105,8 @@ exports.editInfo = async (req, res) => {
             email: user.data.email,
             loginSession
         });
-    } catch (error) {
+    } 
+    catch (error) {
         console.error(error.message);
         res.status(500).send('Error loading info.');
     }
@@ -104,7 +123,8 @@ exports.newInfo = async (req, res) => {
         await axios.put(base_url + '/user/' + loginSession.UID, { email });
 
         res.redirect('/account');
-    } catch (error) {
+    } 
+    catch (error) {
         console.error(error.message);
         res.status(500).send('Error updating info.');
     }
@@ -117,7 +137,8 @@ exports.changePass = async (req, res) => {
         if (!loginSession) return res.redirect('/signin');
 
         res.render('customer/changePass', { category: category.data });
-    } catch (error) {
+    } 
+    catch (error) {
         console.error(error.message);
         res.status(500).send('Error loading password page.');
     }
@@ -151,22 +172,9 @@ exports.newPass = async (req, res) => {
 
         await axios.put(base_url + '/user/' + loginSession.UID, { password: newPass });
         res.redirect('/account');
-    } catch (error) {
+    } 
+    catch (error) {
         console.error(error.message);
         res.status(500).send('Error changing password.');
-    }
-};
-
-exports.checkOut = async (req, res) => {
-    try {
-        const loginSession = req.session.loginSession;
-        const { cart } = req.query;
-
-        await axios.delete(base_url + '/cart/' + cart);
-
-        res.status(200).json({ message: 'Cart cleared.' });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).json({ message: 'Error clearing cart.' });
     }
 };

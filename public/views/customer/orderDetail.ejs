@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/customer/orders.css">
+    <link rel="shortcut icon" href="../img/logo/favico.png" type="image/x-icon">
+    <title>รายการคำสั่งซื้อ</title>
+</head>
+
+<body>
+    <header>
+        <a href="/" class="logo"><img src="../../img/logo/logo_store.png" alt="logo"></a>
+
+        <form class="search-bar" action="/search" method="GET">
+            <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
+            <button type="submit">ค้นหา</button>
+        </form>
+
+        <nav>
+            <div><a href="/">หน้าแรก</a></div>
+            <div class="dropdown">
+                <a href="/category" class="dropbtn">หมวดหมู่</a>
+                <div class="dropdown-content">
+                    <% for(var i=0; i< category.length; i++) { %>
+                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
+                    <% } %>
+                </div>
+            </div>
+            <div><a href="/cart">ตะกร้า</a></div>
+            <div><a href="/account">ข้อมูลส่วนตัว</a></div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="section-title">ใบเสร็จรับเงิน</h1>
+        <div class="orders-list">
+            <div class="Info">
+                <h2 class="orderId">หมายเลขคำสั่งซื้อ D-<%= String(order[0].order_ID).padStart(4, '0') %></h2>
+                <div class="customerInfo">
+                    <strong><p>ชื่อ : <%= customer.name %></p></strong>
+                    <p>เบอร์โทรศัพท์ : <%= customer.phone %></p>
+                    <p>อีเมล : <%= user.email %></p>
+                </div>
+                <div class="orderInfo">
+                    <p>วันที่สั่งซื้อ : <%= order[0].orderDate %></p>
+                    <strong><p>ราคารวม <%= parseFloat(order[0].totalAmount).toFixed(2) %></p></strong>
+                </div>
+            </div>
+
+
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th id="name">ชื่อสินค้า</th>
+                        <th>ราคา/ชิ้น</th>
+                        <th>จำนวน</th>
+                        <th id="price">ราคารวม</th>
+                    </tr>
+                </thead>
+
+                
+                    <tbody>
+
+                        <% detail.forEach(item => { %>
+                            <% products.forEach(product => { %>
+                                <% if (item.product_ID == product.product_ID) { %>
+
+                                    <% brands.forEach(brand => { %>
+                                        <% if (product.brand_ID == brand.brand_ID) { %>
+
+                                            <tr>
+                                                <td><img src="" alt=""></td>
+                                                <td><p><%= brand.name %> <%= product.name %></p></td>
+                                                <td><p><%= product.unitPrice %></p></td>
+                                                <td><p><%= item.quantity %></p></td>
+                                                <td><p><%= item.subtotal %></p></td>
+                                            </tr>
+
+        
+                                        <% }; %>
+                                    <% }); %>
+
+                                <% }; %>
+                            <% }); %>
+                        <% }); %>
+
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+<footer>
+    &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+</footer>
+
+</html>

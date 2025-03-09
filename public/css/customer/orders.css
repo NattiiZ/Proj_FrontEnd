@@ -23,12 +23,11 @@
     display: flex;
     justify-content: space-between;
     background: #ffffff;
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(138, 157, 175, 0.2);  
     border-left: 6px solid #007bff;
-    padding: 30px 60px;
+    padding: 20px 60px;
     align-items: center;
     margin: 5px;
 }

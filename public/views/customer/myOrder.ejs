@@ -35,22 +35,19 @@
     </header>
 
     <div class="container">
-        <h1 class="section-title">รายการคำสั่งซื้อของคุณ</h1>
+        <h1 class="section-title">รายการคำสั่งซื้อ</h1>
         <div class="orders-list">
-            <% if (orders.length > 0) { %>
-                <% orders.forEach(order => { %>
-                    <div class="order-card">
-                        <div>
-                            <h3>คำสั่งซื้อที่ <%= order.order_ID %></h3>
-                            <p><strong>วันที่สั่งซื้อ</strong> <%= order.orderDate %></p>
-                            <p><strong>รายละเอียด</strong> <a href="/order/<%= order.order_ID %>">ดูรายละเอียด</a></p>
-                        </div>
-                        <p class="status"><strong><%= parseFloat(order.totalAmount).toFixed(2) %></strong> ฿</p>
+            <% var i = 1 %>
+            <% orders.forEach(order => { %>
+                <div class="order-card">
+                    <div>
+                        <h3>คำสั่งซื้อที่ <%= i %></h3>
+                        <p>วันที่สั่งซื้อ : <%= order.orderDate %></p>
+                        <p><a href="/order/<%= i++ %>/<%= order.order_ID %>">ดูรายละเอียด</a></p>
                     </div>
-                <% }); %>
-            <% } else { %>
-                <p>คุณยังไม่มีคำสั่งซื้อ</p>
-            <% } %>
+                    <p class="status">รวมคำสั่งซื้อ ฿<strong><%= parseFloat(order.totalAmount).toFixed(2) %></strong></p>
+                </div>
+            <% }); %>
         </div>
     </div>
 

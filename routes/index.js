@@ -25,7 +25,7 @@ router.post('/checkOut', customer_controller.checkOut);
 
 router.get('/account', account_controller.accountMenu);
 router.get('/my-orders', account_controller.myOrders)
-router.get('/order/:id', account_controller.orderDetail)
+router.get('/order/:id/:order', account_controller.orderDetail)
 router.get('/edit-info', account_controller.editInfo)
 router.post('/newInfo', account_controller.newInfo)
 router.get('/change-password', account_controller.changePass)
