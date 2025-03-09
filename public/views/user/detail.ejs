@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/customer/detail.css">
-    <link rel="shortcut icon" href="../img/logo/favico.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/_logo/favico.png" type="image/x-icon">
     <title>รายละเอียดสินค้า</title>
 </head>
 
@@ -19,7 +19,7 @@
 
 <body>
     <header>
-        <a href="/" class="logo"><img src="../img/logo/logo_store.png" alt="logo"></a>
+        <a href="/" class="logo"><img src="../img/_logo/logo_store.png" alt="logo"></a>
 
         <form class="search-bar" action="/search" method="GET">
             <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
@@ -51,7 +51,7 @@
 
         <div class="product-details">
             <div class="product-image">
-                <img src="product-image.jpg" alt="Product Image" />
+                <img src="../../img/<%= products[i].imgName %>" alt="Product Image" />
             </div>
 
             <div class="product-info">
@@ -65,15 +65,13 @@
                         <% } %>
                         <b><p>ราคา <%= products[i].unitPrice %> บาท</p></b>
 
-                        <h4>สเปคสินค้า:</h4>
+                        <h4>รายละเอียด:</h4>
                         <ul>
-                            <li><strong>ชิปเซ็ต:</strong> NVIDIA GeForce RTX 4090</li>
-                            <li><strong>หน่วยความจำ:</strong> 24GB GDDR6X</li>
-                            <li><strong>ความเร็ว:</strong> 2.52 GHz</li>
-                            <li><strong>เชื่อมต่อ:</strong> PCIe 4.0</li>
-                            <li><strong>พอร์ตเชื่อมต่อ:</strong> 3x DisplayPort 1.4a, 1x HDMI 2.1</li>
-                            <li><strong>รองรับการใช้งาน:</strong> 8K Gaming, Ray Tracing</li>
-                            <li><strong>ระบบระบายความร้อน:</strong> 3 พัดลม, Vapor Chamber</li>
+                            <li><strong>ชิปเซ็ต:</strong></li>
+                            <li><strong>ชิปเซ็ต:</strong></li>
+                            <li><strong>ชิปเซ็ต:</strong></li>
+                            <li><strong>ชิปเซ็ต:</strong></li>
+                            <li><strong>ชิปเซ็ต:</strong></li>
                         </ul>
 
                         <form action="/getProduct" method="POST"">

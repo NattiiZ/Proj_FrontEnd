@@ -4,14 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/customer/product.css">
+    <link rel="stylesheet" href="../../css/customer/cart.css">
     <link rel="shortcut icon" href="../img/logo/favico.png" type="image/x-icon">
     <title>The Computer Store</title>
 </head>
 
 <body>
     <header>
-        <a href="/" class="logo"><img src="../img/logo/logo_store.png" alt="logo"></a>
+        <a href="/" class="logo"><img src="../img/_logo/logo_store.png" alt="logo"></a>
 
         <form class="search-bar" action="/search" method="GET">
             <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
@@ -47,37 +49,37 @@
         <div class="product-grid">
             <% for(var i=0; i< products.length; i++) { %>
                 <div class="product-card">
-                    <% var brand %>
-
-                    <div class="borderImg"><img src="../../img/logo/favico.png" alt="<%= products[i].name %>"></div>
                     
+                    <!-- ส่วนที่ 1: รูปภาพ -->
+                    <div class="product-image">
+                        <img src="../../img/<%= products[i].imgName %> alt="<%= products[i].name %>">
+                    </div>
+        
+                    <!-- ส่วนที่ 2: ชื่อสินค้าและราคา -->
                     <div class="product-info">
                         <% for(var k=0; k< brands.length; k++) { %>
                             <% if (products[i].brand_ID == brands[k].brand_ID) { %>
-                                <h4>
-                                    <% brand = brands[k].name %>
-                                    <%= brands[k].name %>
-                                    <%= products[i].name %>
-                                </h4>
+                                <h4><%= brands[k].name %> - <%= products[i].name %></h4>
                             <% } %>
                         <% } %>
-
-                        <p>ราคา <%= products[i].unitPrice %>.-</p>
-
-                        <div class="btn-product">
-                            <form action="/getProduct" method="POST">
-                                <input type="hidden" name="url" value="/">
-                                <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
-                                <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
-                            </form>
-                        
-                            <form action="/detail" method="GET">
-                                <input type="hidden" name="brand" value="<%= brand %>">
-                                <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
-                                <button class="btn" type="submit">รายละเอียด</button>
-                            </form>
-                        </div>
+                        <p>ราคา <%= products[i].unitPrice %> บาท</p>
                     </div>
+        
+                    <!-- ส่วนที่ 3: ปุ่มต่างๆ -->
+                    <div class="product-actions">
+                        <form action="/getProduct" method="POST">
+                            <input type="hidden" name="url" value="/">
+                            <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
+                            <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
+                        </form>
+                    
+                        <form action="/detail" method="GET">
+                            <input type="hidden" name="brand" value="<%= brands %>">
+                            <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
+                            <button class="btn" type="submit">รายละเอียด</button>
+                        </form>
+                    </div>
+                    
                 </div>
             <% } %>
         </div>

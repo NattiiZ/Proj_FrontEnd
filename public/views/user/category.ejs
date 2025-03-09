@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/customer/category.css">
-    <link rel="shortcut icon" href="../img/logo/favico.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/_logo/favico.png" type="image/x-icon">
     <title>หมวดหมู่สินค้า</title>
 </head>
 
 <body>
     <header>
-        <a href="/" class="logo"><img src="../img/logo/logo_store.png" alt="logo"></a>
+        <a href="/" class="logo"><img src="../img/_logo/logo_store.png" alt="logo"></a>
 
         <form class="search-bar" action="/search" method="GET">
             <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
@@ -43,7 +43,7 @@
             <% for(var i=0; i < category.length; i++) { %>
 
                 <div class="product-card">
-                    <img class="borderImg" src="../../img/logo/favico.png" alt="">
+                    <img class="borderImg" src="<%= category[i].img_url %>" alt="">
 
                     <div class="product-info">
                         <h2><%= category[i].name %></h2>
