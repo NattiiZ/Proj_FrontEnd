@@ -55,7 +55,6 @@ exports.myOrders = async (req, res) => {
 
 exports.orderDetail = async (req, res) => {
     try {
-        const fakeId = req.params.id;
         const orderId = req.params.order;
         const loginSession = req.session.loginSession;
 
@@ -79,7 +78,6 @@ exports.orderDetail = async (req, res) => {
             brands: brand.data,
             customer: findCustomer,
             user: user.data,
-            fakeId
         });
     } 
     catch (error) {
@@ -155,7 +153,7 @@ exports.newPass = async (req, res) => {
         if (user.data.password != oldPass) {
             return res.send(`
                 <script>
-                    alert("Old password incorrect.");
+                    alert("รหัสเดิมไม่ถูกต้อง โปรดลองอีกครั้ง");
                     window.location.href = "/change-password";
                 </script>
             `);
@@ -164,7 +162,7 @@ exports.newPass = async (req, res) => {
         if (newPass != confirmPass) {
             return res.send(`
                 <script>
-                    alert("Passwords don't match.");
+                    alert("รหัสผ่านไม่ตรงกัน โปรดลองอีกครั้ง");
                     window.location.href = "/change-password";
                 </script>
             `);

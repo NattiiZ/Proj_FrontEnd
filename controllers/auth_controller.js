@@ -42,7 +42,7 @@ exports.checkLogin = async (req, res) => {
                 UID: user.user_ID 
             };
 
-            return res.redirect(user.userType_ID == process.env.ADMIN_ROLE ? '/admin-dashboard' : lastUrl);
+            return res.redirect(lastUrl);
         } else {
             res.send(`
                 <script>

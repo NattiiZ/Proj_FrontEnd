@@ -97,7 +97,7 @@ exports.getProduct = async (req, res) => {
         res.send(`
             <script>
                 alert("เพิ่ม ${brand.name} ${product.name} ลงตะกร้าเรียบร้อยแล้ว");
-                window.location.href = "${url}";
+                window.location.href = "/";
             </script>
         `);
     } 
@@ -245,6 +245,7 @@ exports.checkOut = async (req, res) => {
             await axios.delete(`${base_url}/cart-item/${item.cart_ID}/${item.product_ID}`);
             console.log(`🗑️ Deleted from cart: product_ID=${item.product_ID}`);
         }
+        res.redirect('/order/' + order_ID)
     } catch (error) {
         console.error('❌ Error in checkOut:', error.message);
         res.status(500).send('An error occurred during checkout.');

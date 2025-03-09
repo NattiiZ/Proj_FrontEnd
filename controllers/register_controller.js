@@ -30,7 +30,7 @@ exports.checkReg = async (req, res) => {
         if (users.data.find(user => user.username === username)) {
             return res.send(`
                 <script>
-                    alert("ชื่อผู้ใช้นี้ถูกใช้งานแล้ว กรุณาลองใหม่อีกครั้ง"); 
+                    alert("ชื่อผู้ใช้นี้ถูกใช้งานแล้ว โปรดลองใหม่อีกครั้ง"); 
                     window.location.href = "/signup";
                 </script>
             `);
@@ -39,7 +39,7 @@ exports.checkReg = async (req, res) => {
         if (users.data.find(user => user.email === email)) {
             return res.send(`
                 <script>
-                    alert("อีเมลนี้ถูกสมัครใช้งานแล้ว กรุณาลองใหม่อีกครั้ง"); 
+                    alert("อีเมลนี้ถูกสมัครใช้งานแล้ว โปรดลองใหม่อีกครั้ง"); 
                     window.location.href = "/signup";
                 </script>
             `);
@@ -48,7 +48,7 @@ exports.checkReg = async (req, res) => {
         if (password !== check_password) {
             return res.send(`
                 <script>
-                    alert("รหัสผ่านยืนยันไม่ตรงกัน กรุณาลองใหม่อีกครั้ง");
+                    alert("รหัสผ่านยืนยันไม่ตรงกัน โปรดลองใหม่อีกครั้ง");
                     window.location.href = "/signup";
                 </script>
             `);

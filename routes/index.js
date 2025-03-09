@@ -6,7 +6,6 @@ const customer_controller = require('../controllers/customer_controller');
 const account_controller = require('../controllers/account_controller');
 const register_controller = require('../controllers/register_controller');
 const auth_controller = require('../controllers/auth_controller');
-const admin_controller = require('../controllers/admin_controller');
 
 
 
@@ -25,7 +24,7 @@ router.post('/checkOut', customer_controller.checkOut);
 
 router.get('/account', account_controller.accountMenu);
 router.get('/my-orders', account_controller.myOrders)
-router.get('/order/:id/:order', account_controller.orderDetail)
+router.get('/order/:order', account_controller.orderDetail)
 router.get('/edit-info', account_controller.editInfo)
 router.post('/newInfo', account_controller.newInfo)
 router.get('/change-password', account_controller.changePass)
@@ -39,8 +38,6 @@ router.get('/signup', register_controller.signup);
 router.post('/checkReg', register_controller.checkReg);
 router.get('/reg-form', register_controller.regForm);
 router.post('/createUser', register_controller.createUser);
-
-router.get('/admin-dashboard', admin_controller.dashboard);
 
 
 
