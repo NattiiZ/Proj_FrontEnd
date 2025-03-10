@@ -1,3 +1,4 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
 
 body {
@@ -25,14 +26,18 @@ header {
     border-bottom: 1px solid #a5a5a5;
     height: fit-content;
     gap: 60px;
-    z-index: 100;
-    position: relative;
-    background: white;
+    z-index: 100; /* ตั้งค่า z-index ให้สูงกว่า dropdown */
+    position: relative; /* ตั้งค่า position เพื่อให้ z-index ทำงาน */
+    background: white; /* เพิ่ม background เพื่อให้ header ไม่โปร่งแสง */
 }
 
 
 .logo img {
     width: 150px;
+    /* font-size: 2rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #333; */
 }
 
 .search-bar {
@@ -72,7 +77,7 @@ nav {
     gap: 30px;
     font-size: larger;
 }
-nav a {
+/* nav a {
     text-decoration: none;
     color: #333;
     font-weight: 500;
@@ -82,7 +87,31 @@ nav a {
 }
 nav a:hover {
     color: #1a73e8;
+} */
+
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    position: relative;
+    padding: 10px 12px;
+    transition: color 0.3s;
 }
+
+nav a::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
 
 
 .dropdown {
@@ -107,6 +136,7 @@ nav a:hover {
     display: block;
     transition: background 0.3s ease-in-out; /* เพิ่ม transition สำหรับ background */
 }
+
 .dropdown-content {
     display: none;
     position: absolute;
@@ -114,11 +144,12 @@ nav a:hover {
     min-width: 160px;
     z-index: 1;
     font-size: medium;
-    margin-top: 10px;
+    margin-top: 100px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
     pointer-events: none; /* ปิดการรับเหตุการณ์ของเมาส์ชั่วคราว */
 }
+
 .dropdown:hover .dropdown-content {
     display: block;
     opacity: 1;
@@ -134,6 +165,7 @@ nav a:hover {
         opacity: 1;
     }
 }
+
 .dropbtn {
     margin-bottom: 50px;
 }
@@ -141,8 +173,99 @@ nav a:hover {
     color: #1a73e8;
 }
 
-button {
-    cursor: pointer;
+
+
+.banner {
+    object-fit: cover;
+    object-position: center;
+    width: 100%;
+    height: 500px;
+    background: #1558b0;
+    margin: 1rem 0;
+}
+
+.container {
+    padding: 2rem 1rem;
+    max-width: 77%;
+    margin: 0 auto;
+    justify-content: center;
+}
+.section-title {
+    display: flex;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 3.5rem 2.5rem;
+    justify-content: center;
+}
+.product-card {
+    width: 300px; /* กำหนดความกว้างให้เท่ากัน */
+    height: 400px; /* กำหนดความสูงให้เท่ากัน */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background: white;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* จัดการเนื้อหาให้สมดุล */
+    gap: 10px;
+    justify-content: center;
+}
+
+.borderImg {
+    height: 180px;
+    align-self: center;
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+.product-card img {
+    width: 270px;
+    height: 180px;
+    object-fit: contain;
+
+
+}
+.product-info {
+    padding: 0 1.5rem ;
+    height: 180px;
+}
+.product-info h3 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+.product-info p {
+    margin: 0 0 1rem 0;
+    color: #666;
+}
+.btn-product {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    gap: 10px;
+}
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    font-size: 0.86rem;
+    background: #1a73e8;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    transition: background 0.3s;
+    margin-right: 8px;
+}
+.btn:hover {
+    background: #1558b0;
 }
 
 footer {
@@ -151,4 +274,8 @@ footer {
     color: #666;
     border-top: 1px solid #a5a5a5;
     flex-shrink: 1;
+}
+
+button {
+    cursor: pointer;
 }

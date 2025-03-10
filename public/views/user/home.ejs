@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/customer/product.css">
-    <link rel="stylesheet" href="../../css/customer/cart.css">
+    <link rel="stylesheet" href="../../css/home.css">
     <link rel="shortcut icon" href="../img/logo/favico.png" type="image/x-icon">
     <title>The Computer Store</title>
 </head>
@@ -51,12 +50,10 @@
             <% for(var i=0; i< products.length; i++) { %>
                 <div class="product-card">
                     
-                    <!-- ส่วนที่ 1: รูปภาพ -->
                     <div class="product-image">
                         <img src="../../img/<%= products[i].category_ID %>/<%= products[i].imgName %>" alt="<%= products[i].name %>">
                     </div>
         
-                    <!-- ส่วนที่ 2: ชื่อสินค้าและราคา -->
                     <div class="product-info">
                         <% for(var k=0; k< brands.length; k++) { %>
                             <% if (products[i].brand_ID == brands[k].brand_ID) { %>
@@ -66,7 +63,6 @@
                         <p>ราคา <%= products[i].unitPrice %>.-</p>
                     </div>
         
-                    <!-- ส่วนที่ 3: ปุ่มต่างๆ -->
                     <div class="product-actions">
                         <form action="/getProduct" method="POST">
                             <input type="hidden" name="url" value="/">
