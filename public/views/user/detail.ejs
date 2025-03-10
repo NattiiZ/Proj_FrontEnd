@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/customer/detail.css">
-    <link rel="shortcut icon" href="../img/favico.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/_logo/favico.png" type="image/x-icon">
     <title>รายละเอียดสินค้า</title>
 </head>
 
@@ -32,7 +32,7 @@
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
+                        <a href="/category/<%=category[i].category_name%>"><%= category[i].name %></a>
                     <% } %>
                 </div>
             </div>
@@ -48,41 +48,43 @@
 
     <div class="container">
         <h1 class="section-title">รายละเอียดสินค้า</h1>
+        <% products.forEach(item => { %>
+            <% if (item.product_ID == Id) { %>
+                
+                <div class="product-details">
+                    <div class="product-image">
+                        <img src="../../img/<%= item.category_ID %>/<%= item.imgName %>" alt="Product Image" />
+                    </div>
 
-        <div class="product-details">
-            <div class="product-image">
-                <img src="../../img/<%= products[i].category_ID %>/<%= products[i].imgName %>" alt="Product Image" />
-            </div>
+                    <div class="product-info">
+                        <h3><%= brand %> <%= item.name %></h3>
 
-            <div class="product-info">
-                <% for(var i=0; i< products.length; i++) { %>
-                    <% if (products[i].product_ID == Id) { %>
-                        <h3><%= brand %> <%= products[i].name %></h3>
-                        <% for(var k=0; k< category.length; k++) { %>
-                            <% if (category[k].category_ID == products[i].category_ID) { %>
-                                <p>ประเภท : <%= category[k].name %></p>
+                        <% category.forEach(category => { %>
+                            <% if (category.category_ID == item.category_ID) { %>
+                                <p>ประเภท : <%= category.name %></p>
                             <% } %>
-                        <% } %>
-                        <b><p>ราคา <%= products[i].unitPrice %> บาท</p></b>
+                        <% }); %>
+
+                        <b><p>ราคา <%= item.unitPrice %> บาท</p></b>
 
                         <h4>รายละเอียด:</h4>
                         <ul>
-                            <li><strong>ชิปเซ็ต:</strong></li>
-                            <li><strong>ชิปเซ็ต:</strong></li>
-                            <li><strong>ชิปเซ็ต:</strong></li>
-                            <li><strong>ชิปเซ็ต:</strong></li>
-                            <li><strong>ชิปเซ็ต:</strong></li>
-                        </ul>
+                            <li><strong></strong></li>
+                            <li><strong></strong></li>
+                            <li><strong></strong></li>
+                            <li><strong></strong></li>
+                            <li><strong></strong></li>
 
                         <form action="/getProduct" method="POST"">
                             <input type="hidden" name="url" value="/detail?brand=<%= brand %>&Id=<%= Id %>">
                             <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
                             <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
                         </form>
-                    <% } %>
-                <% } %>
-            </div>
-        </div>
+                    </div>
+                </div>
+                
+            <% } %>
+        <% }); %>
     </div>
 </body>
 
