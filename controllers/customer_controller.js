@@ -100,24 +100,6 @@ exports.getProduct = async (req, res) => {
     }
 };
 
-
-// exports.updateQty = async (req, res) => {
-//     try {
-//         const { cartId, productId, quantity } = req.body;
-
-//         console.log(productId, quantity);
-        
-
-//         await axios.put(base_url + '/cart-item', { cartId, productId, quantity });
-//     } 
-//     catch (error) {
-//         console.error('Error in updateQty:', error.message);
-//         res.status(500).send('An error occurred while updating the quantity.');
-//     }
-// };
-
-
-
 let previousProductId = null;  // ตัวแปรเก็บ productId ที่ส่งมาในคำขอก่อนหน้า
 let previousQuantity = null;   // ตัวแปรเก็บ quantity ที่ส่งมาในคำขอก่อนหน้า
 
@@ -137,10 +119,9 @@ exports.updateQty = async (req, res) => {
                 await resendUpdate(cartId, productId, quantity, res);
             }, 500);
 
-            return;  // ไม่ให้ส่งคำขอในครั้งนี้
+            return; 
         }
 
-        // ถ้าไม่ซ้ำ อัปเดตตัวแปรเก็บค่า
         previousProductId = productId;
         previousQuantity = quantity;
 
@@ -157,10 +138,8 @@ exports.updateQty = async (req, res) => {
     }
 };
 
-// ฟังก์ชันที่ใช้ในการส่งข้อมูลใหม่เมื่อผ่านดีเลย์
 const resendUpdate = async (cartId, productId, quantity, res) => {
     try {
-        // ส่งคำขอ PUT ไปยัง API หลังจากที่หน่วงเวลาแล้ว
         await axios.put(base_url + '/cart-item', { cartId, productId, quantity });
 
         console.log(`อัปเดตสินค้า ${productId} เป็นจำนวน ${quantity} หลังจากหน่วงเวลา`);
@@ -171,9 +150,6 @@ const resendUpdate = async (cartId, productId, quantity, res) => {
         res.status(500).send('An error occurred while updating the quantity after delay.');
     }
 };
-
-
-
 
 exports.deleteItem = async (req, res) => {
     try {
@@ -188,7 +164,6 @@ exports.deleteItem = async (req, res) => {
         res.status(500).send('An error occurred while deleting the item from your cart.');
     }
 };
-
 
 exports.checkOut = async (req, res) => {
     try {

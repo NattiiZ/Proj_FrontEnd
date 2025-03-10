@@ -25,9 +25,9 @@
             <div class="dropdown">
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
-                    <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=category[i].category_name%>"><%= category[i].name %></a>
-                    <% } %>
+                    <% category.forEach(cat => { %>
+                        <a href="/category/<%= cat.category_name %>"><%= cat.name %></a>
+                    <% }) %>
                 </div>
             </div>
             <div><a href="/cart">ตะกร้า</a></div>
@@ -47,45 +47,46 @@
         <h1 class="section-title">สินค้าทั้งหมด</h1>
 
         <div class="product-grid">
-            <% for(var i=0; i< products.length; i++) { %>
+            <% products.forEach(product => { %>
                 <div class="product-card">
                     
                     <div class="product-image">
-                        <img src="../../img/<%= products[i].category_ID %>/<%= products[i].imgName %>" alt="<%= products[i].name %>">
+                        <img src="../../img/<%= product.category_ID %>/<%= product.imgName %>" alt="<%= product.name %>">
                     </div>
         
                     <div class="product-info">
-                        <% for(var k=0; k< brands.length; k++) { %>
-                            <% if (products[i].brand_ID == brands[k].brand_ID) { %>
-                                <h4><%= brands[k].name %> - <%= products[i].name %></h4>
+                        <% brands.forEach(brand => { %>
+                            <% if (product.brand_ID == brand.brand_ID) { %>
+                                <h4><%= brand.name %> - <%= product.name %></h4>
                             <% } %>
-                        <% } %>
-                        <p>ราคา <%= products[i].unitPrice %>.-</p>
+                        <% }) %>
+                        <p>ราคา <%= product.unitPrice %>.-</p>
                     </div>
         
                     <div class="product-actions">
                         <form action="/getProduct" method="POST">
                             <input type="hidden" name="url" value="/">
-                            <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
+                            <input type="hidden" name="Id" value="<%= product.product_ID %>">
                             <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
                         </form>
-                        <% for(var k=0; k< brands.length; k++) { %>
-                            <% if (products[i].brand_ID == brands[k].brand_ID) { %>
+                        <% brands.forEach(brand => { %>
+                            <% if (product.brand_ID == brand.brand_ID) { %>
                                 <form action="/detail" method="GET">
-                                    <input type="hidden" name="brand" value="<%= brands[k].name %>">
-                                    <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
+                                    <input type="hidden" name="brand" value="<%= brand.name %>">
+                                    <input type="hidden" name="Id" value="<%= product.product_ID %>">
                                     <button class="btn" type="submit">รายละเอียด</button>
                                 </form>
                             <% } %>
-                        <% } %>
+                        <% }) %>
                     </div>
                     
                 </div>
-            <% } %>
+            <% }) %>
         </div>
+        
     </div>
 
-    
+
     <footer>
         &copy; 2025 The Computer Store | Copyright
     </footer>

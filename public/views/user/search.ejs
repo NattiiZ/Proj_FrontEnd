@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/search.css">
     <link rel="shortcut icon" href="../img/favico.png" type="image/x-icon">
     <title>The Computer Store</title>
 </head>
@@ -43,39 +44,40 @@
         <% if (typeof query !== 'undefined') { %>
             <h1 class="section-title">สินค้าสำหรับคำค้นหา "<%= query %>"</h1>
 
-            <% let brand = '' %>
             <div class="product-grid">
                 <% products.forEach(product => { %>
                     <div class="product-card">
-
-                        <div class="borderImg"><img src="../../img/<%= product.category_ID %>/<%= product.imgName %>" alt="<%= product.name %>"></div>
                         
+                        <div class="product-image">
+                            <img src="../../img/<%= product.category_ID %>/<%= product.imgName %>" alt="<%= product.name %>">
+                        </div>
+            
                         <div class="product-info">
-                            <% brands.forEach(brandItem => { %>
-                                <% if (product.brand_ID == brandItem.brand_ID) { %>
-                                    <h4>
-                                        <% brand = brandItem.name %>
-                                        <%= brandItem.name %>
-                                        <%= product.name %>
-                                    </h4>
+                            <% brands.forEach(brand => { %>
+                                <% if (product.brand_ID == brand.brand_ID) { %>
+                                    <h4><%= brand.name %> - <%= product.name %></h4>
                                 <% } %>
                             <% }) %>
-
                             <p>ราคา <%= product.unitPrice %>.-</p>
-                            <div class="btn-product">
-                                <form action="/getProduct" method="POST">
-                                    <input type="hidden" name="url" value="/search/<%= product.category_ID %>">
-                                    <input type="hidden" name="Id" value="<%= product.product_ID %>">
-                                    <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
-                                </form>
-    
-                                <form action="/detail" method="GET">
-                                    <input type="hidden" name="brand" value="<%= brand %>">
-                                    <input type="hidden" name="Id" value="<%= product.product_ID %>">
-                                    <button class="btn" type="submit">รายละเอียด</button>
-                                </form>
-                            </div>
                         </div>
+            
+                        <div class="product-actions">
+                            <form action="/getProduct" method="POST">
+                                <input type="hidden" name="url" value="/">
+                                <input type="hidden" name="Id" value="<%= product.product_ID %>">
+                                <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
+                            </form>
+                            <% brands.forEach(brand => { %>
+                                <% if (product.brand_ID == brand.brand_ID) { %>
+                                    <form action="/detail" method="GET">
+                                        <input type="hidden" name="brand" value="<%= brand.name %>">
+                                        <input type="hidden" name="Id" value="<%= product.product_ID %>">
+                                        <button class="btn" type="submit">รายละเอียด</button>
+                                    </form>
+                                <% } %>
+                            <% }) %>
+                        </div>
+                        
                     </div>
                 <% }) %>
             </div>

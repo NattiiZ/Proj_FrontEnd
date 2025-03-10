@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/customer/orders.css">
+    <link rel="stylesheet" href="../../css/orderDetail.css">
     <link rel="shortcut icon" href="../img/favico.png" type="image/x-icon">
     <title>รายการคำสั่งซื้อ</title>
 </head>
@@ -40,19 +40,18 @@
         <h1 class="section-title">ใบเสร็จรับเงิน</h1>
         <div class="orders-list">
             <div class="Info">
-                <h2 class="orderId">หมายเลขคำสั่งซื้อ D-<%= String(order[0].order_ID).padStart(4, '0') %></h2>
                 <div class="customerInfo">
                     <strong><p>ชื่อ : <%= customer.name %></p></strong>
                     <p>เบอร์โทรศัพท์ : <%= customer.phone %></p>
                     <p>อีเมล : <%= user.email %></p>
                 </div>
                 <div class="orderInfo">
-                    <p>วันที่สั่งซื้อ : <%= order[0].orderDate %></p>
+                    <p class="orderId">หมายเลขคำสั่งซื้อ D-<%= String(order[0].order_ID).padStart(4, '0') %></p>
                     <strong><p>ราคารวม <%= parseFloat(order[0].totalAmount).toFixed(2) %></p></strong>
+                    <p>วันที่สั่งซื้อ : <%= order[0].orderDate %></p>
                 </div>
             </div>
-
-
+    
             <table>
                 <thead>
                     <tr>
@@ -63,37 +62,29 @@
                         <th id="price">ราคารวม</th>
                     </tr>
                 </thead>
-
-                
-                    <tbody>
-
-                        <% detail.forEach(item => { %>
-                            <% products.forEach(product => { %>
-                                <% if (item.product_ID == product.product_ID) { %>
-
-                                    <% brands.forEach(brand => { %>
-                                        <% if (product.brand_ID == brand.brand_ID) { %>
-
-                                            <tr>
-                                                <td><img src="../../img/<%= product.category_ID %>/<%= product.imgName %>" alt=""></td>
-                                                <td><p><%= brand.name %> <%= product.name %></p></td>
-                                                <td><p><%= product.unitPrice %></p></td>
-                                                <td><p><%= item.quantity %></p></td>
-                                                <td><p><%= item.subtotal %></p></td>
-                                            </tr>
-
-        
-                                        <% }; %>
-                                    <% }); %>
-
-                                <% }; %>
-                            <% }); %>
+                <tbody>
+                    <% detail.forEach(item => { %>
+                        <% products.forEach(product => { %>
+                            <% if (item.product_ID == product.product_ID) { %>
+                                <% brands.forEach(brand => { %>
+                                    <% if (product.brand_ID == brand.brand_ID) { %>
+                                        <tr>
+                                            <td><img src="../../img/<%= product.category_ID %>/<%= product.imgName %>" alt=""></td>
+                                            <td><p><%= brand.name %> <%= product.name %></p></td>
+                                            <td><p><%= product.unitPrice %></p></td>
+                                            <td><p><%= item.quantity %></p></td>
+                                            <td><p><%= item.subtotal %></p></td>
+                                        </tr>
+                                    <% }; %>
+                                <% }); %>
+                            <% }; %>
                         <% }); %>
-
-                    </tbody>
+                    <% }); %>
+                </tbody>
             </table>
         </div>
     </div>
+    
 
 
     <footer>

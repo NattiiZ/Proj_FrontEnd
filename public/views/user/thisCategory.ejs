@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/customer/product.css">
+    <link rel="stylesheet" href="../../css/thisCategory.css">
     <link rel="shortcut icon" href="../img/logo/favico.png" type="image/x-icon">
-    <title>หมวดหมู่ <%= name%></title>
+    <title>หมวดหมู่ <%= name %></title>
 </head>
 
 <body>
@@ -25,9 +25,9 @@
             <div class="dropdown">
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
-                    <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
-                    <% } %>
+                    <% category.forEach(cat => { %>
+                        <a href="/category/<%= cat.category_name %>"><%= cat.name %></a>
+                    <% }) %>
                 </div>
             </div>
             <div><a href="/cart">ตะกร้า</a></div>
@@ -39,52 +39,50 @@
         </nav>
     </header>
 
-
     <div class="container">
         <% if (products.length == 0) { %>
-            <h1 class="section-title">ไม่พบสินค้าในหมวดหมู่ <%=name%></h1>
+            <h1 class="section-title">ไม่พบสินค้าในหมวดหมู่ <%= name %></h1>
         <% } else { %>
-            <h1 class="section-title">สินค้าในหมวดหมู่ <%=name%></h1>        
+            <h1 class="section-title">สินค้าในหมวดหมู่ <%= name %></h1>        
         <% } %>
     
         <div class="product-grid">
-            <% for(var i=0; i< products.length; i++) { %>
+            <% products.forEach(product => { %>
                 <div class="product-card">
-                    <% var brand = "" %> <!-- กำหนดค่าตัวแปร brand -->
+                    <% var brand = "" %>
     
                     <div class="product-image">
-                        <img src="../../img/<%= products[i].category_ID %>/<%= products[i].imgName %>" alt="<%= products[i].name %>">
+                        <img src="../../img/<%= product.category_ID %>/<%= product.imgName %>" alt="<%= product.name %>">
                     </div>
     
                     <div class="product-info">
-                        <% for(var k=0; k< brands.length; k++) { %>
-                            <% if (products[i].brand_ID == brands[k].brand_ID) { %>
-                                <% brand = brands[k].name %>
+                        <% brands.forEach(brandItem => { %>
+                            <% if (product.brand_ID == brandItem.brand_ID) { %>
+                                <% brand = brandItem.name %>
                             <% } %>
-                        <% } %>
+                        <% }) %>
     
-                        <h4><%= brand %> - <%= products[i].name %></h4>
-                        <p>ราคา <%= products[i].unitPrice %>.-</p>
+                        <h4><%= brand %> - <%= product.name %></h4>
+                        <p>ราคา <%= product.unitPrice %>.-</p>
     
                         <div class="product-actions">
                             <form action="/getProduct" method="POST">
-                                <input type="hidden" name="url" value="/category/<%= products[i].category_ID %>">
-                                <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
+                                <input type="hidden" name="url" value="/category/<%= product.category_ID %>">
+                                <input type="hidden" name="Id" value="<%= product.product_ID %>">
                                 <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
                             </form>
     
                             <form action="/detail" method="GET">
                                 <input type="hidden" name="brand" value="<%= brand %>">
-                                <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
+                                <input type="hidden" name="Id" value="<%= product.product_ID %>">
                                 <button class="btn" type="submit">รายละเอียด</button>
                             </form>
                         </div>
                     </div>
                 </div>
-            <% } %>
+            <% }) %>
         </div>
     </div>
-
 
     <footer>
         &copy; 2025 The Computer Store | Copyright
@@ -93,4 +91,3 @@
 </body>
 
 </html>
-

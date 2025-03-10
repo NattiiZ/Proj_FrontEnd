@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/customer/category.css">
+    <link rel="stylesheet" href="../../css/category.css">
     <link rel="shortcut icon" href="../img/favico.png" type="image/x-icon">
     <title>หมวดหมู่สินค้า</title>
 </head>
@@ -42,6 +42,7 @@
 
     <div class="container">
         <h1 class="section-title">หมวดหมู่สินค้า</h1>
+
         <div class="product-grid">
             <% for(var i=0; i < category.length; i++) { %>
 
@@ -51,7 +52,7 @@
                     <div class="product-info">
                         <h2><%= category[i].name %></h2>
                         
-                        <p><%= category[i].description %></p>
+                        <h4><%= category[i].description %></h4>
                         
                         <form class="btn-product" action="/category/<%= category[i].category_ID %>" method="GET">
                             <button class="btn" type="submit">ดูรายการสินค้า</button>

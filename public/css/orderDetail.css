@@ -1,0 +1,84 @@
+.container {
+    padding: 3rem 2rem;
+    max-width: 85%;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #333;
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.Info {
+    display: flex;
+    justify-content: space-between; /* กระจายช่องว่างระหว่างข้อมูล */
+    margin-bottom: 2rem;
+}
+
+.customerInfo,
+.orderInfo {
+    flex: 1; /* ทำให้แต่ละส่วนมีขนาดเท่ากัน */
+}
+
+.orderId {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #1a73e8;
+    align-self: center; /* จัดกึ่งกลางแนวตั้ง */
+}
+
+.customerInfo p,
+.orderInfo p {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+    color: #555;
+    text-align: left; /* จัดข้อความให้เรียงซ้าย */
+}
+
+.customerInfo strong,
+.orderInfo strong {
+    font-weight: bold;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2.5rem;
+}
+
+table th,
+table td {
+    padding: 15px;
+    text-align: center;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f4f4;
+    color: #333;
+    font-weight: 600;
+}
+
+table td img {
+    max-width: 100px;
+    border-radius: 8px;
+}
+
+table td p {
+    margin: 0;
+    color: #555;
+}

@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
 
 body {
-    /* font-family: "Prompt", sans-serif; */
     font-family: "Noto Sans Thai", sans-serif;
     margin: 0;
     padding: 0;
@@ -25,10 +24,10 @@ header {
     border-bottom: 1px solid #a5a5a5;
     height: fit-content;
     gap: 60px;
-    z-index: 100; /* ตั้งค่า z-index ให้สูงกว่า dropdown */
+    z-index: 100;
     position: relative;
     background: white;
-    box-shadow: 0 1.5px 5px rgba(0, 0, 0, 0.1); /* เพิ่มเงาให้กับ header */
+    box-shadow: 0 1.5px 5px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -86,21 +85,32 @@ nav a {
 }
 
 
+.section-title {
+    display: flex;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
 
 .dropdown {
     position: relative;
     display: inline-block;
 }
+
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
     min-width: 160px;
-    z-index: 99;
+    z-index: 1;
     font-size: medium;
-    margin-top: 30px;
+    margin-top: 32px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
 }
 .dropdown-content a {
     color: black;
@@ -114,23 +124,8 @@ nav a {
     -o-transition: background 0.3s ease-in-out;
 }
 
-/* เพิ่มการเปลี่ยนสีพื้นหลังเมื่อ hover บนรายการ */
 .dropdown-content a:hover {
-    background-color: #e0e0e0; /* เปลี่ยนสีพื้นหลังเมื่อ hover */
-}
-
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    z-index: 1;
-    font-size: medium;
-    margin-top: 35px;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    pointer-events: none;
+    background-color: #e0e0e0;
 }
 
 .dropdown:hover .dropdown-content {
