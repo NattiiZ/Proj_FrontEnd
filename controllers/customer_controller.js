@@ -118,59 +118,59 @@ exports.getProduct = async (req, res) => {
 
 
 
-// let previousProductId = null;  // ตัวแปรเก็บ productId ที่ส่งมาในคำขอก่อนหน้า
-// let previousQuantity = null;   // ตัวแปรเก็บ quantity ที่ส่งมาในคำขอก่อนหน้า
+let previousProductId = null;  // ตัวแปรเก็บ productId ที่ส่งมาในคำขอก่อนหน้า
+let previousQuantity = null;   // ตัวแปรเก็บ quantity ที่ส่งมาในคำขอก่อนหน้า
 
-// exports.updateQty = async (req, res) => {
-//     try {
-//         const { cartId, productId, quantity } = req.body;
+exports.updateQty = async (req, res) => {
+    try {
+        const { cartId, productId, quantity } = req.body;
 
-//         console.log("Received:", productId, quantity);
+        console.log("Received:", productId, quantity);
 
-//         // ถ้าค่าซ้ำกับข้อมูลก่อนหน้า ให้หน่วงเวลาและลองส่งใหม่
-//         if (previousProductId === productId && previousQuantity === quantity) {
-//             console.log("ข้อมูลนี้ถูกส่งมาแล้วในรอบก่อนหน้า");
+        // ถ้าค่าซ้ำกับข้อมูลก่อนหน้า ให้หน่วงเวลาและลองส่งใหม่
+        if (previousProductId === productId && previousQuantity === quantity) {
+            console.log("ข้อมูลนี้ถูกส่งมาแล้วในรอบก่อนหน้า");
 
-//             // ตั้งเวลารอ (2000ms หรือ 2 วินาที)
-//             setTimeout(async () => {
-//                 console.log("รอ 2 วินาทีแล้วลองส่งข้อมูลใหม่");
-//                 await resendUpdate(cartId, productId, quantity, res);
-//             }, 500);
+            // ตั้งเวลารอ (2000ms หรือ 2 วินาที)
+            setTimeout(async () => {
+                console.log("รอ 2 วินาทีแล้วลองส่งข้อมูลใหม่");
+                await resendUpdate(cartId, productId, quantity, res);
+            }, 500);
 
-//             return;  // ไม่ให้ส่งคำขอในครั้งนี้
-//         }
+            return;  // ไม่ให้ส่งคำขอในครั้งนี้
+        }
 
-//         // ถ้าไม่ซ้ำ อัปเดตตัวแปรเก็บค่า
-//         previousProductId = productId;
-//         previousQuantity = quantity;
+        // ถ้าไม่ซ้ำ อัปเดตตัวแปรเก็บค่า
+        previousProductId = productId;
+        previousQuantity = quantity;
 
-//         // ส่งคำขอ PUT ไปยัง API
-//         await axios.put(base_url + '/cart-item', { cartId, productId, quantity });
+        // ส่งคำขอ PUT ไปยัง API
+        await axios.put(base_url + '/cart-item', { cartId, productId, quantity });
 
-//         console.log(`อัปเดตสินค้า ${productId} เป็นจำนวน ${quantity}`);
+        console.log(`อัปเดตสินค้า ${productId} เป็นจำนวน ${quantity}`);
 
-//         res.status(200).json({ message: 'Quantity successfully updated' });
+        res.status(200).json({ message: 'Quantity successfully updated' });
 
-//     } catch (error) {
-//         console.error('Error in updateQty:', error.message);
-//         res.status(500).send('An error occurred while updating the quantity.');
-//     }
-// };
+    } catch (error) {
+        console.error('Error in updateQty:', error.message);
+        res.status(500).send('An error occurred while updating the quantity.');
+    }
+};
 
-// // ฟังก์ชันที่ใช้ในการส่งข้อมูลใหม่เมื่อผ่านดีเลย์
-// const resendUpdate = async (cartId, productId, quantity, res) => {
-//     try {
-//         // ส่งคำขอ PUT ไปยัง API หลังจากที่หน่วงเวลาแล้ว
-//         await axios.put(base_url + '/cart-item', { cartId, productId, quantity });
+// ฟังก์ชันที่ใช้ในการส่งข้อมูลใหม่เมื่อผ่านดีเลย์
+const resendUpdate = async (cartId, productId, quantity, res) => {
+    try {
+        // ส่งคำขอ PUT ไปยัง API หลังจากที่หน่วงเวลาแล้ว
+        await axios.put(base_url + '/cart-item', { cartId, productId, quantity });
 
-//         console.log(`อัปเดตสินค้า ${productId} เป็นจำนวน ${quantity} หลังจากหน่วงเวลา`);
+        console.log(`อัปเดตสินค้า ${productId} เป็นจำนวน ${quantity} หลังจากหน่วงเวลา`);
 
-//         res.status(200).json({ message: 'Quantity successfully updated after delay' });
-//     } catch (error) {
-//         console.error('Error in resendUpdate:', error.message);
-//         res.status(500).send('An error occurred while updating the quantity after delay.');
-//     }
-// };
+        res.status(200).json({ message: 'Quantity successfully updated after delay' });
+    } catch (error) {
+        console.error('Error in resendUpdate:', error.message);
+        res.status(500).send('An error occurred while updating the quantity after delay.');
+    }
+};
 
 
 

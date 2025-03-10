@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    
     <header>
         <a href="/" class="logo"><img src="../img/logo_store.png" alt="logo"></a>
 
@@ -51,21 +52,20 @@
                             <th>ราคา/ชิ้น</th>
                             <th>จำนวน</th>
                             <th id="price">ราคารวม</th>
-                            <th></th> <!-- เพิ่มคอลัมน์สำหรับปุ่มลบ -->
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% let totalPrice = 0; %> <!-- ประกาศ totalPrice แค่ครั้งเดียวที่นี่ -->
+                        <% let totalPrice = 0; %>
                         <% cartItem.forEach(product => { %>
                             <% 
                                 const brandName = brands.find(brand => brand.brand_ID == product.Product.brand_ID); 
                                 const itemTotal = product.quantity * product.Product.unitPrice;
-                                totalPrice += itemTotal; // คำนวณผลรวมของตะกร้า
+                                totalPrice += itemTotal;
                             %>
                             <tr id="row-<%= product.Product.product_ID %>">
                                 <td>
-                                    <a href="/detail?brand=<%= brandName.name %>&Id=<%= product.Product.product_ID %>">
-                                        <img src="../../img/<%= products[i].category_ID %>/<%= product.Product.imgName %>" alt="Product Image" class="cart-item-image">
+                                        <img src="../../img/<%= product.Product.category_ID %>/<%= product.Product.imgName %>" alt="Product Image" class="cart-item-image">
                                     </a>
                                 </td>
                                 <td class="inRow">
@@ -154,7 +154,7 @@
             catch (error) {
                 console.error('Error:', error);
             }
-        }, 800); // หน่วง 500 ms
+        }, 800);
 
         function updateTotalPrice() 
         {
