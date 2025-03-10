@@ -1,0 +1,71 @@
+/* เพิ่มเติมการตกแต่งในแผงควบคุม */
+.admin-panel {
+    padding: 2rem 1rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.admin-panel p {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.card-menu {
+    display: flex;
+    flex-wrap: wrap; /* ทำให้มันสามารถพับแถว */
+    justify-content: space-between; /* จัดเรียงให้แถวแรกเต็ม */
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.card-menu .card {
+    flex: 1 1 45%; /* กำหนดขนาดของแต่ละ card */
+    max-width: 45%; /* ไม่ให้ card เกินขนาดนี้ */
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-menu .card:nth-child(n+4) {
+    flex: 1 1 45%; /* ใช้ flex แบบเดียวกันสำหรับแถวล่าง */
+    max-width: 45%;
+    margin: 0 auto; /* ทำให้แถวล่างอยู่กลาง */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.card p {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.btn-card {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background: #1a73e8;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+.btn-card:hover {
+    background: #1558b0;
+}

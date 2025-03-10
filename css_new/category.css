@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body {
+    font-family: "Prompt", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+
+    input, button {
+        font-family: "Prompt", sans-serif;
+    }
+}
+
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 60px;
+    border-bottom: 1px solid #a5a5a5;
+    height: fit-content;
+    gap: 60px;
+    z-index: 100; /* ตั้งค่า z-index ให้สูงกว่า dropdown */
+    position: relative; /* ตั้งค่า position เพื่อให้ z-index ทำงาน */
+    background: white; /* เพิ่ม background เพื่อให้ header ไม่โปร่งแสง */
+}
+
+
+.logo img {
+    width: 150px;
+    /* font-size: 2rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: #333; */
+}
+
+.search-bar {
+    display: flex;
+    flex: 1;
+    margin: 0 2rem;
+    justify-content: center;
+}
+.search-bar input {
+    font-size: 100%;
+    margin-right: 10px;
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #b6b6b6;
+    border-radius: 10px;
+    outline: none;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.search-bar button {
+    padding: 10px 20px;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+    font-size: larger;
+}
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+    min-height: max-content;
+    padding: 10px 12px;
+}
+nav a:hover {
+    color: #1a73e8;
+}
+
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 99; /* ตั้งค่า z-index ให้ต่ำกว่า header */
+    font-size: medium;
+    margin-top: 15px; /* ขยับ dropdown ลงมาข้างล่างเพิ่มเติม */
+    opacity: 0; /* เริ่มต้นให้ dropdown ไม่แสดง */
+    transition: opacity 0.5s ease-in-out; /* เพิ่ม transition สำหรับ opacity */
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background 0.3s ease-in-out; /* เพิ่ม transition สำหรับ background */
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 1;
+    font-size: medium;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none; /* ปิดการรับเหตุการณ์ของเมาส์ชั่วคราว */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    animation: fade 0.5s ease-in-out; /* เพิ่ม animation สำหรับ fade effect */
+    transition-delay: 0.5s;
+    pointer-events: auto; /* เปิดการรับเหตุการณ์ของเมาส์เมื่อแสดง dropdown */
+}
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.dropbtn {
+    margin-bottom: 50px;
+}
+.dropdown:hover .dropbtn {
+    color: #1a73e8;
+}
+
+
+
+.banner {
+    width: 100%;
+    height: 500px;
+    background: #1558b0;
+    margin: 1rem 0;
+}
+
+.container {
+    padding: 2rem 1rem;
+    max-width: 77%;
+    margin: 0 auto;
+    justify-content: center;
+}
+.section-title {
+    display: flex;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 3.5rem 2.5rem;
+    justify-content: center;
+}
+.product-card {
+    width: 300px; /* กำหนดความกว้างให้เท่ากัน */
+    height: 400px; /* กำหนดความสูงให้เท่ากัน */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background: white;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* จัดการเนื้อหาให้สมดุล */
+    gap: 10px;
+    justify-content: center;
+}
+
+.borderImg {
+    height: 180px;
+    align-self: center;
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+.product-card img {
+    width: 270px;
+    height: 180px;
+    object-fit: contain;
+}
+
+.borderImg {
+    height: 180px;
+    align-self: center;
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+.product-card img {
+    width: 270px;
+    height: 180px;
+    object-fit: contain;
+
+
+}
+.product-info {
+    padding: 0 1.5rem ;
+    height: 180px;
+}
+.product-info h4 {
+    margin: 0 0 0.5rem 0;
+}
+.product-info p {
+    margin: 0 0 0.5rem 0;
+    color: #666;
+}
+.btn-product {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    gap: 10px;
+}
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    font-size: 0.86rem;
+    background: #1a73e8;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    transition: background 0.3s;
+    margin-right: 8px;
+}
+.btn:hover {
+    background: #1558b0;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    border-top: 1px solid #a5a5a5;
+    flex-shrink: 1;
+}
+
+button {
+    cursor: pointer;
+}

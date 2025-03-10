@@ -1,0 +1,93 @@
+/* ส่วนของหน้าล็อคอิน */
+.login-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.input-group input {
+    width: 95%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #b6b6b6;
+    outline: none;
+    font-size: 1rem;
+}
+
+.input-group input:focus {
+    border-color: #1a73e8;
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+    background-color: #1a73e8;
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #1558b0;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.signup-link a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+/* ปรับให้กับหน้าจอขนาดเล็ก */
+@media (max-width: 768px) {
+    .container {
+        padding: 2rem 1rem;
+    }
+
+    .login-form {
+        padding: 1.5rem;
+    }
+}
+
+
+
+/* ส่วนของข้อความข้อผิดพลาด */
+.error-message {
+    background-color: #ffcccc;
+    color: #d8000c;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.error-message p {
+    margin: 0;
+    font-weight: bold;
+}
