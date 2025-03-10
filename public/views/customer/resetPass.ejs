@@ -34,28 +34,42 @@
         </nav>
     </header>
 
+
     <div class="container">
         <h1 class="account-info-header">เปลี่ยนรหัสผ่าน</h1>
         <form action="/updatePassword" method="POST">
             <div class="password-form">
-                <label for="oldPassword">รหัสผ่านเดิม:</label>
-                <input type="password" id="oldPassword" name="oldPassword" required>
+                <div class="input-group">
+                    <label for="oldPassword">รหัสผ่านเดิม:</label>
+                    <input type="password" id="oldPassword" name="oldPassword" required placeholder="กรอกรหัสผ่านเดิม">
+                </div>
 
-                <label for="newPassword">รหัสผ่านใหม่:</label>
-                <input type="password" id="newPassword" name="newPassword" required>
+                <div class="input-group">
+                    <label for="newPassword">รหัสผ่านใหม่:</label>
+                    <input type="password" id="newPassword" name="newPassword" required placeholder="กรอกรหัสผ่านใหม่"
+                           minlength="8" maxlength="20"
+                           pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}"
+                           title="รหัสผ่านต้องมี 8-20 ตัวอักษร ประกอบด้วยตัวอักษร (A-Z, a-z), ตัวเลข (0-9) และอักขระพิเศษ (!@#$%^&*)">
+                </div>
 
-                <label for="confirmPassword">ยืนยันรหัสผ่านใหม่:</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="input-group">
+                    <label for="confirmPassword">ยืนยันรหัสผ่านใหม่:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="ยืนยันรหัสผ่านใหม่"
+                           minlength="8" maxlength="20"
+                           pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}"
+                           title="รหัสผ่านต้องมี 8-20 ตัวอักษร ประกอบด้วยตัวอักษร (A-Z, a-z), ตัวเลข (0-9) และอักขระพิเศษ (!@#$%^&*)">
+                </div>
 
                 <button type="submit" class="btn">บันทึกรหัสผ่านใหม่</button>
             </div>
         </form>
     </div>
 
-</body>
 
-<footer>
-    &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
-</footer>
+    <footer>
+        &copy; 2025 DIY Computer | สงวนลิขสิทธิ์
+    </footer>
+    
+</body>
 
 </html>

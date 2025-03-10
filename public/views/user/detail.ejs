@@ -10,14 +10,8 @@
     <title>รายละเอียดสินค้า</title>
 </head>
 
-<script>
-    if (!window.performance.navigation.type) {
-        window.location.reload();
-    }
-</script>
-
-
 <body>
+
     <header>
         <a href="/" class="logo"><img src="../img/logo_store.png" alt="logo"></a>
 
@@ -48,6 +42,7 @@
 
     <div class="container">
         <h1 class="section-title">รายละเอียดสินค้า</h1>
+
         <% products.forEach(item => { %>
             <% if (item.product_ID == Id) { %>
                 
@@ -85,12 +80,15 @@
                 
             <% } %>
         <% }); %>
+        
     </div>
-</body>
 
-<footer>
-    &copy; 2025 The Computer Store | Copyright
-</footer>
+
+    <footer>
+        &copy; 2025 The Computer Store | Copyright
+    </footer>
+    
+</body>
 
 </html>
 

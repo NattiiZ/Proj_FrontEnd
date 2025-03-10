@@ -62,6 +62,7 @@
 
 
 <body>
+
     <header>
         <a href="/" class="logo"><img src="../img/logo_store.png" alt="logo"></a>
 
@@ -89,35 +90,44 @@
         </nav>
     </header>
 
+
     <div class="container">
         <h1 class="section-title">แก้ไขข้อมูลผู้ใช้</h1>
 
         <div class="register-form">
             <form action="/newInfo" method="POST">
                 <div class="input-group">
-                    <label for="name">ชื่อ-นามสกุล</label>
-                    <input type="text" name="name" value="<%= customer.name %>" placeholder="กรอกชื่อ-นามสกุล">
+                    <label for="fullname">ชื่อ-นามสกุล</label>
+                    <input type="text" id="fullname" name="name" required placeholder="กรอกชื่อ-นามสกุล"
+                           pattern="[A-Za-zก-๙\s]{3,50}" title="กรุณากรอกชื่อ-นามสกุล (3-50 ตัวอักษร) โดยไม่มีอักขระพิเศษ" value="<%= customer.name %>">
                 </div>
 
                 <div class="input-group">
                     <label for="email">อีเมล</label>
-                    <input type="text" name="email" value="<%= email %>" placeholder="กรอกเบอร์โทร">
+                    <input type="email" id="email" name="email" required placeholder="กรอกอีเมล" value="<%= email %>"
+                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" 
+                            title="กรุณากรอกอีเมลที่ถูกต้อง เช่น example@email.com">
+                    
+                    
                 </div>
 
                 <div class="input-group">
                     <label for="phone">เบอร์โทร</label>
-                    <input type="text" name="phone" value="<%= customer.phone %>" placeholder="กรอกเบอร์โทร">
+                    <input type="tel" id="phone" name="phone" required placeholder="กรอกเบอร์โทร"
+                            pattern="0[0-9]{9}" title="กรุณากรอกเบอร์โทร 10 หลัก โดยขึ้นต้นด้วย 0" maxlength="10" value="<%= customer.phone %>">
                 </div>
 
                 <div class="input-group">
                     <label for="address">ที่อยู่</label>
-                    <textarea name="address" placeholder="กรอกที่อยู่"><%= customer.address %></textarea>
+                    <textarea id="address" name="address" required placeholder="กรอกที่อยู่" rows="3" maxlength="255"
+                                pattern="[^ ]+" title="กรุณากรอกที่อยู่โดยไม่มีอักขระ space และไม่เกิน 255 ตัวอักษร"><%= customer.address %></textarea>
                 </div>
 
                 <button type="submit" class="btn">บันทึกข้อมูล</button>
             </form>
         </div>
     </div>
+    
 
     <footer>
         &copy; 2025 The Computer Store | Copyright
