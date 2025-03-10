@@ -64,15 +64,13 @@
 
                         <h4>รายละเอียด:</h4>
                         <ul>
-                            <li><strong>-</strong></li>
-                            <li><strong>-</strong></li>
-                            <li><strong>-</strong></li>
-                            <li><strong>-</strong></li>
-                            <li><strong>-</strong></li>
-
+                            <% item.detail.split('\\n').forEach(function(line) { %>
+                                <li><%= line %></li>
+                            <% }); %>
+                        </ul>
                         <form action="/getProduct" method="POST"">
                             <input type="hidden" name="url" value="/detail?brand=<%= brand %>&Id=<%= Id %>">
-                            <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
+                            <input type="hidden" name="Id" value="<%= item.product_ID %>">
                             <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
                         </form>
                     </div>

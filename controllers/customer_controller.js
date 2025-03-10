@@ -51,17 +51,15 @@ exports.getProduct = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
         const { url, Id } = req.body;
+        
 
-        // ตรวจสอบการเข้าสู่ระบบ
         if (!loginSession) {
             return res.redirect(`/signin?from=${encodeURIComponent(url)}`);
         }
 
-        // ดึงข้อมูลตะกร้าของผู้ใช้
         const { data: carts } = await axios.get(base_url + '/cart');
         let checkCart = carts.find(cartItem => cartItem.user_ID === loginSession.UID);
 
-        // หากไม่มีตะกร้า ให้สร้างใหม่
         if (!checkCart) {
             const { data: newCart } = await axios.post(base_url + '/cart', { user_ID: loginSession.UID });
             checkCart = newCart;
@@ -69,19 +67,16 @@ exports.getProduct = async (req, res) => {
 
         const cartId = checkCart.cart_ID;
 
-        // ตรวจสอบว่าสินค้าอยู่ในตะกร้าแล้วหรือไม่
         const { data: cartItems } = await axios.get(base_url + '/cart-item');
         const findItem = cartItems.find(item => item.cart_ID == cartId && item.product_ID == Id);
 
         if (findItem) {
-            // ถ้าสินค้าซ้ำ ให้อัปเดตจำนวน
             await axios.put(base_url + '/cart-item', {
                 cartId: findItem.cart_ID,
                 productId: Id,
                 quantity: findItem.quantity + 1
             });
         } else {
-            // ถ้าไม่มี ให้เพิ่มสินค้าใหม่
             await axios.post(base_url + '/cart-item', {
                 cart_ID: cartId,
                 product_ID: Id,
@@ -89,15 +84,13 @@ exports.getProduct = async (req, res) => {
             });
         }
 
-        // ดึงข้อมูลสินค้าและแบรนด์
         const { data: product } = await axios.get(`${base_url}/product/${Id}`);
         const { data: brand } = await axios.get(`${base_url}/brand/${product.brand_ID}`);
 
-        // แจ้งเตือนและกลับไปยังหน้าที่แล้ว
         res.send(`
             <script>
                 alert("เพิ่ม ${brand.name} ${product.name} ลงตะกร้าเรียบร้อยแล้ว");
-                window.location.href = "/";
+                window.location.href = "http://localhost:${process.env.HOST_PORT}${url}";
             </script>
         `);
     } 
@@ -204,47 +197,36 @@ exports.checkOut = async (req, res) => {
 
         const cart = JSON.parse(req.body.cart);
 
-        // คำนวณราคารวม
+        const customers = await axios.get(base_url + '/customer')
+        const findCustomer = customers.data.find(customer => customer.user_ID == loginSession.UID);
+
         const totalAmount = cart.reduce((total, item) => total + (item.quantity * item.Product.unitPrice), 0);
 
-        // สร้างคำสั่งซื้อใหม่
         await axios.post(base_url + '/order', {
-            customer_ID: loginSession.UID,
+            customer_ID: findCustomer.customer_ID,
             totalAmount,
-            status_ID: 1, // 1 = รอดำเนินการ
         });
-
-        // ดึงคำสั่งซื้อของผู้ใช้เพื่อตรวจสอบ order_ID
+        
         const orders = await axios.get(base_url + '/order');
-        const order_ID = orders.data.filter(order => order.customer_ID == loginSession.UID).at(-1).order_ID;
+        const order_ID = orders.data.filter(order => order.customer_ID == findCustomer.customer_ID).at(-1).order_ID;
 
         if (!order_ID) {
             throw new Error('Order not found for the current user.');
         }
-
-        console.log(`✅ Order created: ${order_ID}`);
         
-        
-
-        // เพิ่มสินค้าไปยัง order-detail
         for (const item of cart) {
-            console.log(item);
-            
             await axios.post(base_url + '/order-detail', {
                 order_ID: order_ID,
                 product_ID: item.product_ID,
                 quantity: item.quantity,
                 unitPrice: item.Product.unitPrice,
-                subtotal: (item.Product.unitPrice * item.quantity),
             });
-            console.log(`📦 Added to OrderDetails: product_ID=${item.product_ID}`);
         }
 
-        // ลบสินค้าทั้งหมดออกจากตะกร้า
         for (const item of cart) {
             await axios.delete(`${base_url}/cart-item/${item.cart_ID}/${item.product_ID}`);
-            console.log(`🗑️ Deleted from cart: product_ID=${item.product_ID}`);
         }
+
         res.redirect('/order/' + order_ID)
     } catch (error) {
         console.error('❌ Error in checkOut:', error.message);

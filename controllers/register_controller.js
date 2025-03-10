@@ -94,7 +94,7 @@ exports.createUser = async (req, res) => {
 
         const userId = await axios.get(base_url + '/user/' + user.data[user.data.length - 1].user_ID);
 
-        req.session.loginSession = { role_Id: userId.data.userType_ID, UID: userId.data.user_ID };
+        req.session.loginSession = { UID: userId.data.user_ID };
         delete req.session.userData;
 
         res.redirect("/");

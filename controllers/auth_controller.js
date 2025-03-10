@@ -38,7 +38,6 @@ exports.checkLogin = async (req, res) => {
 
         if (user) {
             req.session.loginSession = { 
-                role_Id: user.userType_ID, 
                 UID: user.user_ID 
             };
 
