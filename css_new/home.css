@@ -1,0 +1,329 @@
+/* ===================== การ์ดสินค้า ===================== */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* กระจายพื้นที่ระหว่างเนื้อหาและปุ่ม */
+    align-items: center;
+    width: 300px;
+    height: 400px; /* กำหนดความสูงเท่ากันทุกการ์ด */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background: white;
+    overflow: hidden;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* ===================== รูปภาพสินค้า ===================== */
+.product-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 180px; /* กำหนดความสูงของรูปสินค้า */
+}
+
+.product-card img {
+    width: 100%;
+    max-width: 270px;
+    height: 180px;
+    object-fit: contain;
+}
+
+/* ===================== ข้อมูลสินค้า ===================== */
+.product-info {
+    flex-grow: 1; /* ขยายเต็มพื้นที่ */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* ทำให้เนื้อหาอยู่ด้านบน ปุ่มอยู่ล่าง */
+    text-align: center;
+    height: 100%;
+}
+
+.product-info h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.product-info p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+/* ===================== ปุ่มสินค้า ===================== */
+.product-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: auto; /* ดันปุ่มลงล่างสุด */
+}
+
+.btn {
+    display: inline-block;
+    flex: 1; /* ให้ปุ่มขยายเท่ากัน */
+    padding: 0.6rem 1rem;
+    font-size: 0.86rem;
+    background: #1a73e8;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #1558b0;
+}
+
+/* เพิ่มเงาเมื่อ Hover การ์ด */
+.product-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.cart-items {
+    margin-bottom: 2rem;
+}
+
+.data {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 50px;
+
+}
+
+.data tbody {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+}
+
+.data th, .data td {
+    width: 100px;
+    padding: 10px 40px;
+    text-align: center;
+    border-bottom: 3px solid #e0e0e0;
+
+}
+
+#name {
+    width: 380px;
+}
+
+#price {
+    width: 190px;
+}
+
+.inRow p {
+    font-size: 1.3rem;
+}
+
+.edit {
+    span {
+        margin: 0 10px;
+    }
+
+    button {
+        font-size: larger;
+        padding: 0.5px 10px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+        border-width: 0.5px;
+}
+}
+
+#del-Btn {
+    padding: 5px 15px;
+    background: rgb(218, 49, 49);
+    border-radius: 10px;
+    border-width: 0.5px;
+    color: white;
+
+}
+
+.cart-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.cart-summary {
+    margin-top: 20px;
+    padding: 1rem 6rem;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+
+    button {
+        font-size: large;
+        font-weight: bolder;
+        color: white;
+        background:#1a73e8;
+        padding: 15px 40px;
+        border-radius: 5px;
+        border-width: 0.5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+        -o-border-radius: 5px;
+    }
+}
+
+.cart-summary h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.cart-summary p {
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.cart-summary .btn {
+    background: #1a73e8;
+    color: white;
+    padding: 2rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.cart-summary .btn:hover {
+    background: #1558b0;
+}
+
+/* Style for the banner */
+.banner {
+    width: 100%;
+    height: 500px;
+    background: #1558b0;
+    margin: 1rem 0;
+}
+
+/* The main container style */
+.container {
+    padding: 2rem 1rem;
+    max-width: 85%;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+/* Section title styling */
+.section-title {
+    display: flex;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+/* Adjust header navigation and search */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 60px;
+    border-bottom: 1px solid #a5a5a5;
+    gap: 60px;
+}
+
+/* Style for logo */
+.logo img {
+    width: 150px;
+}
+
+/* Search bar styling */
+.search-bar {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    margin: 0 2rem;
+}
+
+.search-bar input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #b6b6b6;
+    border-radius: 10px;
+    outline: none;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* Navigation bar styles */
+nav {
+    display: flex;
+    gap: 30px;
+    font-size: larger;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #1a73e8;
+}
+
+/* Dropdown menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    z-index: 0;
+    font-size: medium;
+    margin-top: 5px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropbtn {
+    margin-bottom: 50px;
+}
+
+.dropdown:hover .dropbtn {
+    color: #1a73e8;
+}
+
+/* Footer styles */
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    border-top: 1px solid #a5a5a5;
+}
