@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    
     <header>
         <a href="/" class="logo"><img src="../img/logo_store.png" alt="logo"></a>
 
@@ -25,37 +26,45 @@
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
+                        <a href="/category/<%=category[i].category_name%>"><%= category[i].name %></a>
                     <% } %>
                 </div>
             </div>
             <div><a href="/cart">ตะกร้า</a></div>
-            <div><a href="/account">เข้าสู่ระบบ</a></div>
+            <div><a href="/signin">เข้าสู่ระบบ</a></div>
         </nav>
     </header>
 
+
     <div class="container">
         <h1 class="section-title">เข้าสู่ระบบ</h1>
-
+    
         <div class="login-form">
             <form action="/checkLogin?from=<%= encodeURIComponent(url) %>" method="POST">
                 <div class="input-group">
-                    <label for="username">อีเมล</label>
-                    <input type="text" name="email" required placeholder="กรุณากรอกอีเมล">
+                    <label for="email">อีเมล</label>
+                    <input type="email" name="email" required placeholder="กรุณากรอกอีเมล" 
+                           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" 
+                           title="กรุณากรอกอีเมลที่ถูกต้อง เช่น example@email.com">
                 </div>
-
+    
                 <div class="input-group">
                     <label for="password">รหัสผ่าน</label>
-                    <input type="password" name="password" required placeholder="กรุณากรอกรหัสผ่าน">
+                    <input type="password" name="password" required placeholder="กรุณากรอกรหัสผ่าน"
+                           minlength="8" maxlength="20" 
+                           pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}" 
+                           title="รหัสผ่านต้องมี 8-20 ตัวอักษร ประกอบด้วยตัวอักษร (A-Z, a-z), ตัวเลข (0-9) และอักขระพิเศษ (!@#$%^&*)">
                 </div>
-
+                
+    
                 <button type="submit" class="btn">เข้าสู่ระบบ</button>
-
+    
                 <p class="signup-link">ยังไม่มีบัญชี? <a href="/signup">สมัครสมาชิก</a></p>
             </form>
         </div>
     </div>
-
+    
+    
     <footer>
         &copy; 2025 The Computer Store | Copyright
     </footer>

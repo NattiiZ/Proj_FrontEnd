@@ -105,13 +105,15 @@
         <% }%>
     </div>
 
+
     <footer>
         &copy; 2025 The Computer Store | Copyright
     </footer>
 
+
     <script>
-        // ฟังก์ชันอัปเดตจำนวนสินค้า
-        function debounce(func, delay) {
+        function debounce(func, delay) 
+        {
             let timer;
             return function (...args) {
                 clearTimeout(timer);
@@ -119,7 +121,8 @@
             };
         }
 
-        const updateQuantity = debounce(async function (productId, change) {
+        const updateQuantity = debounce(async function (productId, change) 
+        {
             const quantityElement = document.getElementById(`quantity-${productId}`);
             const totalElement = document.getElementById(`total-${productId}`);
             let quantity = parseInt(quantityElement.innerText);
@@ -147,16 +150,19 @@
                     }),
                 });
                 console.log("อัปเดตสำเร็จ");
-            } catch (error) {
+            } 
+            catch (error) {
                 console.error('Error:', error);
             }
         }, 800); // หน่วง 500 ms
 
-        function updateTotalPrice() {
+        function updateTotalPrice() 
+        {
             let totalPrice = 0;
             document.querySelectorAll('[id^="total-"]').forEach(totalElement => {
                 totalPrice += parseFloat(totalElement.innerText.replace(' บาท', ''));
             });
+            
             document.getElementById('all').innerText = totalPrice.toFixed(2) + " บาท";
         }
     </script>

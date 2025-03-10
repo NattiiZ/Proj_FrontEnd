@@ -10,6 +10,7 @@
 </head>
 
 <body>
+
     <header>
         <a href="/" class="logo"><img src="../img/logo_store.png" alt="logo"></a>
 
@@ -23,9 +24,9 @@
             <div class="dropdown">
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
-                    <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
-                    <% } %>
+                    <% category.forEach(cat => { %>
+                        <a href="/category/<%= cat.category_name %>"><%= cat.name %></a>
+                    <% }) %>
                 </div>
             </div>
             <div><a href="/cart">ตะกร้า</a></div>
@@ -37,50 +38,52 @@
         </nav>
     </header>
 
+
     <div class="container">
-        <% if (typeof query !=='undefined' ) { %>
+        <% if (typeof query !== 'undefined') { %>
             <h1 class="section-title">สินค้าสำหรับคำค้นหา "<%= query %>"</h1>
 
             <% let brand = '' %>
             <div class="product-grid">
-                <% for(var i=0; i< products.length; i++) { %>
+                <% products.forEach(product => { %>
                     <div class="product-card">
 
-                        <div class="borderImg"><img src="../../img/<%= products[i].category_ID %>/<%= products[i].imgName %>" alt="<%= products[i].name %>"></div>
+                        <div class="borderImg"><img src="../../img/<%= product.category_ID %>/<%= product.imgName %>" alt="<%= product.name %>"></div>
                         
                         <div class="product-info">
-                            <% for(var k=0; k< brands.length; k++) { %>
-                                <% if (products[i].brand_ID==brands[k].brand_ID) { %>
+                            <% brands.forEach(brandItem => { %>
+                                <% if (product.brand_ID == brandItem.brand_ID) { %>
                                     <h4>
-                                        <% brand = brands[k].name %>
-                                        <%= brands[k].name %>
-                                        <%= products[i].name %>
+                                        <% brand = brandItem.name %>
+                                        <%= brandItem.name %>
+                                        <%= product.name %>
                                     </h4>
                                 <% } %>
-                            <% } %>
+                            <% }) %>
 
-                            <p>ราคา <%= products[i].unitPrice %>.-</p>
+                            <p>ราคา <%= product.unitPrice %>.-</p>
                             <div class="btn-product">
                                 <form action="/getProduct" method="POST">
-                                    <input type="hidden" name="url" value="/search/<%= products[i].category_ID %>">
-                                    <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
+                                    <input type="hidden" name="url" value="/search/<%= product.category_ID %>">
+                                    <input type="hidden" name="Id" value="<%= product.product_ID %>">
                                     <button class="btn" type="submit">เพิ่มลงตะกร้า</button>
                                 </form>
     
                                 <form action="/detail" method="GET">
-                                <input type="hidden" name="brand" value="<%= brand %>">
-                                <input type="hidden" name="Id" value="<%= products[i].product_ID %>">
+                                    <input type="hidden" name="brand" value="<%= brand %>">
+                                    <input type="hidden" name="Id" value="<%= product.product_ID %>">
                                     <button class="btn" type="submit">รายละเอียด</button>
                                 </form>
                             </div>
                         </div>
                     </div>
-                <% } %>
+                <% }) %>
             </div>
 
         <% } %>
     </div>
 
+    
     <footer>
         &copy; 2025 The Computer Store | Copyright
     </footer>

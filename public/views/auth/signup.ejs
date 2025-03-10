@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../css/signup.css">
     <link rel="shortcut icon" href="../img/favico.png" type="image/x-icon">
     <title>สมัครสมาชิก</title>
 </head>
 
 <body>
+    
     <header>
         <a href="/" class="logo"><img src="../img/logo_store.png" alt="logo"></a>
 
@@ -25,7 +25,7 @@
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
+                        <a href="/category/<%=category[i].category_name%>"><%= category[i].name %></a>
                     <% } %>
                 </div>
             </div>
@@ -34,6 +34,7 @@
         </nav>
     </header>
 
+
     <div class="container">
         <h1 class="section-title">สมัครสมาชิก</h1>
 
@@ -41,31 +42,42 @@
             <form action="/checkReg" method="POST">
                 <div class="input-group">
                     <label for="username">ชื่อผู้ใช้</label>
-                    <input type="text" id="username" name="username" required placeholder="กรอกชื่อผู้ใช้" minlength="8" maxlength="20" pattern="[A-Za-z0-9!@#$%^&*()_+|~\-=`{}[\]:\">
+                    <input type="text" id="username" name="username" required placeholder="กรอกชื่อผู้ใช้" minlength="8" maxlength="20"
+                           title="ชื่อผู้ใช้ต้องมี 8-20 ตัวอักษร (A-Z, a-z, 0-9 และอักขระพิเศษ !@#$%^&*)"
+                           pattern="[A-Za-z0-9!@#$%^&*()_+|~\-=`{}\[\]:\"]+">
                 </div>
-
+            
                 <div class="input-group">
                     <label for="email">อีเมล</label>
-                    <input type="email" name="email" required placeholder="กรอกอีเมล">
+                    <input type="email" id="email" name="email" required placeholder="กรอกอีเมล"
+                           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" 
+                           title="กรุณากรอกอีเมลที่ถูกต้อง เช่น example@email.com">
                 </div>
-
+            
                 <div class="input-group">
                     <label for="password">รหัสผ่าน</label>
-                    <input type="password" name="password" required placeholder="กรอกรหัสผ่าน" minlength="8" maxlength="20" pattern="[A-Za-z0-9!@#$%^&*()_+|~\-=`{}[\]:\">
+                    <input type="password" id="password" name="password" required placeholder="กรอกรหัสผ่าน"
+                           minlength="8" maxlength="20"
+                           pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}"
+                           title="รหัสผ่านต้องมี 8-20 ตัวอักษร ประกอบด้วยตัวอักษร (A-Z, a-z), ตัวเลข (0-9) และอักขระพิเศษ (!@#$%^&*)">
                 </div>
-
+            
                 <div class="input-group">
-                    <label for="password">ยืนยันรหัสผ่าน</label>
-                    <input type="password" name="check_password" required placeholder="ยืนยันรหัสผ่าน" minlength="8" maxlength="20" pattern="[A-Za-z0-9!@#$%^&*()_+|~\-=`{}[\]:\">
+                    <label for="check_password">ยืนยันรหัสผ่าน</label>
+                    <input type="password" id="check_password" name="check_password" required placeholder="ยืนยันรหัสผ่าน"
+                           minlength="8" maxlength="20"
+                           pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}"
+                           title="รหัสผ่านต้องมี 8-20 ตัวอักษร ประกอบด้วยตัวอักษร (A-Z, a-z), ตัวเลข (0-9) และอักขระพิเศษ (!@#$%^&*)">
                 </div>
-
+            
                 <button type="submit" class="btn">สมัครสมาชิก</button>
-
+            
                 <p class="login-link">มีบัญชีอยู่แล้ว? <a href="/signin">เข้าสู่ระบบ</a></p>
             </form>
         </div>
     </div>
 
+    
     <footer>
         &copy; 2025 The Computer Store | Copyright
     </footer>

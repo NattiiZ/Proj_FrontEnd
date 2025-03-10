@@ -59,9 +59,8 @@
     }
 </style>
 
-
-
 <body>
+    
     <header>
         <a href="/" class="logo"><img src="../img/logo_store.png" alt="logo"></a>
 
@@ -76,7 +75,7 @@
                 <a href="/category" class="dropbtn">หมวดหมู่</a>
                 <div class="dropdown-content">
                     <% for(var i=0; i< category.length; i++) { %>
-                        <a href="/category/<%=i+1%>"><%= category[i].name %></a>
+                        <a href="/category/<%=category[i].category_name%>"><%= category[i].name %></a>
                     <% } %>
                 </div>
             </div>
@@ -85,6 +84,7 @@
         </nav>
     </header>
 
+
     <div class="container">
         <h1 class="section-title">ข้อมูลผู้ใช้</h1>
 
@@ -92,24 +92,29 @@
             <form action="/createUser" method="POST">
                 <div class="input-group">
                     <label for="fullname">ชื่อ-นามสกุล</label>
-                    <input type="text" name="name" required placeholder="กรอกชื่อ-นามสกุล">
+                    <input type="text" id="fullname" name="name" required placeholder="กรอกชื่อ-นามสกุล"
+                           pattern="[A-Za-zก-๙\s]{3,50}" title="กรุณากรอกชื่อ-นามสกุล (3-50 ตัวอักษร) โดยไม่มีอักขระพิเศษ" />
                 </div>
-
+            
                 <div class="input-group">
                     <label for="phone">เบอร์โทร</label>
-                    <input type="text" name="phone" required placeholder="กรอกเบอร์โทร">
+                    <input type="tel" id="phone" name="phone" required placeholder="กรอกเบอร์โทร"
+                           pattern="0[0-9]{9}" title="กรุณากรอกเบอร์โทร 10 หลัก โดยขึ้นต้นด้วย 0" maxlength="10" />
                 </div>
-
+            
                 <div class="input-group">
                     <label for="address">ที่อยู่</label>
-                    <textarea name="address" required placeholder="กรอกที่อยู่"></textarea>
+                    <textarea id="address" name="address" required placeholder="กรอกที่อยู่" rows="3" maxlength="255"
+                              pattern="[^ ]+" title="กรุณากรอกที่อยู่โดยไม่มีอักขระ space และไม่เกิน 255 ตัวอักษร"></textarea>
                 </div>
-
+            
                 <button type="submit" class="btn">บันทึกข้อมูล</button>
             </form>
         </div>
+        
     </div>
 
+    
     <footer>
         &copy; 2025 The Computer Store | Copyright
     </footer>
