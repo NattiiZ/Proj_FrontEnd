@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../../css/admin/style.css">
+    <link rel="stylesheet" href="../../css/admin/dashboard.css">
 </head>
 
 <body>
@@ -15,11 +16,11 @@
     </header>
 
     <nav>
-        <a href="/admin/category">Categories</a>
-        <a href="/admin/brand">Brands</a>
-        <a href="/admin/product">Products</a>
-        <a href="/admin/customer">Customers</a>
-        <a href="/admin/edit">Admin Edit</a>
+        <a href="/admin/edit">จัดการผู้ดูแล</a>
+        <a href="/admin/customer">ข้อมูลลูกค้า</a>
+        <a href="/admin/product">รายการสินค้า</a>
+        <a href="/admin/category">หมวดหมู่สินค้า</a>
+        <a href="/admin/brand">แบรนด์</a>
 
         <form action="/logout" method="POST" class="logout-form">
             <button class="logout-btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
@@ -29,7 +30,8 @@
     <div class="content">
         <div class="adminInfo">
             <h3>Welcome, <%= user.username %>!</h3>
-            <p>Email: <%= user.email %></p>
+            <p>Email: <%= user.email %>
+            </p>
         </div>
     </div>
 

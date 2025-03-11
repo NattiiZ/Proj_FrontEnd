@@ -69,7 +69,7 @@
                                 <% brands.forEach(brand => { %>
                                     <% if (product.brand_ID == brand.brand_ID) { %>
                                         <tr>
-                                            <td><img src="../../img/<%= product.category_ID %>/<%= product.imgName %>" alt=""></td>
+                                            <td><img src="../../img/Product/<%= product.category_ID %>/<%= product.imgName %>" alt=""></td>
                                             <td><p><%= brand.name %> <%= product.name %></p></td>
                                             <td><p><%= product.unitPrice %></p></td>
                                             <td><p><%= item.quantity %></p></td>

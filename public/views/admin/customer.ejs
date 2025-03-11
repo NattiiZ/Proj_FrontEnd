@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers</title>
+    <link rel="stylesheet" href="../../css/admin/style.css">
+    <link rel="stylesheet" href="../../css/admin/customer.css">
+
+</head>
+
+<body>
+
+    <header>
+        Admin Dashboard
+    </header>
+
+    <nav>
+        <a href="/admin/edit">จัดการผู้ดูแล</a>
+        <a href="/admin/customer">ข้อมูลลูกค้า</a>
+        <a href="/admin/product">รายการสินค้า</a>
+        <a href="/admin/category">หมวดหมู่สินค้า</a>
+        <a href="/admin/brand">แบรนด์</a>
+
+        <form action="/logout" method="POST" class="logout-form">
+            <button class="logout-btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+        </form>
+    </nav>
+
+    <div class="content">
+        <h1>ข้อมูลลูกค้า</h1>
+
+        <form class="search-bar" action="/admin-search" method="GET">
+            <input type="text" name="query" placeholder="ค้นหาลูกค้า" />
+            <input type="hidden" name="table" value="Customer" />
+            <button type="submit">ค้นหา</button>
+        </form>
+
+        <table>
+            <tr>
+                <th>รหัสลูกค้า</th>
+                <th>ชื่อ-นามสกุล</th>
+                <th>เบอร์โทร</th>
+                <th>อีเมล</th>
+                <th>ที่อยู่</th>
+                <th>วันที่สมัครบัญชี</th>
+                <th>รายการคำสั่งซื้อ</th>
+            </tr>
+
+            <% customer.forEach(customer=> { %>
+                <tr>
+                    <td>C-<%= String(customer.customer_ID).padStart(3, '0' ) %></td>
+                    <td><%= customer.name %></td>
+                    <td><%= customer.phone %></td>
+                    <td>
+                        <% user.forEach(user=> { %>
+                            <% if (user.user_ID==customer.user_ID) { %>
+                                <%= user.email %>
+                            <% } %>
+                        <% }) %>
+                    </td>
+                    <td><%= customer.address %></td>
+                    <td>
+                        <% user.forEach(user=> { %>
+                            <% if (user.user_ID==customer.user_ID) { %>
+                                <%= user.joinDate %>
+                            <% } %>
+                        <% }) %>
+                    </td>
+                    <td><a href="editcategory.html">ดูคำสั่งซื้อ</a></td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
+
+</body>
+
+</html>

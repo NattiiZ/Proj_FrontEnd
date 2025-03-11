@@ -1,3 +1,8 @@
+header {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+}
+
+
 .banner {
     object-fit: cover;
     object-position: center;
@@ -5,7 +10,7 @@
     height: 500px;
     background: hsl(214, 79%, 39%);
     z-index: 1;
-    margin: 0.5rem 0;
+    margin:  0;
 }
 
 

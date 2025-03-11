@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category</title>
+    <link rel="stylesheet" href="../../css/admin/style.css">
+    <link rel="stylesheet" href="../../css/admin/Brand.css">
+</head>
+
+<body>
+
+    <header>
+        Admin Dashboard
+    </header>
+
+    <nav>
+        <a href="/admin/edit">จัดการผู้ดูแล</a>
+        <a href="/admin/customer">ข้อมูลลูกค้า</a>
+        <a href="/admin/product">รายการสินค้า</a>
+        <a href="/admin/category">หมวดหมู่สินค้า</a>
+        <a href="/admin/brand">แบรนด์</a>
+
+        <form action="/logout" method="POST" class="logout-form">
+            <button class="logout-btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+        </form>
+    </nav>
+
+    <div class="content">
+        <h1>แบรนด์</h1>
+
+        <form class="search-bar" action="/admin-search" method="GET">
+            <input type="text" name="query" placeholder="ค้นหาสินค้า..." />
+            <input type="hidden" name="table" value="Brand" />
+            <button type="submit">ค้นหา</button>
+        </form>
+
+        <div class="action-bar">
+            <a href="/add/brand" class="btn create-btn">เพิ่ม</a>
+        </div>
+
+        <table>
+            <tr>
+                <th>แบรนด์</th>
+                <th>จัดการ</th>
+            </tr>
+
+            <% if (brand.length> 0) { %>
+                <% brand.forEach(brand=> { %>
+                    <tr>
+                        <td><%= brand.name %></td>
+                        <td>
+                            <a href="editcategory.html">แก้ไข</a> |
+                            <a href="#" onclick="confirmDelete('<%= brand.brand_ID %>', '<%= brand.name %>')">ลบ</a>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="2">ไม่พบข้อมูลแบรนด์ "<%= query %>"</td>
+                </tr>
+            <% } %>
+        </table>
+        <br>
+    </div>
+
+    <script>
+        function confirmDelete(Id, name) {
+            if (confirm(`ยืนยันการลบแบรนด์ ${name}`)) {
+                window.location.href = `/delete/brand/${Id}`;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

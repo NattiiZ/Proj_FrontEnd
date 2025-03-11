@@ -43,6 +43,7 @@ router.get('/signup/form', register_controller.regForm);
 router.post('/createUser', register_controller.createUser);
 
 router.get('/admin/dashboard', adminDashboard_controller.dashboard);
+router.get('/admin-search', adminDashboard_controller.search);
 router.get('/admin/category', adminDashboard_controller.allCategory);
 router.get('/admin/brand', adminDashboard_controller.allBrand);
 router.get('/admin/product', adminDashboard_controller.allProduct);
@@ -50,9 +51,10 @@ router.get('/admin/customer', adminDashboard_controller.Customers);
 router.get('/admin/edit', adminDashboard_controller.adminEdit);
 
 router.get('/delete/:table/:id', adminAction_controller.delete)
-router.get('/add/:table', adminAction_controller.add)
+router.get('/add/:table', adminAction_controller.addNew)
 router.post('/addCategory', adminAction_controller.addCategory)
 router.post('/addBrand', adminAction_controller.addBrand)
+router.post('/addProduct', adminAction_controller.addProduct)
 
 
 
