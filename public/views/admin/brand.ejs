@@ -30,14 +30,13 @@
     <div class="content">
         <h1>แบรนด์</h1>
 
-        <form class="search-bar" action="/admin-search" method="GET">
-            <input type="text" name="query" placeholder="ค้นหาแบรนด์" />
-            <input type="hidden" name="table" value="Brand" />
-            <button type="submit">ค้นหา</button>
-        </form>
-
-        <div class="action-bar">
-            <a href="/add/brand" class="btn create-btn">เพิ่ม</a>
+        <div class="search-container">
+            <form class="search-bar" action="/admin-search" method="GET">
+                <input type="text" name="query" placeholder="ค้นหาแบรนด์" />
+                <input type="hidden" name="table" value="Brand" />
+                <button type="submit">ค้นหา</button>
+            </form>
+                <a href="/add/brand" class="btn create-btn">เพิ่ม</a>
         </div>
 
         <table>

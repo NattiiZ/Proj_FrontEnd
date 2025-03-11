@@ -25,20 +25,32 @@ exports.dashboard = async (req, res) =>
     }
 }
 
+
+// function convertThaiDateToISO(thaiDate) {
+//     const [day, month, year] = thaiDate.split('/').map(num => parseInt(num, 10));
+//     const gregorianYear = year - 543; // แปลงปีจากพุทธศักราชเป็นคริสต์ศักราช
+//     const date = new Date(gregorianYear, month - 1, day);  // สร้าง Date object
+
+//     return date.toISOString();  // เช่น "2025-03-10T00:00:00.000Z"
+// }
+
+
 exports.search = async (req, res) => {
     const loginSession = req.session.loginSession;
     if (!loginSession) return res.redirect('/signin');
 
     const query = req.query.query;
     const from = req.query.table;
+    const orderDate = req.query.orderDate; // Fetch the date from query
 
     try {
-        const [productList, brand, categories, customers, users] = await Promise.all([
+        const [productList, brand, categories, customers, users, orders] = await Promise.all([
             axios.get(base_url + '/product'),
             axios.get(base_url + '/brand'),
             axios.get(base_url + '/category'),
             axios.get(base_url + '/customer'),
-            axios.get(base_url + '/user')
+            axios.get(base_url + '/user'),
+            axios.get(base_url + '/order') // Fetch the orders data
         ]);
 
         const brandMap = brand.data.reduce((map, b) => {
@@ -82,11 +94,35 @@ exports.search = async (req, res) => {
                 user: users.data,
                 query: query,
             });
-        } else {
+        } 
+        // else if (from === 'Order') {
+        //     filteredData = orders.data.filter(order => {
+        //         // ตรวจสอบคำค้นที่เป็นรหัสคำสั่งซื้อ (1, D-0001)
+        //         const matchQuery = `${order.orderID}`.includes(query) || `D-${String(order.orderID).padStart(4, '0')}` === query;
+        
+        //         // ตรวจสอบวันที่ ถ้ามีการกรอกวันในฟอร์ม
+        //         let matchDate = true;
+        //         if (orderDate) {
+        //             const formattedOrderDate = convertThaiDateToISO(orderDate);  // แปลงวันที่จากไทยเป็น ISO
+        //             // ตรวจสอบวันที่ในฐานข้อมูลกับวันที่ที่แปลง
+        //             matchDate = order.orderDate.startsWith(formattedOrderDate.split('T')[0]);  // เปรียบเทียบแค่วันที่ (YYYY-MM-DD)
+        //         }
+        
+        //         return matchQuery && matchDate;
+        //     });
+        
+        //     res.render('admin/searchOrder', {
+        //         orders: filteredData,
+        //         query: query,
+        //         orderDate: orderDate
+        //     });
+        // }
+        else {
             res.status(400).send('Invalid search type');
         }
 
-    } catch (error) {
+    } 
+    catch (error) {
         console.error('Error in search:', error.message);
         res.status(500).send('An error occurred while processing your search.');
     }
@@ -178,3 +214,51 @@ exports.allBrand = async (req, res) =>
         res.status(500).send('An error occurred while loading the admin dashboard page.');
     }
 }
+
+exports.viewOrder = async (req, res) => {
+    try {
+        const { id } = req.query;  
+        const loginSession = req.session.loginSession;
+        if (!loginSession) return res.redirect('/signin');
+
+        const orders = await axios.get(base_url + '/order');
+        const orderDetail = await axios.get(base_url + '/order-detail');
+        const products = await axios.get(base_url + '/product');
+
+        const findOrder = orders.data.filter(order => order.customer_ID == id);
+
+        res.render('admin/customerOrder', { 
+            orders: findOrder,
+            products: products.data,
+            orderDetail: orderDetail.data,
+            id, 
+        });
+    } 
+    catch (error) {
+        console.error('Error in admin:', error.message);
+        res.status(500).send('An error occurred while loading the admin dashboard page.');
+    }
+};
+
+exports.viewOrderDetail = async (req, res) => {
+    try {
+        const { id } = req.query;  
+        const loginSession = req.session.loginSession;
+        if (!loginSession) return res.redirect('/signin');
+
+        const ordersDetail = await axios.get(base_url + '/order-detail/' + id);
+        const products = await axios.get(base_url + '/product');
+        const brands = await axios.get(base_url + '/brand')
+
+        res.render('admin/orderDetail', { 
+            orders: ordersDetail.data, 
+            products: products.data, 
+            brands: brands.data,
+            id
+        });
+    } 
+    catch (error) {
+        console.error('Error in admin:', error.message);
+        res.status(500).send('An error occurred while loading the admin dashboard page.');
+    }
+};

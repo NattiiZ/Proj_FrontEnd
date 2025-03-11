@@ -1,33 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
 
-
 * {
     font-family: "Noto Sans Thai", sans-serif;
-    
     padding: 0;
     margin: 0;
     color: #333;
     box-sizing: border-box;
     line-height: 1.6;
-
-    input, button {
-        font-family: "Noto Sans Thai", sans-serif;
-    }
 }
 
 body {
-    background: #f5f5f5;
-
+    background: #f5f7fa;
 }
 
+/* Header */
 header {
-    background-color: #1a73e8;
+    background: linear-gradient(135deg, #1a73e8, #1558b0);
     color: white;
     padding: 15px 0;
     text-align: center;
     font-size: 1.8em;
     font-weight: bold;
-    box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     position: fixed;
     width: 100%;
     top: 0;
@@ -35,69 +29,69 @@ header {
     z-index: 1000;
 }
 
+/* Sidebar */
 nav {
-    width: 220px;
-    background-color: #ffffff;
+    width: 240px;
+    background: white;
     padding: 20px 0;
     position: fixed;
     top: 80px;
     left: 0;
     height: calc(100% - 80px);
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     z-index: 9;
+    border-radius: 0 15px 15px 0;
 }
 
 nav a {
+    text-decoration: none; /* ลบขีดเส้นใต้ */
     text-decoration: none;
     color: #1a73e8;
     display: block;
-    padding: 12px 20px;
-    margin: 10px 0;
-    transition: background 0.3s ease, color 0.3s ease;
+    padding: 14px 20px;
+    margin: 10px;
+    transition: all 0.3s ease-in-out;
     font-size: 1.1em;
+    border-radius: 8px;
 }
 
 nav a:hover {
-    background-color: #3a78ca;
-    /* background-color: #1a73e8; */
+    text-decoration: none; /* ลบขีดเส้นใต้ */
+    background: linear-gradient(135deg, #1a73e8, #1558b0);
     color: white;
-    cursor: pointer;
-
+    transform: scale(1.05);
 }
 
+/* Logout Button */
 .logout-form {
     margin-top: auto;
     padding: 20px;
-
 }
 
 .logout-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #1a73e8;
+    display: block;
+    padding: 12px;
+    background: linear-gradient(135deg, #e63946, #d62828);
     color: white;
-    text-decoration: none;
+    text-align: center;
     border-radius: 8px;
-    transition: background 0.3s;
+    transition: all 0.3s;
     font-size: 1em;
-    cursor: pointer; /* เรียกให้ cursor เป็น pointer เมื่ออยู่บนปุ่ม */
+    font-weight: bold;
 }
 
 .logout-btn:hover {
-    background-color: #1558b0;
-    cursor: pointer; /* เปลี่ยน cursor ให้เป็น pointer เวลาผ่านปุ่ม */
+    background: #c21e1e;
+    transform: scale(1.05);
 }
-
 
 /* Content */
 .content {
-    margin-left: 250px;
-    padding: 40px;
-    width: calc(100% - 250px);
+    margin-left: 260px;
+    padding: 50px;
+    width: calc(100% - 260px);
     padding-top: 100px; /* Account for fixed header */
 }
 
@@ -106,4 +100,17 @@ nav a:hover {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
+}
+
+/* Card Style */
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }

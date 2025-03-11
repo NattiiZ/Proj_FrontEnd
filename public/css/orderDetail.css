@@ -5,8 +5,11 @@
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
+/* ชื่อ Section */
 .section-title {
     font-size: 2.5rem;
     font-weight: 700;
@@ -15,48 +18,58 @@
     color: #333;
 }
 
-.orders-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
+/* กล่องแสดงข้อมูลลูกค้าและออเดอร์ */
 .Info {
     display: flex;
-    justify-content: space-between; /* กระจายช่องว่างระหว่างข้อมูล */
-    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
+/* ข้อมูลลูกค้าและออเดอร์ */
 .customerInfo,
 .orderInfo {
-    flex: 1; /* ทำให้แต่ละส่วนมีขนาดเท่ากัน */
+    flex: 1;
+    min-width: 280px; /* ป้องกันการบีบตัว */
 }
 
+/* เลข Order */
 .orderId {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: bold;
     color: #1a73e8;
-    align-self: center; /* จัดกึ่งกลางแนวตั้ง */
+    text-align: center;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1a73e8;
 }
 
 .customerInfo p,
 .orderInfo p {
-    margin: 1rem 0;
+    margin: 0.7rem 0;
     font-size: 1.2rem;
     color: #555;
-    text-align: left; /* จัดข้อความให้เรียงซ้าย */
 }
 
 .customerInfo strong,
 .orderInfo strong {
     font-weight: bold;
-    color: #333;
+    color: #222;
 }
 
+/* ตารางสินค้า */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 2.5rem;
+    margin-top: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 table th,
@@ -68,8 +81,8 @@ table td {
 }
 
 table th {
-    background-color: #f4f4f4;
-    color: #333;
+    /* background-color: #007aff; */
+    color: #555;
     font-weight: 600;
 }
 
@@ -81,4 +94,37 @@ table td img {
 table td p {
     margin: 0;
     color: #555;
+}
+
+/* ลบขีดเส้นใต้จากลิงก์ */
+a {
+    text-decoration: none;
+    color: #007aff;
+    font-weight: 600;
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #005ecb;
+}
+
+/* ปรับให้ responsive */
+@media (max-width: 768px) {
+    .Info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .customerInfo,
+    .orderInfo {
+        width: 100%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 }

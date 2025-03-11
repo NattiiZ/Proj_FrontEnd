@@ -1,63 +1,164 @@
-
 /* Tables */
 table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-th, td {
-    padding: 12px;
-    border: 1px solid #ddd;
-}
-
+/* Table Header */
 th {
-    background-color: #f4f4f4;
-    font-weight: bold;
+    background: #007aff;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 14px;
+}
+
+/* Table Cells */
+td {
+    padding: 14px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Alternate Row Colors */
+tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+tr:nth-child(odd) {
+    background: #ffffff;
+}
+
+/* Hover Effect */
+tr:hover {
+    background: #dbeafe; /* ฟ้าอ่อน */
+    transition: background 0.3s ease-in-out;
 }
 
 /* Links */
 a {
     text-decoration: none;
-    color: #1a73e8;
+    color: #007aff;
+    transition: color 0.3s ease-in-out;
 }
 
 a:hover {
     text-decoration: underline;
+    color: #005ecb;
 }
 
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: #1a73e8;
+    padding: 10px 16px;
+    background: #007aff;
     color: white;
     text-decoration: none;
-    border-radius: 8px;
-    transition: background 0.3s;
+    border-radius: 6px;
+    transition: all 0.3s ease-in-out;
     font-size: 1em;
+    border: none;
+    cursor: pointer;
 }
 
 .btn:hover {
-    background-color: #1558b0;
+    background: #005ecb;
+    transform: translateY(-2px);
 }
 
+/* Floating Create Button */
 .create-btn {
-    margin-left: auto;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
 }
 
 /* Image Styling */
 img {
-    width: 50px;
-    height: 50px;
+    width: 48px;
+    height: 48px;
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: 50%;
+    border: 2px solid #f4f4f4;
+    transition: all 0.3s ease-in-out;
+}
+
+img:hover {
+    border-color: #007aff;
+    transform: scale(1.1);
 }
 
 /* Additional Padding for Bottom */
 .content-bottom-space {
     padding-bottom: 40px;
+}
+
+/* Responsive Table */
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.search-bar input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+}
+
+.search-bar button {
+    padding: 10px 16px;
+    background: #007aff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-bar button:hover {
+    background: #005ecb;
+}
+
+/* Table Buttons */
+table button {
+    padding: 8px 12px;
+    background: #007aff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+table button:hover {
+    background: #005ecb;
 }

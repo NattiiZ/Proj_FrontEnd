@@ -175,11 +175,11 @@ exports.checkOut = async (req, res) => {
         const customers = await axios.get(base_url + '/customer')
         const findCustomer = customers.data.find(customer => customer.user_ID == loginSession.UID);
 
-        const totalAmount = cart.reduce((total, item) => total + (item.quantity * item.Product.unitPrice), 0);
+        const totalPrice = cart.reduce((total, item) => total + (item.quantity * item.Product.unitPrice), 0);
 
         await axios.post(base_url + '/order', {
             customer_ID: findCustomer.customer_ID,
-            totalAmount,
+            totalPrice,
         });
         
         const orders = await axios.get(base_url + '/order');

@@ -219,3 +219,33 @@ exports.addBrand = async (req, res) =>
         res.status(500).send('An error occurred while adding the category.');
     }
 };
+
+exports.editProduct = async (req, res) => 
+{
+    try {
+        const { id } = req.query
+
+        
+
+        res.render('admin/editProduct');
+    } 
+    catch (err) {
+        console.error('Error adding category:', err.message);
+        res.status(500).send('An error occurred while adding the category.');
+    }
+};
+
+exports.editCategory = async (req, res) => 
+{
+    try {
+        const { id } = req.query
+
+        
+
+        res.render('admin/editCategory');
+    } 
+    catch (err) {
+        console.error('Error adding category:', err.message);
+        res.status(500).send('An error occurred while adding the category.');
+    }
+};

@@ -1,63 +1,127 @@
-
-/* Tables */
+/* General Table Styles */
 table {
     width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-th, td {
-    padding: 12px;
-    border: 1px solid #ddd;
-}
-
+/* Table Header */
 th {
-    background-color: #f4f4f4;
-    font-weight: bold;
+    background: #007aff;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 14px;
+}
+
+/* Table Cells */
+td {
+    padding: 14px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Alternate Row Colors */
+tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+tr:hover {
+    background: #dbeafe; /* Light blue */
+    transition: background 0.3s ease-in-out;
 }
 
 /* Links */
 a {
     text-decoration: none;
-    color: #1a73e8;
+    color: #007aff;
+    transition: color 0.3s ease-in-out;
 }
 
 a:hover {
-    text-decoration: underline;
+    color: #005ecb;
+    text-decoration: none; /* ลบขีดเส้นใต้ */
 }
 
-/* Buttons */
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #1a73e8;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: background 0.3s;
+/* Search Bar & Add Button Container */
+.search-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-bar input[type="text"] {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
     font-size: 1em;
 }
 
-.btn:hover {
-    background-color: #1558b0;
+.search-bar button {
+    padding: 8px 14px;
+    background: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
+.search-bar button:hover {
+    background: #0055b3;
+}
+
+/* Add Button */
 .create-btn {
-    margin-left: auto;
+    text-decoration: none; /* ลบขีดเส้นใต้ */
+    background: #28a745;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1em;
 }
 
-/* Image Styling */
-img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 5px;
+.create-btn:hover {
+    text-decoration: none; /* ลบขีดเส้นใต้ */
+    background: #229641;
+    color: white;
+    transform: scale(1.02);
 }
 
-/* Additional Padding for Bottom */
-.content-bottom-space {
-    padding-bottom: 40px;
+/* Responsive Table */
+@media (max-width: 768px) {
+    .search-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .create-btn {
+        text-align: center;
+        width: 100%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th, td {
+        padding: 10px;
+    }
 }

@@ -31,16 +31,16 @@
 
         <h1>รายการสินค้า</h1>
 
-        <form class="search-bar" action="/admin-search" method="GET">
-            <input type="text" name="query" placeholder="ค้นหาสินค้า" />
-            <input type="hidden" name="table" value="Product" />
-            <button type="submit">ค้นหา</button>
-        </form>
-
-
-        <div class="action-bar">
-            <a href="/add/product" class="btn create-btn">เพิ่ม</a>
+        <div class="search-container">
+            <form class="search-bar" action="/admin-search" method="GET">
+                <input type="text" name="query" placeholder="ค้นหาสินค้า" />
+                <input type="hidden" name="table" value="Product" />
+                <button type="submit">ค้นหา</button>
+            </form>
+        
+            <a href="/add/product" class="btn create-btn">เพิ่มสินค้า</a>
         </div>
+        
 
         <table>
             <tr>
@@ -75,8 +75,8 @@
                     <td><%= parseFloat(product.unitPrice).toFixed(2) %></td>
                     <td><%= product.stockQty %></td>
                     <td>
-                        <a href="editcategory.html">แก้ไข</a> |
-                        <a href="#" onclick="confirmDelete('<%= product.product_ID %>', '<%= product.name %>')">ลบ</a>
+                        <a href="editcategory.html" class="edit-btn">แก้ไข</a> |
+                        <a href="#" onclick="confirmDelete('<%= product.product_ID %>', '<%= product.name %>')" class="delete-btn">ลบ</a>
                     </td>
                 </tr>
             <% }) %>

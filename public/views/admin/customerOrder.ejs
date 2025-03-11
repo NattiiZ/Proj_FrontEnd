@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Report</title>
+    <link rel="stylesheet" href="../../css/admin/style.css">
+    <link rel="stylesheet" href="../../css/admin/order.css">
+</head>
+
+<body>
+
+    <header>
+        Admin Dashboard
+    </header>
+
+    <nav>
+        <a href="/admin/manage">จัดการผู้ดูแล</a>
+        <a href="/admin/customer">ข้อมูลลูกค้า</a>
+        <a href="/admin/product">รายการสินค้า</a>
+        <a href="/admin/category">หมวดหมู่สินค้า</a>
+        <a href="/admin/brand">แบรนด์</a>
+
+        <form action="/logout" method="POST" class="logout-form">
+            <button class="logout-btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+        </form>
+    </nav>
+
+    <div class="content">
+        <h1>คำสั่งซื้อลูกค้า รหัส C-<%= String(id).padStart(4, '0') %></h1>
+
+        <table>
+            <tr>
+                <th>รหัสคำสั่งซื้อ</th>
+                <th>วันที่</th>
+                <th>จำนวนสินค้า</th>
+                <th>ราคารวม (บาท)</th>
+                <th>ดูรายละเอียด</th>
+            </tr>
+
+            <% orders.forEach(order => { %>
+                <tr>
+                    <td>D-<%= String(order.order_ID).padStart(4, '0') %></td>
+                    <td><%= order.orderDate %></td>
+                    <td>
+                        <%= orderDetail.filter(detail => detail.order_ID === order.order_ID).length %>
+                    </td>
+                    <td><%= parseInt(order.totalPrice).toFixed(2) %></td>
+                    <td>
+                        <form action="/admin-viewOrderDetail" method="GET">
+                            <input type="hidden" name="id" value="<%= order.order_ID %>">
+                            <button type="submit" class="btn">ดูรายละเอียด</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+    </div>
+
+</body>
+
+</html>

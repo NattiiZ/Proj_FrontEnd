@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Report</title>
+    <link rel="stylesheet" href="../../css/admin/style.css">
+    <link rel="stylesheet" href="../../css/admin/order.css">
+</head>
+
+<body>
+
+    <header>
+        Admin Dashboard
+    </header>
+
+    <nav>
+        <a href="/admin/manage">จัดการผู้ดูแล</a>
+        <a href="/admin/customer">ข้อมูลลูกค้า</a>
+        <a href="/admin/product">รายการสินค้า</a>
+        <a href="/admin/category">หมวดหมู่สินค้า</a>
+        <a href="/admin/brand">แบรนด์</a>
+
+        <form action="/logout" method="POST" class="logout-form">
+            <button class="logout-btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+        </form>
+    </nav>
+
+    <div class="content">
+        <h1>คำสั่งซื้อ รหัส D-<%= String(id).padStart(4, '0') %></h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <!-- <th>รูป</th> -->
+                    <th id="name">ชื่อสินค้า</th>
+                    <th>ราคา/ชิ้น</th>
+                    <th>จำนวน</th>
+                    <th id="price">ราคารวม</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% let totalPrice = 0 %>
+
+                <% orders.forEach(item => { %>
+                    <% products.forEach(product => { %>
+                        <% if (item.product_ID == product.product_ID) { %>
+                            <% brands.forEach(brand => { %>
+                                <% if (product.brand_ID == brand.brand_ID) { %>
+                                    <tr>
+                                        <!-- <td><img src="../../img/Product/<%= product.category_ID %>/<%= product.imgName %>" alt=""></td> -->
+                                        <td><p><%= brand.name %> <%= product.name %></p></td>
+                                        <td><p><%= parseFloat(product.unitPrice).toFixed(2) %></p></td>
+                                        <td><p><%= item.quantity %></p></td>
+                                        <td><p><%= parseFloat(item.quantity * product.unitPrice).toFixed(2) %></p></td>
+                                    </tr>
+
+                                    <% totalPrice += item.quantity * product.unitPrice %>
+                                <% }; %>
+                            <% }); %>
+                        <% }; %>
+                    <% }); %>
+                <% }); %>
+
+                <tr>
+                    <td colspan="3"><strong>ราคารวมคำสั่งซื้อ</strong></td>
+                    <td><strong><%= parseFloat(totalPrice).toFixed(2) %> บาท</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

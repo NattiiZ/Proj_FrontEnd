@@ -69,8 +69,8 @@
                         <% }) %>
                     </td>
                     <td>
-                        <form action="/admin/viewOrders" method="POST">
-                            <input type="hidden" name="customer_ID" value="<%= customer.customer_ID %>">
+                        <form action="/admin-viewOrder" method="GET">
+                            <input type="hidden" name="id" value="<%= customer.customer_ID %>">
                             <button type="submit">ดูคำสั่งซื้อ</button>
                         </form>
                     </td>

@@ -49,6 +49,8 @@ router.get('/admin/product', adminDashboard_controller.allProduct);
 router.get('/admin/category', adminDashboard_controller.allCategory);
 router.get('/admin/brand', adminDashboard_controller.allBrand);
 router.get('/admin-search', adminDashboard_controller.search);
+router.get('/admin-viewOrder', adminDashboard_controller.viewOrder);
+router.get('/admin-viewOrderDetail', adminDashboard_controller.viewOrderDetail);
 
 router.post('/adminAdd', adminAction_controller.addAdmin)
 router.post('/adminRemove', adminAction_controller.removeAdmin)
@@ -57,6 +59,8 @@ router.get('/delete/:table/:id', adminAction_controller.delete)
 router.get('/add/:table', adminAction_controller.addNew)
 router.post('/addCategory', adminAction_controller.addCategory)
 router.post('/addBrand', adminAction_controller.addBrand)
+router.get('/editProduct', adminAction_controller.editProduct)
+router.get('/editCategory', adminAction_controller.editCategory)
 
 
 

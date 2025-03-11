@@ -48,7 +48,7 @@
                             <p>วันที่สั่งซื้อ : <%= order.orderDate %></p>
                             <p><a href="/my-orders/<%= order.order_ID %>">ดูรายละเอียด</a></p>
                         </div>
-                        <p class="status">รวมคำสั่งซื้อ ฿<strong><%= parseFloat(order.totalAmount).toFixed(2) %></strong></p>
+                        <p class="status">รวมคำสั่งซื้อ ฿<strong><%= parseFloat(order.totalPrice).toFixed(2) %></strong></p>
                     </div>
                 <% }); %>
             <% } else { %>

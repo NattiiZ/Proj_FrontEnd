@@ -47,7 +47,7 @@
                 </div>
                 <div class="orderInfo">
                     <p class="orderId">หมายเลขคำสั่งซื้อ D-<%= String(order[0].order_ID).padStart(4, '0') %></p>
-                    <strong><p>ราคารวม <%= parseFloat(order[0].totalAmount).toFixed(2) %></p></strong>
+                    <strong><p>ราคารวม <%= parseFloat(order[0].totalPrice).toFixed(2) %></p></strong>
                     <p>วันที่สั่งซื้อ : <%= order[0].orderDate %></p>
                 </div>
             </div>
@@ -71,9 +71,9 @@
                                         <tr>
                                             <td><img src="../../img/Product/<%= product.category_ID %>/<%= product.imgName %>" alt=""></td>
                                             <td><p><%= brand.name %> <%= product.name %></p></td>
-                                            <td><p><%= product.unitPrice %></p></td>
+                                            <td><p><%= parseFloat(product.unitPrice).toFixed(2) %></p></td>
                                             <td><p><%= item.quantity %></p></td>
-                                            <td><p><%= item.subtotal %></p></td>
+                                            <td><strong><p><%= parseFloat(item.quantity * product.unitPrice).toFixed(2) %></p></strong></td>
                                         </tr>
                                     <% }; %>
                                 <% }); %>

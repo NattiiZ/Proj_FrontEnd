@@ -1,50 +1,73 @@
 /* Form Container */
 .form-container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 1%;
 }
 
 .form-container h2 {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    color: #333;
+    font-size: 1.6em;
+    margin-bottom: 20px;
+    color: #222;
+    font-weight: bold;
+    text-align: center;
 }
 
+/* Form Labels */
 .form-container label {
-    font-size: 1em;
-    color: #555;
+    font-size: 1.1em;
+    color: #444;
     margin-bottom: 8px;
     display: block;
+    font-weight: 500;
 }
 
+/* Input & Select Fields */
 .form-container input,
 .form-container select {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
+.form-container input:focus,
+.form-container select:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 8px rgba(26, 115, 232, 0.2);
+}
+
+/* Submit Button */
 .form-container button {
-    background-color: #1a73e8;
+    background: linear-gradient(135deg, #1a73e8, #1558b0);
     color: white;
-    padding: 10px 15px;
+    padding: 12px 18px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1em;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
 }
 
 .form-container button:hover {
-    background-color: #1558b0;
+    background: #1558b0;
+    transform: scale(1.05);
 }
 
+/* Select Field */
 .form-container select {
     cursor: pointer;
+    appearance: none;
+    background: white url("data:image/svg+xml;utf8,<svg fill='%231a73e8' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 12px center;
+    background-size: 16px;
 }
