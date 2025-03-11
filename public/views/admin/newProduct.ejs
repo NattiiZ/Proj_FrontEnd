@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Brand</title>
     <link rel="stylesheet" href="../../css/admin/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"/>
 </head>
 
 <body>
@@ -15,7 +15,7 @@
     </header>
 
     <nav>
-        <a href="/admin/edit">จัดการผู้ดูแล</a>
+        <a href="/admin/manage">จัดการผู้ดูแล</a>
         <a href="/admin/customer">ข้อมูลลูกค้า</a>
         <a href="/admin/product">รายการสินค้า</a>
         <a href="/admin/category">หมวดหมู่สินค้า</a>
@@ -42,13 +42,17 @@
                 <label for="brand">Brand</label>
                 <select id="brand" name="brand_ID" required class="select-search">
                     
-                    <option value="">เลือกแบรนด์</option>
+                    <% if (category.length === 0) { %>
+                        <option disabled>ไม่พบแบรนด์</option>
+                    <% } else { %>
+                        <option value="">เลือกแบรนด์</option>
 
-                    <% brand.forEach(brand=> { %>
-                        <option value="<%= brand.brand_ID %>">
-                            <%= brand.name %>
-                        </option>
-                    <% }) %>
+                        <% brand.forEach(brand=> { %>
+                            <option value="<%= brand.brand_ID %>">
+                                <%= brand.name %>
+                            </option>
+                        <% }) %>
+                    <% } %>
                     
                 </select>
             </div>
@@ -56,7 +60,10 @@
             <div class="input-group">
                 <label for="category">Category</label>
                 <select id="category" name="category_ID" required class="select-search">
-                    
+        
+                <% if (category.length === 0) { %>
+                    <option disabled>ไม่พบหมวดหมู่</option>
+                <% } else { %>
                     <option value="">เลือกหมวดหมู่</option>
 
                     <% category.forEach(category=> { %>
@@ -64,6 +71,7 @@
                             <%= category.name %>
                         </option>
                     <% }) %>
+                <% } %>
 
                 </select>
             </div>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../../css/admin/style.css">
+    <link rel="stylesheet" href="../../css/admin/manageAdmin.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+</head>
+
+<body>
+
+    <header>
+        Admin Dashboard
+    </header>
+
+    <nav>
+        <a href="/admin/manage">จัดการผู้ดูแล</a>
+        <a href="/admin/customer">ข้อมูลลูกค้า</a>
+        <a href="/admin/product">รายการสินค้า</a>
+        <a href="/admin/category">หมวดหมู่สินค้า</a>
+        <a href="/admin/brand">แบรนด์</a>
+
+        <form action="/logout" method="POST" class="logout-form">
+            <button class="logout-btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+        </form>
+    </nav>
+
+    <div class="content">
+        <h1>จัดการผู้ดูแล</h1>
+
+        <div class="form-container">
+            <h2>เพิ่มผู้ดูแล</h2>
+            <form action="/adminAdd" method="POST">
+                <div class="input-group">
+                    <label for="username">ชื่อผู้ใช้</label>
+                    <input type="text" id="username" name="username" required placeholder="กรอกชื่อผู้ใช้"
+                           minlength="8" maxlength="20"
+                           pattern="[A-Za-z0-9!@#$%^&*()_+|~\-=`{}\[\]:\"]+"
+                           title="ชื่อผู้ใช้ต้องมี 8-20 ตัวอักษร (A-Z, a-z, 0-9 และอักขระพิเศษ !@#$%^&*)">
+                </div>
+
+                <div class="input-group">
+                    <label for="email">อีเมล</label>
+                    <input type="email" id="email" name="email" required placeholder="กรอกอีเมล"
+                           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                           title="กรุณากรอกอีเมลที่ถูกต้อง เช่น example@email.com">
+                </div>
+
+                <div class="input-group">
+                    <label for="password">รหัสผ่าน</label>
+                    <input type="password" id="password" name="password" required placeholder="กรอกรหัสผ่าน"
+                           minlength="8" maxlength="20"
+                           pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}"
+                           title="รหัสผ่านต้องมี 8-20 ตัวอักษร ประกอบด้วยตัวอักษร (A-Z, a-z), ตัวเลข (0-9) และอักขระพิเศษ (!@#$%^&*)">
+                </div>
+
+                <div class="input-group">
+                    <label for="check_password">ยืนยันรหัสผ่าน</label>
+                    <input type="password" id="check_password" name="check_password" required placeholder="ยืนยันรหัสผ่าน"
+                           minlength="8" maxlength="20"
+                           pattern="(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}"
+                           title="รหัสผ่านต้องมี 8-20 ตัวอักษร ประกอบด้วยตัวอักษร (A-Z, a-z), ตัวเลข (0-9) และอักขระพิเศษ (!@#$%^&*)">
+                </div>
+
+                <button type="submit">เพิ่ม</button>
+            </form>
+        </div>
+
+        <div class="form-container">
+            <h2>ลบผู้ดูแล</h2>
+        
+            <form action="/adminRemove" method="POST">
+                <label for="admin-list">Select User</label>
+                <select id="admin-list" name="adminID" class="searchable-dropdown" required>
+
+                    <% if (user.length === 0) { %>
+                        <option disabled>ไม่พบผู้ดูแล</option>
+                    <% } else { %>
+                        <option value="">-</option>
+                        <% user.forEach(admin => { %>
+                            <option value="<%= admin.user_ID %>">
+                                <%= admin.username %>
+                            </option>
+                        <% }) %>
+                    <% } %>
+                </select>
+        
+                <button type="submit">Remove</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+    <script>
+        const searchableDropdown = new Choices('#admin-list', {
+            searchEnabled: true,
+            removeItemButton: true,
+            placeholder: true,
+            placeholderValue: 'ค้นหาผู้ใช้...',
+        });
+    </script>
+
+</body>
+
+</html>

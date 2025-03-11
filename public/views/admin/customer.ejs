@@ -17,7 +17,7 @@
     </header>
 
     <nav>
-        <a href="/admin/edit">จัดการผู้ดูแล</a>
+        <a href="/admin/manage">จัดการผู้ดูแล</a>
         <a href="/admin/customer">ข้อมูลลูกค้า</a>
         <a href="/admin/product">รายการสินค้า</a>
         <a href="/admin/category">หมวดหมู่สินค้า</a>
@@ -68,7 +68,12 @@
                             <% } %>
                         <% }) %>
                     </td>
-                    <td><a href="editcategory.html">ดูคำสั่งซื้อ</a></td>
+                    <td>
+                        <form action="/admin/viewOrders" method="POST">
+                            <input type="hidden" name="customer_ID" value="<%= customer.customer_ID %>">
+                            <button type="submit">ดูคำสั่งซื้อ</button>
+                        </form>
+                    </td>
                 </tr>
             <% }) %>
         </table>

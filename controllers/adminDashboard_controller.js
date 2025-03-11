@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { use } = require('../routes');
 
 
 const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
@@ -29,14 +30,15 @@ exports.search = async (req, res) => {
     if (!loginSession) return res.redirect('/signin');
 
     const query = req.query.query;
-    const from = req.query.table;  // รับค่าจาก table ว่ามาจากที่ไหน
+    const from = req.query.table;
 
     try {
-        const [productList, brand, categories, customers] = await Promise.all([
+        const [productList, brand, categories, customers, users] = await Promise.all([
             axios.get(base_url + '/product'),
             axios.get(base_url + '/brand'),
             axios.get(base_url + '/category'),
-            axios.get(base_url + '/customer') // ดึงข้อมูลลูกค้าด้วย
+            axios.get(base_url + '/customer'),
+            axios.get(base_url + '/user')
         ]);
 
         const brandMap = brand.data.reduce((map, b) => {
@@ -46,7 +48,6 @@ exports.search = async (req, res) => {
 
         let filteredData = [];
 
-        // หากคำค้นหามาจาก "Brand"
         if (from === 'Brand') {
             filteredData = brand.data.filter(b => b.name.toLowerCase().includes(query.toLowerCase()));
             res.render('admin/searchBrand', {
@@ -54,7 +55,6 @@ exports.search = async (req, res) => {
                 query: query,
             });
         } 
-        // หากคำค้นหามาจาก "Product"
         else if (from === 'Product') {
             filteredData = productList.data.filter(product => {
                 const brandName = brandMap[product.brand_ID] || '';
@@ -68,7 +68,6 @@ exports.search = async (req, res) => {
                 query: query,
             });
         } 
-        // หากคำค้นหามาจาก "Category"
         else if (from === 'Category') {
             filteredData = categories.data.filter(category => category.name.toLowerCase().includes(query.toLowerCase()));
             res.render('admin/searchCategory', {
@@ -76,11 +75,11 @@ exports.search = async (req, res) => {
                 query: query,
             });
         } 
-        // หากคำค้นหามาจาก "Customer"
         else if (from === 'Customer') {
             filteredData = customers.data.filter(customer => customer.name.toLowerCase().includes(query.toLowerCase()));
             res.render('admin/searchCustomer', {
                 customer: filteredData,
+                user: users.data,
                 query: query,
             });
         } else {
@@ -93,34 +92,35 @@ exports.search = async (req, res) => {
     }
 };
 
-
-
-
-exports.allCategory = async (req, res) => 
-{
+exports.adminManage = async (req, res) => {
     try {
         const loginSession = req.session.loginSession;
         if (!loginSession) return res.redirect('/signin');
 
-        const category = await axios.get(base_url + '/category');
+        const users = await axios.get(base_url + '/user');
 
-        res.render('admin/category', { category: category.data })
-    } 
-    catch (error) {
+        const user = users.data.filter(user => user.userType == 2 && user.user_ID != loginSession.UID);
+
+        res.render('admin/manageAdmin', { user });
+
+    } catch (error) {
         console.error('Error in admin:', error.message);
         res.status(500).send('An error occurred while loading the admin dashboard page.');
     }
 }
 
-exports.allBrand = async (req, res) => 
+
+exports.Customers = async (req, res) => 
 {
     try {
         const loginSession = req.session.loginSession;
         if (!loginSession) return res.redirect('/signin');
 
-        const brand = await axios.get(base_url + '/brand');
+        const customers = await axios.get(base_url + '/customer');
+        const users = await axios.get(base_url + '/user');
 
-        res.render('admin/brand', { brand: brand.data })
+        res.render('admin/customer', { customer: customers.data, user: users.data })
+
     } 
     catch (error) {
         console.error('Error in admin:', error.message);
@@ -147,17 +147,15 @@ exports.allProduct = async (req, res) =>
     }
 }
 
-exports.Customers = async (req, res) => 
+exports.allCategory = async (req, res) => 
 {
     try {
         const loginSession = req.session.loginSession;
         if (!loginSession) return res.redirect('/signin');
 
-        const customers = await axios.get(base_url + '/customer');
-        const users = await axios.get(base_url + '/user');
+        const category = await axios.get(base_url + '/category');
 
-        res.render('admin/customer', { customer: customers.data, user: users.data })
-
+        res.render('admin/category', { category: category.data })
     } 
     catch (error) {
         console.error('Error in admin:', error.message);
@@ -165,17 +163,15 @@ exports.Customers = async (req, res) =>
     }
 }
 
-exports.adminEdit = async (req, res) => 
+exports.allBrand = async (req, res) => 
 {
     try {
         const loginSession = req.session.loginSession;
         if (!loginSession) return res.redirect('/signin');
 
-        const users = await axios.get(base_url + '/user');
-        const user = users.data.filter(user => user.userType == 1)
+        const brand = await axios.get(base_url + '/brand');
 
-        res.render('admin/editUser', { user })
-
+        res.render('admin/brand', { brand: brand.data })
     } 
     catch (error) {
         console.error('Error in admin:', error.message);

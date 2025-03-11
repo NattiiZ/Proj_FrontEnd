@@ -36,6 +36,118 @@ const upload = multer({
 });
 
 
+exports.addAdmin = async (req, res) => 
+    {
+    try {
+        const { username, email, password, check_password } = req.body;
+
+        const user = await axios.get(base_url + '/user')
+        const findUser = user.data.find(user => user.username === username || user.email === email)
+
+        if (findUser) {
+            return res.send(`
+                <script>
+                    alert('ชื่อผู้ใช้หรืออีเมลนี้มีอยู่แล้วในระบบ');
+                    window.history.back();
+                </script>
+            `);
+        }
+
+        if (password !== check_password) {
+            return res.send(`
+                <script>
+                    alert('รหัสผ่านไม่ตรงกัน');
+                    window.history.back();
+                </script>
+            `);
+        }
+
+        await axios.post(base_url + '/user', {
+            username,
+            email,
+            password,
+            userType: 2
+        })
+
+        res.send(`
+            <script>
+                alert('เพิ่มผู้ดูแลสำเร็จ');
+                window.location.href = '/admin/manage';
+            </script>
+        `);
+    } 
+    catch (err) {
+        console.error('Error adding admin:', err.message);
+        res.status(500).send('เกิดข้อผิดพลาดในการเพิ่มผู้ดูแล');
+    }
+};
+
+exports.removeAdmin = async (req, res) => 
+{
+    try {
+        const loginSession = req.session.loginSession;
+        const { adminID } = req.body;
+
+        const users = await axios.get(base_url + '/user');
+
+        const userToRemove = users.data.find(user => user.user_ID == adminID);
+
+        console.log("send : ", adminID);
+        console.log("find : ", userToRemove);
+        
+        
+
+        if (loginSession.UID == adminID) {
+            return res.status(400).json({ message: 'คุณไม่สามารถลบตัวเองได้' });
+        }
+
+        if (userToRemove && userToRemove.userType == 2) {
+            await axios.delete(base_url + '/user/' + adminID);
+
+            res.send(`
+                <script>
+                    alert('ลบผู้ดูแลสำเร็จ');
+                    window.location.href = '/admin/manage';
+                </script>
+            `);
+        } else {
+            return res.status(400).json({ message: 'ไม่สามารถลบผู้ดูแลประเภทนี้ได้' });
+        }
+    } 
+    catch (err) {
+        console.error('Error removing admin:', err.message);
+        res.status(500).send('เกิดข้อผิดพลาดในการลบผู้ดูแล');
+    }
+};
+
+
+exports.addProduct = async (req, res) => 
+{
+    try {
+        upload.single('img')(req, res, async (err) => {
+            if (err) return res.status(400).send({ error: err.message });
+
+            const { name, brand_ID, category_ID, unitPrice, stockQty, detail } = req.body;
+
+            const categoryProductFolder = path.join(productFolder, category_ID);
+            if (!fs.existsSync(categoryProductFolder)) fs.mkdirSync(categoryProductFolder);
+
+            const imgName = req.file ? generateFileName(name, req.file.originalname) : null;
+
+            if (imgName && req.file) {
+                const newPath = path.join(categoryProductFolder, imgName);
+                fs.renameSync(req.file.path, newPath);
+            }
+
+            await axios.post(base_url + '/product', { name, brand_ID, category_ID, unitPrice, stockQty, imgName, detail });
+            res.redirect('/admin/product');
+        });
+    } catch (err) {
+        console.error('Error adding product:', err.message);
+        res.status(500).send('An error occurred while adding the product.');
+    }
+};
+
 exports.delete = async (req, res) => 
 {
     try {
@@ -93,7 +205,6 @@ exports.addCategory = async (req, res) =>
     }
 };
 
-
 exports.addBrand = async (req, res) => 
 {
     try {
@@ -106,32 +217,5 @@ exports.addBrand = async (req, res) =>
     catch (err) {
         console.error('Error adding category:', err.message);
         res.status(500).send('An error occurred while adding the category.');
-    }
-};
-
-exports.addProduct = async (req, res) => 
-{
-    try {
-        upload.single('img')(req, res, async (err) => {
-            if (err) return res.status(400).send({ error: err.message });
-
-            const { name, brand_ID, category_ID, unitPrice, stockQty, detail } = req.body;
-
-            const categoryProductFolder = path.join(productFolder, category_ID);
-            if (!fs.existsSync(categoryProductFolder)) fs.mkdirSync(categoryProductFolder);
-
-            const imgName = req.file ? generateFileName(name, req.file.originalname) : null;
-
-            if (imgName && req.file) {
-                const newPath = path.join(categoryProductFolder, imgName);
-                fs.renameSync(req.file.path, newPath);
-            }
-
-            await axios.post(base_url + '/product', { name, brand_ID, category_ID, unitPrice, stockQty, imgName, detail });
-            res.redirect('/admin/product');
-        });
-    } catch (err) {
-        console.error('Error adding product:', err.message);
-        res.status(500).send('An error occurred while adding the product.');
     }
 };

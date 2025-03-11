@@ -42,7 +42,10 @@ exports.checkLogin = async (req, res) => {
                 userType: user.userType
             };
 
-            return res.redirect(req.session.loginSession.userType == 1 ? '/admin/dashboard' : lastUrl);
+            if (req.session.loginSession.userType == 3)
+                return res.redirect(lastUrl)
+            else
+                return res.redirect('/admin/dashboard')
         } else {
             res.send(`
                 <script>
