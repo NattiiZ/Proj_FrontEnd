@@ -202,7 +202,7 @@ exports.checkOut = async (req, res) => {
             await axios.delete(`${base_url}/cart-item/${item.cart_ID}/${item.product_ID}`);
         }
 
-        res.redirect('/order/' + order_ID)
+        res.redirect('/my-orders/' + order_ID)
     } catch (error) {
         console.error('❌ Error in checkOut:', error.message);
         res.status(500).send('An error occurred during checkout.');

@@ -57,7 +57,7 @@ exports.checkReg = async (req, res) => {
         }
 
         req.session.userData = { username, password, email };
-        res.redirect(`/reg-form`);
+        res.redirect(`/signup/form`);
     } catch (error) {
         console.error('Error in checkReg:', error.message);
         res.status(500).send('An error occurred while validating your registration.');

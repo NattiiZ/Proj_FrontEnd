@@ -7,6 +7,9 @@ const account_controller = require('../controllers/account_controller');
 const register_controller = require('../controllers/register_controller');
 const auth_controller = require('../controllers/auth_controller');
 
+const adminDashboard_controller = require('../controllers/adminDashboard_controller');
+const adminAction_controller = require('../controllers/adminAction_controller');
+
 
 
 
@@ -24,7 +27,7 @@ router.post('/checkOut', customer_controller.checkOut);
 
 router.get('/account', account_controller.accountMenu);
 router.get('/my-orders', account_controller.myOrders)
-router.get('/order/:order', account_controller.orderDetail)
+router.get('/my-orders/:order', account_controller.orderDetail)
 router.get('/edit-info', account_controller.editInfo)
 router.post('/newInfo', account_controller.newInfo)
 router.get('/change-password', account_controller.changePass)
@@ -36,8 +39,20 @@ router.post('/logout', auth_controller.logout);
 
 router.get('/signup', register_controller.signup);
 router.post('/checkReg', register_controller.checkReg);
-router.get('/reg-form', register_controller.regForm);
+router.get('/signup/form', register_controller.regForm);
 router.post('/createUser', register_controller.createUser);
+
+router.get('/admin/dashboard', adminDashboard_controller.dashboard);
+router.get('/admin/category', adminDashboard_controller.allCategory);
+router.get('/admin/brand', adminDashboard_controller.allBrand);
+router.get('/admin/product', adminDashboard_controller.allProduct);
+router.get('/admin/customer', adminDashboard_controller.Customers);
+router.get('/admin/edit', adminDashboard_controller.adminEdit);
+
+router.get('/delete/:table/:id', adminAction_controller.delete)
+router.get('/add/:table', adminAction_controller.add)
+router.post('/addCategory', adminAction_controller.addCategory)
+router.post('/addBrand', adminAction_controller.addBrand)
 
 
 

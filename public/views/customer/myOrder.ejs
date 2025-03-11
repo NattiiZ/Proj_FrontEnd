@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/orders.css">
+    <link rel="stylesheet" href="../../css/myOrders.css">
     <link rel="shortcut icon" href="../img/favico.png" type="image/x-icon">
     <title>รายการคำสั่งซื้อ</title>
 </head>
@@ -46,7 +46,7 @@
                         <div>
                             <h3>คำสั่งซื้อที่ <%= i++ %></h3>
                             <p>วันที่สั่งซื้อ : <%= order.orderDate %></p>
-                            <p><a href="/order/<%= order.order_ID %>">ดูรายละเอียด</a></p>
+                            <p><a href="/my-orders/<%= order.order_ID %>">ดูรายละเอียด</a></p>
                         </div>
                         <p class="status">รวมคำสั่งซื้อ ฿<strong><%= parseFloat(order.totalAmount).toFixed(2) %></strong></p>
                     </div>

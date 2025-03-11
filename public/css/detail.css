@@ -1,4 +1,10 @@
-/* ส่วนของรายละเอียดสินค้า */
+.container {
+    padding: 2rem 1rem;
+    max-width: 85%;
+    margin: 0 auto;
+    justify-content: center;
+}
+
 .product-details {
     display: flex;
     justify-content: space-between;

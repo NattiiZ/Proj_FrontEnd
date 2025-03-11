@@ -1,11 +1,11 @@
-/* ส่วนของหน้าสมัครสมาชิก */
 .register-form {
     background: white;
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 500px; /* ขยายเล็กน้อยเพื่อเพิ่มฟอร์ม */
+    max-width: 500px;
+    /* ขยายเล็กน้อยเพื่อเพิ่มฟอร์ม */
     margin: 0 auto;
 }
 
@@ -91,4 +91,41 @@
     .register-form {
         padding: 1.5rem;
     }
+}
+
+.input-group input,
+.input-group textarea {
+    width: 96%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.input-group textarea {
+    resize: none;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+    color: #aaa;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
 }

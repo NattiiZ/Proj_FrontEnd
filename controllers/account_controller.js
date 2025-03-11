@@ -6,7 +6,8 @@ const base_url = `http://localhost:${process.env.API_PORT || 3000}`;
 
 
 
-exports.accountMenu = async (req, res) => {
+exports.accountMenu = async (req, res) => 
+{
     try {
         const loginSession = req.session.loginSession;
         if (!loginSession) return res.redirect('/signin');
@@ -32,7 +33,8 @@ exports.accountMenu = async (req, res) => {
     }
 };
 
-exports.myOrders = async (req, res) => {
+exports.myOrders = async (req, res) => 
+{
     try {
         const loginSession = req.session.loginSession;
         if (!loginSession) 
@@ -53,7 +55,8 @@ exports.myOrders = async (req, res) => {
     }
 };
 
-exports.orderDetail = async (req, res) => {
+exports.orderDetail = async (req, res) => 
+{
     try {
         const orderId = req.params.order;
         const loginSession = req.session.loginSession;
@@ -86,7 +89,8 @@ exports.orderDetail = async (req, res) => {
     }
 };
 
-exports.editInfo = async (req, res) => {
+exports.editInfo = async (req, res) => 
+{
     try {
         const loginSession = req.session.loginSession;
         if (!loginSession) return res.redirect(`/signin?from=${encodeURIComponent(req.url)}`);
@@ -110,7 +114,8 @@ exports.editInfo = async (req, res) => {
     }
 };
 
-exports.newInfo = async (req, res) => {
+exports.newInfo = async (req, res) => 
+{
     try {
         const { name, email, phone, address } = req.body;
         const loginSession = req.session.loginSession;
@@ -128,7 +133,8 @@ exports.newInfo = async (req, res) => {
     }
 };
 
-exports.changePass = async (req, res) => {
+exports.changePass = async (req, res) => 
+{
     try {
         const loginSession = req.session.loginSession;
         const category = await axios.get(base_url + '/category');
@@ -142,7 +148,8 @@ exports.changePass = async (req, res) => {
     }
 };
 
-exports.newPass = async (req, res) => {
+exports.newPass = async (req, res) => 
+{
     try {
         const { oldPass, newPass, confirmPass } = req.body;
         const loginSession = req.session.loginSession;
