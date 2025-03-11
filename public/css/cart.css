@@ -30,6 +30,10 @@
     width: 190px;
 }
 
+#amount {
+    width: 190px;
+}
+
 .inRow p {
     font-size: 1.3rem;
 }
