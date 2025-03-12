@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Brand</title>
+    <title>Add Product</title>
     <link rel="stylesheet" href="../../css/admin/style.css">
+    <link rel="stylesheet" href="../../css/admin/editCategory.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"/>
 </head>
 
@@ -27,82 +28,63 @@
     </nav>
 
     <div class="content">
-        <h1>Add Product</h1>
+        <h1>เพิ่มสินค้า</h1>
 
         <form action="/addProduct" method="POST" enctype="multipart/form-data">
 
             <div class="input-group">
-                <label for="name">Product Name</label>
+                <label for="name">ชื่อสินค้า</label>
                 <input type="text" id="name" name="name" required placeholder="กรอกชื่อสินค้า"
-                    pattern="[A-Za-zก-๙0-9\s]{3,100}"
-                    title="กรอกชื่อสินค้า (3-100 ตัวอักษร) ใช้ได้ทั้งภาษาอังกฤษ, ไทย, ตัวเลข และเว้นวรรค">
+                    pattern="[A-Za-zก-๙0-9\s]{3,100}" title="กรอกชื่อสินค้า (3-100 ตัวอักษร) ใช้ได้ทั้งภาษาอังกฤษ, ไทย, ตัวเลข และเว้นวรรค">
+                <small>ระบุชื่อสินค้าของคุณ (3-100 ตัวอักษร)</small>
             </div>
 
             <div class="input-group">
-                <label for="brand">Brand</label>
+                <label for="brand">แบรนด์</label>
                 <select id="brand" name="brand_ID" required class="select-search">
-                    
-                    <% if (category.length === 0) { %>
-                        <option disabled>ไม่พบแบรนด์</option>
-                    <% } else { %>
-                        <option value="">เลือกแบรนด์</option>
-
-                        <% brand.forEach(brand=> { %>
-                            <option value="<%= brand.brand_ID %>">
-                                <%= brand.name %>
-                            </option>
-                        <% }) %>
-                    <% } %>
-                    
+                    <!-- Options for brands will be populated here -->
                 </select>
+                <small>เลือกแบรนด์ที่เกี่ยวข้องกับสินค้านี้</small>
             </div>
 
             <div class="input-group">
-                <label for="category">Category</label>
+                <label for="category">หมวดหมู่</label>
                 <select id="category" name="category_ID" required class="select-search">
-        
-                <% if (category.length === 0) { %>
-                    <option disabled>ไม่พบหมวดหมู่</option>
-                <% } else { %>
-                    <option value="">เลือกหมวดหมู่</option>
-
-                    <% category.forEach(category=> { %>
-                        <option value="<%= category.category_ID %>">
-                            <%= category.name %>
-                        </option>
-                    <% }) %>
-                <% } %>
-
+                    <!-- Options for categories will be populated here -->
                 </select>
+                <small>เลือกหมวดหมู่สินค้าของคุณ</small>
             </div>
 
             <div class="input-group">
-                <label for="price">Price</label>
+                <label for="price">ราคาสินค้า</label>
                 <input type="number" id="price" name="unitPrice" required placeholder="ระบุราคา" min="1" max="1000000"
                     title="กรอกราคาสินค้าระหว่าง 1-1,000,000">
+                <small>กรอกราคาสินค้า (ระหว่าง 1-1,000,000 บาท)</small>
             </div>
 
             <div class="input-group">
-                <label for="quantity">Quantity</label>
+                <label for="quantity">จำนวน</label>
                 <input type="number" id="quantity" name="stockQty" required placeholder="ระบุจำนวนสินค้า" min="1"
                     max="1000" title="ระบุจำนวนสินค้าระหว่าง 1-1000">
+                <small>กรอกจำนวนสินค้าในสต็อก (ระหว่าง 1-1000 ชิ้น)</small>
             </div>
 
             <div class="input-group">
-                <label for="img">Product Image</label>
+                <label for="img">รูปสินค้า</label>
                 <input type="file" id="img" name="img" required accept="image/jpeg, image/png">
+                <small>อัปโหลดภาพสินค้า (รองรับ JPG, PNG)</small>
             </div>
 
             <div class="input-group">
-                <label for="detail">Product Detail</label>
+                <label for="detail">รายละเอียดสินค้า</label>
                 <textarea id="detail" name="detail" required placeholder="กรอกรายละเอียดสินค้า" rows="4" maxlength="500"
                     title="กรอกรายละเอียดสินค้า ไม่เกิน 500 ตัวอักษร"></textarea>
+                <small>กรอกรายละเอียดของสินค้าหรือฟีเจอร์สำคัญ (ไม่เกิน 500 ตัวอักษร)</small>
             </div>
 
-            <button type="submit" class="btn">Add Product</button>
+            <button type="submit" class="btn">เพิ่ม</button>
         </form>
     </div>
-
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Brand</title>
     <link rel="stylesheet" href="../../css/admin/style.css">
+    <link rel="stylesheet" href="../../css/admin/newBrand.css">
 </head>
 
 <body>
@@ -26,13 +27,15 @@
     </nav>
 
     <div class="content">
-        <h1>Add Brands</h1>
+        <h1>เพิ่มแบรนด์</h1>
 
 
         <form action="/addBrand" method="POST">
-            <input type="text" name="name" placeholder="Brand Name" minlength="1" required pattern="[A-Za-z\s]+"
+            <div class="input-group">
+            <input type="text" name="name" placeholder="ชื่าแบรนด์" minlength="1" required pattern="[A-Za-z\s]+"
                 title="Only letters and spaces are allowed">
-            <button type="submit" class="btn">Add</button>
+            </div>
+            <button type="submit" class="btn">เพิ่ม</button>
         </form>
 
     </div>

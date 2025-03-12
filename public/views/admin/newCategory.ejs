@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Brand</title>
+    <title>Add Category</title>
     <link rel="stylesheet" href="../../css/admin/style.css">
+    <link rel="stylesheet" href="../../css/admin/editCategory.css">
 </head>
 
 <body>
@@ -26,17 +27,27 @@
     </nav>
 
     <div class="content">
-        <h1>Add Category</h1>
-
+        <h1>เพิ่มหมวดหมู่สินค้า</h1>
 
         <form action="/addCategory" method="POST" enctype="multipart/form-data">
-            <input type="text" name="name" placeholder="Category Name" minlength="1" required pattern="[A-Za-z\s]+"
-                title="Only letters and spaces are allowed">
-            <input type="file" name="img" required>
-            <input type="text" name="description" placeholder="Description" required>
+            <div class="input-group">
+                <input type="text" name="name" placeholder="ชื่อหมวดหมู่" minlength="1" required pattern="[A-Za-z\s]+"
+                    title="Only letters and spaces are allowed">
+                <small>ชื่อหมวดหมู่ที่ใช้ในการจัดระเบียบสินค้าของคุณ</small>
+            </div>
+
+            <div class="input-group">
+                <input type="file" name="img" required>
+                <small>กรุณาอัปโหลดรูปภาพหมวดหมู่ (ขนาดไฟล์ไม่เกิน 1MB)</small>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="description" placeholder="คำอธิบาย" required>
+                <small>คำอธิบายเกี่ยวกับหมวดหมู่นี้ (ไม่เกิน 200 ตัวอักษร)</small>
+            </div>
+
             <button type="submit" class="btn">Add</button>
         </form>
-
     </div>
 
 </body>

@@ -1,3 +1,4 @@
+
 /* Content */
 .content {
     margin-left: 260px;
@@ -57,22 +58,10 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* Action Bar */
-.action-bar {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-}
-
-/* Card Style */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
+/* New description for the form */
+.input-group small {
+    font-size: 0.9em;
+    color: #777;
+    display: block;
+    margin-top: 5px;
 }
