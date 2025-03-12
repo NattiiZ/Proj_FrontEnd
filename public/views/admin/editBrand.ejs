@@ -4,30 +4,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Brand</title>
-    <link rel="stylesheet" href="editBrand.css">
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="../../css/admin/style.css">
 </head>
 
 <body>
-    <div class="box">
-        <header>
-            Admin Dashboard
-        </header>
-        <nav>
-            <a href="/admin/manage">จัดการผู้ดูแล</a>
-            <a href="/admin/customer">ข้อมูลลูกค้า</a>
-            <a href="/admin/product">รายการสินค้า</a>
-            <a href="/admin/category">หมวดหมู่สินค้า</a>
-            <a href="/admin/brand">แบรนด์</a>
-        </nav>
-        <div class="content">
-            <h2>Edit Brand</h2>
-            <form method="post" class="form-container">
-                <input type="text" name="brand" placeholder="Brand Name" required>
-                <button type="submit" class="btn">แก้ไข</button>
-            </form>
-        </div>
+    <header>
+        Admin Dashboard
+    </header>
+
+    <nav>
+        <a href="/admin/manage">จัดการผู้ดูแล</a>
+        <a href="/admin/customer">ข้อมูลลูกค้า</a>
+        <a href="/admin/product">รายการสินค้า</a>
+        <a href="/admin/category">หมวดหมู่สินค้า</a>
+        <a href="/admin/brand">แบรนด์</a>
+
+        <form action="/logout" method="POST" class="logout-form">
+            <button class="logout-btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+        </form>
+    </nav>
+
+    <div class="content">
+        <h1>แก้ไขแบรนด์</h1>
+
+        <form action="/updateBrand" method="POST">
+            <input type="hidden" name="brand_ID" value="<%= id %>">
+
+            <div class="input-group">
+                <label for="name">ชื่อแบรนด์</label>
+                <input type="text" id="name" name="name" value="<%= brand.name || '' %>" required>
+            </div>
+
+            <button type="submit" onclick="confirmEdit('<%= brand.category_ID %>', '<%= brand.name %>')">บันทึกการเปลี่ยนแปลง</button>
+        </form>
     </div>
+        </form>
+
+    </div>
+
+
+    <script>
+        function confirmDelete(Id, name) {
+            if (confirm(`ยืนยันการแก้ไขแบรนด์ ${name}`)) {
+                alert("บันทึกข้อมูล " + name + " เรียบร้อย");
+                window.location.href = `/admin/brand`;
+            }
+        }
+    </script>
 
 </body>
 

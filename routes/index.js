@@ -61,6 +61,10 @@ router.post('/addCategory', adminAction_controller.addCategory)
 router.post('/addBrand', adminAction_controller.addBrand)
 router.get('/editProduct', adminAction_controller.editProduct)
 router.get('/editCategory', adminAction_controller.editCategory)
+router.get('/editBrand', adminAction_controller.editBrand)
+router.post('/updateProduct', adminAction_controller.updateProduct)
+router.post('/updateCategory', adminAction_controller.updateCategory)
+router.post('/updateBrand', adminAction_controller.updateBrand)
 
 
 

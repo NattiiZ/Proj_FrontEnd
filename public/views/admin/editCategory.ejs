@@ -4,30 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Brand</title>
-    <link rel="stylesheet" href="editBrand.css">
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="../../css/admin/style.css">
 </head>
 
 <body>
-    <div class="box">
-        <header>
-            Admin Dashboard
-        </header>
-        <nav>
-            <a href="/admin/manage">จัดการผู้ดูแล</a>
-            <a href="/admin/customer">ข้อมูลลูกค้า</a>
-            <a href="/admin/product">รายการสินค้า</a>
-            <a href="/admin/category">หมวดหมู่สินค้า</a>
-            <a href="/admin/brand">แบรนด์</a>
-        </nav>
-        <div class="content">
-            <h2>Edit Category</h2>
-            <form method="post" class="form-container">
-                <input type="text" name="brand" placeholder="category Name" required>
-                <button type="submit" class="btn">แก้ไข</button>
-            </form>
-        </div>
+    <header>
+        Admin Dashboard
+    </header>
+
+    <nav>
+        <a href="/admin/manage">จัดการผู้ดูแล</a>
+        <a href="/admin/customer">ข้อมูลลูกค้า</a>
+        <a href="/admin/product">รายการสินค้า</a>
+        <a href="/admin/category">หมวดหมู่สินค้า</a>
+        <a href="/admin/brand">แบรนด์</a>
+
+        <form action="/logout" method="POST" class="logout-form">
+            <button class="logout-btn" onclick="alert('คุณได้ออกจากระบบแล้ว')" type="submit">ออกจากระบบ</button>
+        </form>
+    </nav>
+
+    <div class="content">
+        <h1>แก้ไขหมวดหมู่สินค้า</h1>
+
+        <form action="/updateCategory" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="category_ID" value="<%= id %>">
+
+            <div class="input-group">
+                <label for="name">ชื่อหมวดหมู่</label>
+                <input type="text" id="name" name="name" value="<%= category.name || '' %>" required>
+            </div>
+
+            <div class="input-group">
+                <label for="detail">คำอธิบาย</label>
+                <textarea id="detail" name="description" required><%= category.description || '' %></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="img">รูปภาพ</label>
+                <input type="file" id="img" name="img">
+            </div>
+
+            <button type="submit"  onclick="confirmEdit('<%= category.category_ID %>', '<%= category.name %>')">บันทึกการเปลี่ยนแปลง</button>
+        </form>
+
     </div>
+
+
+    <script>
+        function confirmDelete(Id, name) {
+            if (confirm(`ยืนยันการแก้ไขหมวดหมู่ ${name}`)) {
+                alert("บันทึกข้อมูล " + name + " เรียบร้อย");
+                window.location.href = `/admin/category`;
+            }
+        }
+    </script>
 
 </body>
 

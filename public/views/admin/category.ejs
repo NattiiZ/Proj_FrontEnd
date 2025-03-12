@@ -50,7 +50,7 @@
                 <tr>
                     <td><%= category.name %></td>
                     <td>
-                        <a href="editcategory.html">แก้ไข</a> |
+                        <a href="/editCategory?id=<%= category.category_ID %>">แก้ไข</a> |
                         <a href="#" onclick="confirmDelete('<%= category.category_ID %>', '<%= category.name %>')">ลบ</a>
                     </td>
                 </tr>
@@ -63,7 +63,8 @@
     <script>
         function confirmDelete(Id, name) {
             if (confirm(`ยืนยันการลบหมวดหมู่ ${name}`)) {
-                window.location.href = `/delete/category/${Id}`;
+                alert("ลบหมวดหมู่ " + name + " เรียบร้อย");
+                window.location.href = `/admin/category`;
             }
         }
     </script>

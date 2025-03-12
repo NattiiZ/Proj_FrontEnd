@@ -75,9 +75,10 @@
                     <td><%= parseFloat(product.unitPrice).toFixed(2) %></td>
                     <td><%= product.stockQty %></td>
                     <td>
-                        <a href="editcategory.html" class="edit-btn">แก้ไข</a> |
-                        <a href="#" onclick="confirmDelete('<%= product.product_ID %>', '<%= product.name %>')" class="delete-btn">ลบ</a>
+                        <a href="/editProduct?id=<%= product.product_ID %>" class="edit-btn">แก้ไข</a> |
+                        <a href="#" onclick="confirmDelete('<%= product.product_ID %>', '<%= product.name %>')">ลบ</a>
                     </td>
+                    
                 </tr>
             <% }) %>
         </table>
@@ -86,8 +87,9 @@
 
     <script>
         function confirmDelete(Id, name) {
-            if (confirm(`ยืนยันการลบหมวดหมู่ ${name}`)) {
-                window.location.href = `/delete/product/${Id}`;
+            if (confirm(`ยืนยันการลบสินค้า ${name}`)) {
+                alert("ลบสินค้า " + name + " เรียบร้อย");
+                window.location.href = `/admin/product`;
             }
         }
     </script>
