@@ -91,7 +91,7 @@ exports.getProduct = async (req, res) => {
         res.send(`
             <script>
                 alert("เพิ่ม ${brand.name} ${product.name} ลงตะกร้าเรียบร้อยแล้ว");
-                window.location.href = "http://localhost${url}";
+                window.location.href = "${url}";
             </script>
         `);
     } 

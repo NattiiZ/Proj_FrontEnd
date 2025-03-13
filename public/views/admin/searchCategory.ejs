@@ -51,7 +51,7 @@
                     <tr>
                         <td><%= category.name %></td>
                         <td>
-                            <a href="editcategory.html">แก้ไข</a> |
+                            <a href="/editCategory?id=<%= category.category_ID %>">แก้ไข</a> |
                             <a href="#" onclick="confirmDelete('<%= category.category_ID %>', '<%= category.name %>')">ลบ</a>
                         </td>
                     </tr>

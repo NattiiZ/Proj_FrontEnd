@@ -39,7 +39,7 @@
 
 
         <div class="action-bar">
-            <a href="/add/category" class="btn create-btn">Add New</a>
+            <a href="/add/category" class="btn create-btn">เพิ่ม</a>
         </div>
 
         <table>
@@ -75,7 +75,7 @@
                         <td><%= parseFloat(product.unitPrice).toFixed(2) %></td>
                         <td><%= product.stockQty %></td>
                         <td>
-                            <a href="editcategory.html">แก้ไข</a> |
+                            <a href="/editProduct?id=<%= product.product_ID %>" class="edit-btn">แก้ไข</a> |
                             <a href="#" onclick="confirmDelete('<%= product.product_ID %>', '<%= product.name %>')">ลบ</a>
                         </td>
                     </tr>

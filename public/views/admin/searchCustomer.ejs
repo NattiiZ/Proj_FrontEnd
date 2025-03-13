@@ -71,7 +71,10 @@
                             <% }) %>
                         </td>
                         <td>
-                            <a href="editcategory.html">ดูคำสั่งซื้อ</a>
+                            <form action="/admin-viewOrder" method="GET">
+                                <input type="hidden" name="id" value="<%= customer.customer_ID %>">
+                                <button type="submit">ดูคำสั่งซื้อ</button>
+                            </form>
                         </td>
                     </tr>
                 <% }) %>

@@ -36,6 +36,7 @@
             <button type="submit">ค้นหา</button>
         </form>
 
+        
         <div class="action-bar">
             <a href="/add/brand" class="btn create-btn">เพิ่ม</a>
         </div>
@@ -51,7 +52,7 @@
                     <tr>
                         <td><%= brand.name %></td>
                         <td>
-                            <a href="editcategory.html">แก้ไข</a> |
+                            <a href="/editBrand?id=<%= brand.brand_ID %>">แก้ไข</a> |
                             <a href="#" onclick="confirmDelete('<%= brand.brand_ID %>', '<%= brand.name %>')">ลบ</a>
                         </td>
                     </tr>

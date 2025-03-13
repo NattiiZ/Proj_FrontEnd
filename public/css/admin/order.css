@@ -45,10 +45,23 @@ a:hover {
     background-color: #1558b0;
 }
 
+/* Add Button */
 .create-btn {
-    margin-left: auto;
+    text-decoration: none; /* ลบขีดเส้นใต้ */
+    background: #28a745;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1em;
 }
 
+.create-btn:hover {
+    text-decoration: none; /* ลบขีดเส้นใต้ */
+    background: #229641;
+    color: white;
+    transform: scale(1.02);
+}
 /* Image Styling */
 img {
     width: 50px;
